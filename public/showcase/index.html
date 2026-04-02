@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>RWJBarnabas Health 2026 Benefits Showcase</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Serif+Display&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy: #1B2F5C;
+  --red: #CC1F34;
+  --bg: #EBF0F5;
+  --card: #FFFFFF;
+  --border: #D0DCE8;
+  --text: #1A2338;
+  --muted: #5A6880;
+  --light-navy: #2A4785;
+  --tag-bg: #E8F0FB;
+  --tag-text: #1B4098;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.6;}
+
+/* ── HEADER ── */
+.site-header{background:var(--navy);padding:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25);}
+.header-top{display:flex;align-items:center;justify-content:space-between;padding:14px 32px;}
+.logo-block{display:flex;align-items:center;gap:12px;}
+.logo-icon{width:44px;height:44px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;}
+.logo-icon svg{width:26px;height:26px;fill:white;}
+.logo-text{color:white;line-height:1.2;}
+.logo-text strong{font-size:17px;font-weight:700;letter-spacing:-.3px;}
+.logo-text span{font-size:12px;opacity:.7;display:block;}
+.header-tagline{color:rgba(255,255,255,.65);font-size:13px;font-style:italic;}
+.nav-bar{background:rgba(0,0,0,.25);overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+.nav-bar::-webkit-scrollbar{height:3px;background:transparent;}
+.nav-bar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:2px;}
+.nav-bar a{display:inline-block;color:rgba(255,255,255,.75);text-decoration:none;padding:11px 20px;font-size:13px;font-weight:500;letter-spacing:.2px;transition:all .2s;border-bottom:3px solid transparent;}
+.nav-bar a:hover,.nav-bar a.active{color:white;border-bottom-color:var(--red);}
+
+/* ── HERO BAND ── */
+.hero{background:linear-gradient(135deg,var(--navy) 0%,#2A4785 100%);color:white;padding:56px 32px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.hero-label{background:var(--red);display:inline-block;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-family:'DM Serif Display',serif;font-size:44px;line-height:1.1;margin-bottom:14px;}
+.hero h1 span{color:rgba(255,255,255,.7);}
+.hero p{font-size:17px;opacity:.8;max-width:560px;margin:0 auto 28px;}
+.hero-cta{background:var(--red);color:white;text-decoration:none;padding:13px 30px;border-radius:8px;font-weight:600;font-size:15px;display:inline-block;transition:all .2s;}
+.hero-cta:hover{background:#b01a2c;transform:translateY(-1px);}
+
+/* ── LAYOUT ── */
+.section{padding:60px 32px;max-width:1100px;margin:0 auto;}
+.section-head{margin-bottom:36px;}
+.section-head h2{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy);margin-bottom:8px;}
+.section-head p{color:var(--muted);font-size:16px;max-width:680px;}
+.section-divider{background:var(--border);height:1px;margin:0 32px;}
+.section-label{display:inline-flex;align-items:center;gap:8px;background:var(--tag-bg);color:var(--tag-text);padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px;}
+.section-label .dot{width:6px;height:6px;background:var(--red);border-radius:50%;}
+
+/* ── VIDEO PLACEHOLDER ── */
+.video-wrap{background:var(--navy);border-radius:14px;overflow:hidden;position:relative;cursor:pointer;transition:transform .2s;aspect-ratio:16/9;}
+.video-wrap:hover{transform:scale(1.01);}
+.video-thumb{width:100%;height:100%;background:linear-gradient(135deg,var(--navy) 0%,#1a3a6b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;}
+.play-btn{width:58px;height:58px;background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:14px;transition:all .2s;}
+.video-wrap:hover .play-btn{background:var(--red);border-color:var(--red);}
+.play-btn svg{width:22px;height:22px;fill:white;margin-left:3px;}
+.video-title{color:white;font-weight:600;font-size:14px;margin-bottom:6px;}
+.video-sub{color:rgba(255,255,255,.55);font-size:12px;}
+.video-badge{position:absolute;top:12px;right:12px;background:var(--red);color:white;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;}
+
+/* ── GRID LAYOUTS ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+@media(max-width:768px){.two-col,.three-col{grid-template-columns:1fr;}}
+
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;}
+.plan-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;overflow:hidden;transition:box-shadow .2s;}
+.plan-card:hover{box-shadow:0 6px 24px rgba(27,47,92,.1);}
+.plan-card.featured{border-color:var(--navy);}
+.plan-card-head{padding:20px 22px;background:var(--navy);color:white;}
+.plan-card-head.red{background:var(--red);}
+.plan-card-head h3{font-size:17px;font-weight:700;margin-bottom:4px;}
+.plan-card-head p{font-size:13px;opacity:.75;}
+.plan-card-body{padding:18px 22px;}
+.plan-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px;}
+.plan-row:last-child{border-bottom:none;}
+.plan-row .label{color:var(--muted);}
+.plan-row .value{font-weight:600;color:var(--text);}
+.plan-row .value.free{color:#0a7c42;font-weight:700;}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.badge.green{background:#E0F5EA;color:#0a7c42;}
+.badge.navy{background:var(--tag-bg);color:var(--tag-text);}
+
+/* ── TABLES ── */
+.data-table{width:100%;border-collapse:collapse;font-size:14px;margin:16px 0;}
+.data-table th{background:var(--navy);color:white;padding:12px 14px;text-align:left;font-weight:600;font-size:13px;}
+.data-table th:first-child{border-radius:8px 0 0 0;}
+.data-table th:last-child{border-radius:0 8px 0 0;}
+.data-table td{padding:11px 14px;border-bottom:1px solid var(--border);}
+.data-table tr:last-child td{border-bottom:none;}
+.data-table tr:nth-child(even){background:#F7FAFC;}
+.data-table .highlight{color:var(--red);font-weight:700;}
+.data-table .free-cell{color:#0a7c42;font-weight:700;}
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin:20px 0;}
+.red-head{background:var(--red) !important;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-block;text-decoration:none;padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:all .2s;cursor:pointer;}
+.btn-primary{background:var(--red);color:white;}
+.btn-primary:hover{background:#b01a2c;transform:translateY(-1px);}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--navy);}
+.btn-outline:hover{background:var(--navy);color:white;}
+.btn-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:20px;}
+
+/* ── CALLOUT BOXES ── */
+.callout{border-radius:12px;padding:20px 22px;margin:20px 0;}
+.callout.navy{background:var(--navy);color:white;}
+.callout.navy p{color:rgba(255,255,255,.8);}
+.callout.red{background:#FEF0F2;border-left:4px solid var(--red);}
+.callout.blue{background:var(--tag-bg);border-left:4px solid var(--navy);}
+.callout h4{font-size:15px;font-weight:700;margin-bottom:6px;}
+
+/* ── CONTACT TABLE ── */
+.contact-section h3{font-size:16px;font-weight:700;color:var(--navy);padding:10px 14px;background:var(--tag-bg);border-radius:8px 8px 0 0;margin-top:28px;border:1px solid var(--border);border-bottom:none;}
+.contact-table{width:100%;border-collapse:collapse;font-size:14px;border:1px solid var(--border);border-radius:0 0 8px 8px;overflow:hidden;}
+.contact-table td{padding:12px 14px;border-bottom:1px solid var(--border);}
+.contact-table tr:last-child td{border-bottom:none;}
+.contact-table td:first-child{font-weight:600;width:35%;background:#F7FAFC;}
+.contact-table a{color:var(--red);text-decoration:none;font-weight:500;}
+.contact-table a:hover{text-decoration:underline;}
+
+/* ── TIER PILL ── */
+.tier-row{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;}
+.tier{flex:1;min-width:140px;border:1px solid var(--border);border-radius:10px;padding:14px 16px;background:white;}
+.tier-badge{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--red);margin-bottom:4px;}
+.tier h4{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:6px;}
+.tier p{font-size:12px;color:var(--muted);}
+
+/* ── CHECKLIST ── */
+.checklist{list-style:none;}
+.checklist li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px;font-size:15px;}
+.checklist li:last-child{border-bottom:none;}
+.checklist li::before{content:'';width:20px;height:20px;min-width:20px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' width='12'%3E%3Cpath d='M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;margin-top:2px;}
+
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin:24px 0;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;text-align:center;}
+.stat-num{font-family:'DM Serif Display',serif;font-size:32px;color:var(--navy);line-height:1;}
+.stat-unit{font-size:16px;color:var(--red);font-weight:700;}
+.stat-label{font-size:13px;color:var(--muted);margin-top:6px;}
+
+/* ── FOOTER ── */
+footer{background:var(--navy);color:white;text-align:center;padding:32px;margin-top:40px;}
+footer p{opacity:.6;font-size:13px;}
+footer strong{opacity:1;font-size:15px;display:block;margin-bottom:8px;}
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header class="site-header">
+  <div class="header-top">
+    <div class="logo-block">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+      </div>
+      <div class="logo-text">
+        <strong>RWJBarnabas Health</strong>
+        <span>2026 Employee Benefits</span>
+      </div>
+    </div>
+    <div class="header-tagline">Wellbeing starts with you.</div>
+  </div>
+  <nav class="nav-bar">
+    <a href="#welcome" class="active">Welcome</a>
+    <a href="#medical">Medical Plans</a>
+    <a href="#dental">Dental &amp; Vision</a>
+    <a href="#prescriptions">Prescriptions</a>
+    <a href="#spending">Spending Accounts</a>
+    <a href="#emotional">Emotional Wellbeing</a>
+    <a href="#financial">Financial &amp; Retirement</a>
+    <a href="#pto">Paid Time Off</a>
+    <a href="#contacts">Contacts</a>
+  </nav>
+</header>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-label">Open Enrollment 2026</div>
+  <h1>Your Benefits.<br/><span>Your Wellbeing.</span></h1>
+  <p>Everything you need to understand and enroll in your 2026 RWJBarnabas Health benefits — in one place.</p>
+  <a href="https://www.RWJBHBenefits.com" target="_blank" class="hero-cta">Enroll Now →</a>
+</div>
+
+<!-- ════════════════════════════════════
+     SECTION 1 — WELCOME
+════════════════════════════════════ -->
+<section class="section" id="welcome">
+  <div class="section-label"><span class="dot"></span>Getting Started</div>
+  <div class="section-head">
+    <h2>Welcome to Your 2026 Benefits</h2>
+    <p>You have <strong>30 days from your hire date</strong> to enroll. Coverage begins the first of the month following your start date. Take time to explore your options — this guide is available to you year-round.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <div class="video-wrap">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Benefits Key Terms Explained</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:20px;font-weight:700;color:var(--navy);margin-bottom:16px;">New Hire Enrollment Checklist</h3>
+      <ul class="checklist">
+        <li>Review this benefits guide and visit RWJBHTotalWellbeing.com</li>
+        <li>Gather your PeopleSoft ID, dependent SSNs, and dependent verification documents</li>
+        <li>Visit <a href="https://www.RWJBHBenefits.com" style="color:var(--red);">RWJBHBenefits.com</a> or call 844.690.0920 to enroll</li>
+        <li>Review elections and save your confirmation statement</li>
+        <li>ID cards arrive via US Mail within 2–3 weeks</li>
+        <li>Explore Retirement, BHealthy Wellness, and voluntary benefits</li>
+      </ul>
+      <div class="btn-row">
+        <a href="https://www.RWJBHBenefits.com" target="_blank" class="btn btn-primary">Enroll at RWJBHBenefits.com</a>
+        <a href="https://RWJBHTotalWellbeing.com" target="_blank" class="btn btn-outline">Total Wellbeing Site</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout navy" style="margin-top:32px;">
+    <h4>🌟 Your Total Wellbeing — Six Focus Areas</h4>
+    <div class="three-col" style="margin-top:16px;gap:12px;">
+      <div><strong style="display:block;margin-bottom:4px;">Physical</strong><span style="font-size:13px;opacity:.75;">Coverage and support for coordinated care</span></div>
+      <div><strong style="display:block;margin-bottom:4px;">Emotional</strong><span style="font-size:13px;opacity:.75;">Resources to safeguard your mind and spirit</span></div>
+      <div><strong style="display:block;margin-bottom:4px;">Financial</strong><span style="font-size:13px;opacity:.75;">Stability for you and your family today and tomorrow</span></div>
+      <div><strong style="display:block;margin-bottom:4px;">Personal</strong><span style="font-size:13px;opacity:.75;">Time away and support for personal priorities</span></div>
+      <div><strong style="display:block;margin-bottom:4px;">Career</strong><span style="font-size:13px;opacity:.75;">Pathways for your professional goals and growth</span></div>
+      <div><strong style="display:block;margin-bottom:4px;">Community</strong><span style="font-size:13px;opacity:.75;">Initiatives that build healthier communities</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 2 — MEDICAL
+════════════════════════════════════ -->
+<section class="section" id="medical">
+  <div class="section-label"><span class="dot"></span>Physical Wellbeing</div>
+  <div class="section-head">
+    <h2>Medical Benefits</h2>
+    <p>Medical plans are administered by <strong>Aetna®</strong>. Care received within the RWJBarnabas Health system is completely free* across all plans. Choose the plan that fits where you live and how you use care.</p>
+  </div>
+
+  <div class="callout red">
+    <h4>★ Care at RWJBarnabas Health = $0 Cost to You</h4>
+    <p>Across all plans, in-network Premier Tier (RWJBH facilities, employed doctors, Rutgers Health) — deductible $0, coinsurance 0%, $0 copay. *Payroll deductions and $200 ER copay still apply.</p>
+  </div>
+
+  <div style="margin:28px 0;">
+    <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:16px;">Which Plan Is Right for You?</h3>
+    <div class="three-col">
+      <div class="plan-card featured">
+        <div class="plan-card-head">
+          <h3>Core Plan</h3>
+          <p>Best for RWJBH system users</p>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-row"><span class="label">Live in NJ?</span><span class="value">✓ Yes</span></div>
+          <div class="plan-row"><span class="label">Payroll cost</span><span class="value">Lowest</span></div>
+          <div class="plan-row"><span class="label">OON coverage</span><span class="value">❌ None</span></div>
+          <div class="plan-row"><span class="label">Tiers</span><span class="value">3 (Premier/Extended/Aetna)</span></div>
+          <div class="plan-row"><span class="label">Best for</span><span class="value" style="font-size:13px;">RWJBH/HTC providers, budget-conscious</span></div>
+        </div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-card-head red">
+          <h3>Flex Plan</h3>
+          <p>For NJ residents wanting flexibility</p>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-row"><span class="label">Live in NJ?</span><span class="value">✓ Yes</span></div>
+          <div class="plan-row"><span class="label">Payroll cost</span><span class="value">Higher</span></div>
+          <div class="plan-row"><span class="label">OON coverage</span><span class="value">✓ Yes (60%)</span></div>
+          <div class="plan-row"><span class="label">Tiers</span><span class="value">4 (incl. Out-of-Network)</span></div>
+          <div class="plan-row"><span class="label">Best for</span><span class="value" style="font-size:13px;">Using non-RWJBH or out-of-state providers</span></div>
+        </div>
+      </div>
+      <div class="plan-card">
+        <div class="plan-card-head">
+          <h3>Out-of-Area Plan</h3>
+          <p>For employees outside NJ</p>
+        </div>
+        <div class="plan-card-body">
+          <div class="plan-row"><span class="label">Live in NJ?</span><span class="value">❌ No</span></div>
+          <div class="plan-row"><span class="label">Payroll cost</span><span class="value">Same as Core</span></div>
+          <div class="plan-row"><span class="label">OON coverage</span><span class="value">✓ Yes (60%)</span></div>
+          <div class="plan-row"><span class="label">Tiers</span><span class="value">4 (incl. Out-of-Network)</span></div>
+          <div class="plan-row"><span class="label">Best for</span><span class="value" style="font-size:13px;">Employees who live outside New Jersey</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="video-wrap" style="max-width:480px;margin:8px 0 28px;">
+    <div class="video-thumb">
+      <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+      <div class="video-title">Medical Plan: PPO Preferred Provider Organization</div>
+      <div class="video-sub">Understand how tiered plans work</div>
+    </div>
+    <div class="video-badge">▶ Watch</div>
+  </div>
+
+  <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">Core Plan — Coverage by Tier</h3>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Benefit</th>
+          <th>Premier (Tier 1) — RWJBH</th>
+          <th>Extended (Tier 2) — HTC</th>
+          <th>Aetna Network (Tier 3)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Deductible (Ind/Fam)</strong></td><td class="free-cell">$0 / $0</td><td>$1,000 / $2,000</td><td>$2,500 / $5,000</td></tr>
+        <tr><td><strong>Coinsurance</strong></td><td class="free-cell">0%</td><td>20%</td><td>50%</td></tr>
+        <tr><td><strong>OOP Max (Ind/Fam)</strong></td><td>$1,500 / $3,000</td><td>$2,500 / $5,000</td><td>$7,000 / $14,000</td></tr>
+        <tr><td>Primary Care</td><td class="free-cell">$0</td><td>$20 copay</td><td>$40 copay</td></tr>
+        <tr><td>Specialist</td><td class="free-cell">$0</td><td>$40 copay</td><td>$80 copay</td></tr>
+        <tr><td>Preventive Care</td><td class="free-cell">$0</td><td class="free-cell">$0</td><td class="free-cell">$0</td></tr>
+        <tr><td>Behavioral Health</td><td class="free-cell">$0</td><td class="free-cell">$0</td><td class="free-cell">$0</td></tr>
+        <tr><td>Diagnostic Lab</td><td class="free-cell">$0</td><td class="free-cell">$0</td><td class="free-cell">$0</td></tr>
+        <tr><td>Emergency Room</td><td>$200 copay</td><td>$200 copay</td><td>$200 copay</td></tr>
+        <tr><td>Urgent Care</td><td class="free-cell">$0</td><td>$50 copay</td><td>$100 copay</td></tr>
+        <tr><td>Virtual Urgent Care (KeyCare)</td><td class="free-cell" colspan="3" style="text-align:center;">No charge — all plans</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin:28px 0 12px;">Per-Paycheck Medical Contributions (Full-Time, Non-Tobacco)</h3>
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Annual Salary</th><th>Employee Only — Core</th><th>Employee Only — Flex</th><th>Family — Core</th><th>Family — Flex</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Under $55,000</td><td>$61.34</td><td>$100.63</td><td>$147.68</td><td>$265.56</td></tr>
+        <tr><td>$55,000 – $94,999</td><td>$77.81</td><td>$132.80</td><td>$197.06</td><td>$362.08</td></tr>
+        <tr><td>$95,000 – $124,999</td><td>$94.26</td><td>$164.98</td><td>$246.44</td><td>$458.58</td></tr>
+        <tr><td>$125,000 – $174,999</td><td>$131.29</td><td>$208.39</td><td>$357.54</td><td>$584.76</td></tr>
+        <tr><td>$175,000 +</td><td>$164.21</td><td>$262.39</td><td>$456.30</td><td>$750.84</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout blue">
+    <h4>💰 Save $125/month — Non-Tobacco User Discount</h4>
+    <p>Haven't used tobacco in the last 6 months? Save $125/month on your medical plan contributions. Ready to quit? Support at <strong>RWJBH.org/NicotineRecovery</strong> or call <strong>833.795.QUIT</strong>.</p>
+  </div>
+  <div class="btn-row">
+    <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" class="btn btn-primary">Aetna Provider Search</a>
+    <a href="https://www.RWJBHBenefits.com" target="_blank" class="btn btn-outline">Enroll Now</a>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 3 — DENTAL & VISION
+════════════════════════════════════ -->
+<section class="section" id="dental">
+  <div class="section-label"><span class="dot"></span>Physical Wellbeing</div>
+  <div class="section-head">
+    <h2>Dental &amp; Vision Benefits</h2>
+    <p>Comprehensive dental coverage through <strong>Delta Dental™</strong> and vision benefits through <strong>EyeMed</strong> — keeping you and your family healthy from eyes to teeth.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="video-wrap" style="margin-bottom:24px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Dental Insurance Explained</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">Delta Dental™ Plans</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Benefit</th><th>Base Plan</th><th>Buy-Up Plan</th></tr></thead>
+          <tbody>
+            <tr><td>Calendar Yr Deductible (Ind/Fam)</td><td>$75 / $225</td><td>$50 / $150</td></tr>
+            <tr><td>Preventive (exams, cleanings 3x/yr)</td><td class="free-cell">100% — No deductible</td><td class="free-cell">100% — No deductible</td></tr>
+            <tr><td>Basic Services (fillings, extractions)</td><td>You pay 20%</td><td>You pay 20%</td></tr>
+            <tr><td>Major Services (crowns, dentures)</td><td>You pay 50%</td><td>You pay 50%</td></tr>
+            <tr><td>Implants</td><td>Not covered</td><td>You pay 50%</td></tr>
+            <tr><td>Annual Maximum (per person)</td><td>$1,500</td><td>$2,000</td></tr>
+            <tr><td>Orthodontia (adults &amp; children)</td><td>You pay 50%</td><td>You pay 50%</td></tr>
+            <tr><td>Ortho Lifetime Max</td><td>$1,500</td><td>$2,000</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--muted);margin:16px 0 8px;">Per-Pay Dental Contributions (Full-Time)</h4>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Coverage</th><th>Base Plan</th><th>Buy-Up Plan</th></tr></thead>
+          <tbody>
+            <tr><td>Employee Only</td><td>$11.84</td><td>$13.90</td></tr>
+            <tr><td>Employee + Child(ren)</td><td>$23.68</td><td>$27.82</td></tr>
+            <tr><td>Employee + Spouse</td><td>$18.94</td><td>$22.35</td></tr>
+            <tr><td>Family</td><td>$36.71</td><td>$43.26</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <a href="https://www.deltadentalnj.com/RWJBH" target="_blank" class="btn btn-outline" style="margin-top:12px;">Find a Delta Dental Provider</a>
+    </div>
+    <div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">EyeMed Vision Plan</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Benefit</th><th>In-Network</th><th>Out-of-Network</th></tr></thead>
+          <tbody>
+            <tr><td>Eye Exam</td><td class="free-cell">$0 copay (PLUS) / $10</td><td>Up to $50</td></tr>
+            <tr><td>Frames</td><td>$0 + $175 allowance</td><td>Up to $88</td></tr>
+            <tr><td>PLUS Provider Frames</td><td>$0 + $225 allowance</td><td>Up to $88</td></tr>
+            <tr><td>Lenses (single/bi/tri)</td><td>$10 copay</td><td>Up to $100</td></tr>
+            <tr><td>Contact Lenses — Conventional</td><td>$0 + $175 allowance</td><td>Up to $140</td></tr>
+            <tr><td>Contact Lenses — Disposable</td><td>$0 + up to $175</td><td>Up to $140</td></tr>
+            <tr><td>Medically Necessary Contacts</td><td class="free-cell">$0 — paid in full</td><td>Up to $210</td></tr>
+            <tr><td>Frequency</td><td colspan="2" style="text-align:center;">Once per calendar year (exam, lenses, frames)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <h4 style="font-size:14px;font-weight:600;color:var(--muted);margin:16px 0 8px;">Vision Contributions (Bi-Weekly)</h4>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Coverage</th><th>Per Pay Period</th></tr></thead>
+          <tbody>
+            <tr><td>Employee Only</td><td>$3.45</td></tr>
+            <tr><td>Employee + Child(ren)</td><td>$6.63</td></tr>
+            <tr><td>Employee + Spouse</td><td>$5.12</td></tr>
+            <tr><td>Family</td><td>$9.75</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <a href="https://www.eyemed.com" target="_blank" class="btn btn-outline" style="margin-top:12px;">Find EyeMed Provider</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 4 — PRESCRIPTIONS
+════════════════════════════════════ -->
+<section class="section" id="prescriptions">
+  <div class="section-label"><span class="dot"></span>Physical Wellbeing</div>
+  <div class="section-head">
+    <h2>Prescription Drug Benefits</h2>
+    <p>Prescription coverage through <strong>CVS Caremark®</strong> is included automatically when you enroll in a medical plan. Three convenient options for maintenance medications.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="video-wrap" style="margin-bottom:20px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">How to Stretch Your Healthcare Dollars</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">Copay Schedule</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Type</th><th>Drug</th><th>Copay</th></tr></thead>
+          <tbody>
+            <tr><td rowspan="3"><strong>Retail (30-day)</strong></td><td>Generic</td><td class="highlight">$10</td></tr>
+            <tr><td>Preferred Brand</td><td class="highlight">$40</td></tr>
+            <tr><td>Non-Preferred Brand</td><td class="highlight">$80</td></tr>
+            <tr><td rowspan="3"><strong>Mail Order (90-day)</strong></td><td>Generic</td><td class="highlight">$20</td></tr>
+            <tr><td>Preferred Brand</td><td class="highlight">$100</td></tr>
+            <tr><td>Non-Preferred Brand</td><td class="highlight">$200</td></tr>
+            <tr><td rowspan="2"><strong>Specialty (30-day)</strong></td><td>Preferred Brand</td><td class="highlight">$200 ($0 via PrudentRx)</td></tr>
+            <tr><td>Non-Preferred Brand</td><td class="highlight">$400 ($0 via PrudentRx)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout blue" style="margin-top:16px;">
+        <h4>Maintenance Meds (90-day supply) — 3 Options</h4>
+        <p>1. RWJBH on-site retail pharmacies &nbsp;•&nbsp; 2. CVS Caremark® Mail Service &nbsp;•&nbsp; 3. Nearest CVS Pharmacy®</p>
+      </div>
+      <a href="https://caremarkrxplaninfo.com/RWJBH" target="_blank" class="btn btn-primary" style="margin-top:12px;">CVS Caremark Member Portal</a>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 5 — SPENDING ACCOUNTS
+════════════════════════════════════ -->
+<section class="section" id="spending">
+  <div class="section-label"><span class="dot"></span>Financial Wellbeing</div>
+  <div class="section-head">
+    <h2>Flexible Spending Accounts</h2>
+    <p>Use pre-tax dollars to cover eligible expenses and reduce your taxable income. Two FSA types available — enroll during your new hire window.</p>
+  </div>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-num">$3,400<span class="stat-unit"></span></div>
+      <div class="stat-label">Healthcare FSA annual max</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$7,500<span class="stat-unit"></span></div>
+      <div class="stat-label">Dependent Care FSA annual max</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">$680<span class="stat-unit"></span></div>
+      <div class="stat-label">Healthcare FSA rollover max (2026→2027)</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">31<span class="stat-unit"> days</span></div>
+      <div class="stat-label">To change FSA after a Qualifying Life Event</div>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:24px;">
+    <div>
+      <div class="video-wrap" style="margin-bottom:16px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">FSA Flexible Spending Account</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+    </div>
+    <div>
+      <div class="video-wrap">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Dependent Care FSA</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout red" style="margin-top:24px;">
+    <h4>⚠️ Use It or Lose It — Important FSA Rules</h4>
+    <p>Healthcare FSA: You may roll over up to <strong>$680</strong> into 2027. Dependent Care FSA: <strong>No rollover</strong> — plan contributions carefully. Changes only allowed during Annual Enrollment or after a Qualifying Life Event.</p>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 6 — EMOTIONAL WELLBEING
+════════════════════════════════════ -->
+<section class="section" id="emotional">
+  <div class="section-label"><span class="dot"></span>Emotional Wellbeing</div>
+  <div class="section-head">
+    <h2>Emotional Wellbeing Resources</h2>
+    <p>Your mental health matters as much as your physical health. RWJBH provides resources — free and confidential — to support you at work and at home.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="video-wrap" style="margin-bottom:20px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Employee Assistance Programs (EAP)</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+      <div class="video-wrap">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Managing Stress and Mental Health</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px;">
+        <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:12px;">🧠 Employee Assistance Program (EAP)</h3>
+        <ul class="checklist">
+          <li>Free, confidential counseling — available 24/7</li>
+          <li>Available virtually and in-person for you and your family</li>
+          <li>Covers life's challenges: stress, relationships, grief, substance use</li>
+        </ul>
+        <a href="tel:8003000628" class="btn btn-primary" style="margin-top:16px;">Call EAP: 800.300.0628</a>
+      </div>
+      <div class="card" style="margin-bottom:16px;">
+        <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:12px;">😌 Calm App — Free for You + 5 Family/Friends</h3>
+        <p style="color:var(--muted);font-size:14px;margin-bottom:14px;">Meditations, sleep stories, stress-relief tools. Full premium subscription at no cost to benefits-eligible employees.</p>
+        <a href="https://www.calm.com/b2b/RWJBarnabasHealth/subscribe" target="_blank" class="btn btn-outline">Get Calm Free</a>
+      </div>
+      <div class="card">
+        <h3 style="font-size:17px;font-weight:700;color:var(--navy);margin-bottom:8px;">❤️ Aetna Behavioral Health</h3>
+        <p style="color:var(--muted);font-size:14px;">All <strong>in-network behavioral health copays are waived</strong> for employees and enrolled family members on an RWJBH medical plan — including therapy, ABA therapy, and psychiatric care.</p>
+        <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" class="btn btn-outline" style="margin-top:14px;">Find a Provider</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 7 — FINANCIAL & RETIREMENT
+════════════════════════════════════ -->
+<section class="section" id="financial">
+  <div class="section-label"><span class="dot"></span>Financial Wellbeing</div>
+  <div class="section-head">
+    <h2>Financial &amp; Retirement Benefits</h2>
+    <p>Build a secure financial future — from retirement savings and life insurance to student loan navigation and tuition support.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:16px;">401(k) Retirement Plan — Fidelity</h3>
+      <div class="stat-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="stat-card"><div class="stat-num">50<span class="stat-unit">%</span></div><div class="stat-label">Employer match on first 6% you contribute</div></div>
+        <div class="stat-card"><div class="stat-num">3<span class="stat-unit">%</span></div><div class="stat-label">Auto-enrollment contribution (after 30 days)</div></div>
+        <div class="stat-card"><div class="stat-num">0–6<span class="stat-unit">%</span></div><div class="stat-label">Non-elective employer contribution (annual, based on system results)</div></div>
+        <div class="stat-card"><div class="stat-num">3<span class="stat-unit"> yrs</span></div><div class="stat-label">Vesting period for employer contributions</div></div>
+      </div>
+      <div class="callout blue" style="margin-top:16px;">
+        <h4>Maximize Your Match</h4>
+        <p>Contribute 6% → RWJBH adds 3% = 9% total going into your retirement. Consider increasing from the auto-enrolled 3%.</p>
+      </div>
+      <div class="btn-row">
+        <a href="https://www.netbenefits.com/RWJBarnabasHealth" target="_blank" class="btn btn-primary">Manage at Fidelity</a>
+        <a href="tel:8005135015" class="btn btn-outline">Fidelity: 800.513.5015</a>
+      </div>
+    </div>
+    <div>
+      <div class="video-wrap" style="margin-bottom:20px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">How to Optimize Your HSA/Retirement Savings</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">Life &amp; Disability — MetLife</h3>
+      <div class="plan-card">
+        <div class="plan-card-body">
+          <div class="plan-row"><span class="label">Basic Life (auto)</span><span class="value free">1.5× salary, up to $500k — FREE</span></div>
+          <div class="plan-row"><span class="label">Voluntary Life</span><span class="value">Additional coverage available</span></div>
+          <div class="plan-row"><span class="label">Spouse &amp; Child Life</span><span class="value">Employee-paid options</span></div>
+          <div class="plan-row"><span class="label">Long-Term Disability (auto)</span><span class="value free">60% salary, up to $10k/month — FREE</span></div>
+        </div>
+      </div>
+      <h3 style="font-size:16px;font-weight:700;color:var(--navy);margin:20px 0 10px;">Additional Financial Benefits</h3>
+      <div class="plan-card">
+        <div class="plan-card-body">
+          <div class="plan-row"><span class="label">Tuition Reimbursement (ISTS)</span><span class="value">Up to $5,250/year</span></div>
+          <div class="plan-row"><span class="label">Student Loan Navigation (Savi)</span><span class="value">Personalized support</span></div>
+          <div class="plan-row"><span class="label">Employee Discounts (PerkSpot)</span><span class="value">Travel, dining, electronics</span></div>
+          <div class="plan-row"><span class="label">Purchasing Program (Purchasing Power)</span><span class="value">Payroll deduction purchases</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 8 — PAID TIME OFF
+════════════════════════════════════ -->
+<section class="section" id="pto">
+  <div class="section-label"><span class="dot"></span>Personal Wellbeing</div>
+  <div class="section-head">
+    <h2>Paid Time Off &amp; Leave</h2>
+    <p>RWJBH supports your life outside of work with a comprehensive time-off program — three banks of time plus generous paid leave for major life events.</p>
+  </div>
+  <div class="two-col">
+    <div>
+      <div class="video-wrap" style="margin-bottom:20px;">
+        <div class="video-thumb">
+          <div class="play-btn"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="video-title">Family and Medical Leave Act (FMLA)</div>
+          <div class="video-sub">Flimp HR Benefits Video Library</div>
+        </div>
+        <div class="video-badge">▶ Watch</div>
+      </div>
+      <div class="callout navy">
+        <h4>8 Paid Holidays Per Year</h4>
+        <p style="margin-top:8px;">7 fixed: New Year's Day, MLK Jr. Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, Christmas<br/><br/>1 flex: Use on any day meaningful to you</p>
+      </div>
+      <div class="callout blue" style="margin-top:16px;">
+        <h4>Sick Time</h4>
+        <p>40 hours of NJ Earned Sick Leave (NJESL) frontloaded January 1 each calendar year.</p>
+      </div>
+    </div>
+    <div>
+      <h3 style="font-size:18px;font-weight:700;color:var(--navy);margin-bottom:12px;">Vacation Accrual (40-hr/week employees)</h3>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead><tr><th>Years of Service</th><th>Hourly (Non-Exempt)</th><th>Salaried (Exempt)</th></tr></thead>
+          <tbody>
+            <tr><td>0 years</td><td>120 hrs (15 days)</td><td>160 hrs (20 days)</td></tr>
+            <tr><td>3 years</td><td>136 hrs (17 days)</td><td>176 hrs (22 days)</td></tr>
+            <tr><td>5 years</td><td>152 hrs (19 days)</td><td>192 hrs (24 days)</td></tr>
+            <tr><td>10 years</td><td>168 hrs (21 days)</td><td>208 hrs (26 days)</td></tr>
+            <tr><td>15 years</td><td>184 hrs (23 days)</td><td>224 hrs (28 days)</td></tr>
+            <tr><td>20 years</td><td>200 hrs (25 days)</td><td>240 hrs (30 days)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout red" style="margin-top:16px;">
+        <h4>Paid Parental Leave — 12 Weeks at 100% Pay</h4>
+        <p>For all eligible new parents (birthing and non-birthing), combined with NJ TDI/FLI. Must have 1 year of continuous service. Paid Short-Term Disability: up to 26 weeks at 66⅔% pay.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ════════════════════════════════════
+     SECTION 9 — CONTACTS
+════════════════════════════════════ -->
+<section class="section" id="contacts">
+  <div class="section-label"><span class="dot"></span>Resources</div>
+  <div class="section-head">
+    <h2>Key Benefits Contacts</h2>
+    <p>Know who to call for each benefit. Your RWJBH Benefits Center is your first stop for enrollment questions.</p>
+  </div>
+  <div class="contact-section">
+    <h3>Physical Wellbeing</h3>
+    <table class="contact-table">
+      <tbody>
+        <tr><td>Benefits Enrollment / Life Events</td><td><a href="https://www.RWJBHBenefits.com">RWJBHBenefits.com</a> &nbsp;|&nbsp; <a href="tel:8446900920">844.690.0920</a></td></tr>
+        <tr><td>Care Navigation &amp; Appointments</td><td><a href="https://RWJBHTotalWellbeing.com">RWJBHTotalWellbeing.com</a> &nbsp;|&nbsp; <a href="tel:8444242628">844.424.2628</a></td></tr>
+        <tr><td>Medical (Aetna®)</td><td><a href="https://www.aetnaresource.com/n/RWJBH">aetnaresource.com/n/RWJBH</a> &nbsp;|&nbsp; <a href="tel:8555465415">855.546.5415</a></td></tr>
+        <tr><td>Prescription (CVS Caremark®)</td><td><a href="https://caremarkrxplaninfo.com/RWJBH">caremarkrxplaninfo.com/RWJBH</a> &nbsp;|&nbsp; <a href="tel:8332905676">833.290.5676</a></td></tr>
+        <tr><td>Dental (Delta Dental™)</td><td><a href="https://www.deltadentalnj.com/RWJBH">deltadentalnj.com/RWJBH</a> &nbsp;|&nbsp; <a href="tel:8008105234">800.810.5234</a></td></tr>
+        <tr><td>Vision (EyeMed)</td><td><a href="https://www.eyemed.com">eyemed.com</a> &nbsp;|&nbsp; <a href="tel:8668005457">866.800.5457</a></td></tr>
+        <tr><td>BHealthy Wellness (Personify Health)</td><td><a href="https://join.personifyhealth.com/bhealthy">join.personifyhealth.com/bhealthy</a> &nbsp;|&nbsp; <a href="tel:8886719395">888.671.9395</a></td></tr>
+        <tr><td>EAP (Confidential Counseling)</td><td><a href="tel:8003000628">800.300.0628</a> — 24/7</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="contact-section">
+    <h3>Financial Wellbeing</h3>
+    <table class="contact-table">
+      <tbody>
+        <tr><td>Life Insurance / LTD / FSA</td><td><a href="https://www.RWJBHBenefits.com">RWJBHBenefits.com</a> &nbsp;|&nbsp; <a href="tel:8446900920">844.690.0920</a></td></tr>
+        <tr><td>Retirement Plans (Fidelity)</td><td><a href="https://www.netbenefits.com/RWJBarnabasHealth">netbenefits.com/RWJBarnabasHealth</a> &nbsp;|&nbsp; <a href="tel:8005135015">800.513.5015</a></td></tr>
+        <tr><td>Voluntary Benefits (Aon)</td><td><a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home">mybenefits.aon.com</a> &nbsp;|&nbsp; <a href="tel:8444286672">844.428.6672</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout navy" style="margin-top:36px;text-align:center;">
+    <h4 style="font-size:20px;">Ready to Enroll?</h4>
+    <p style="margin:10px 0 20px;">You have 30 days from your hire date. Don't wait — your coverage, your choice.</p>
+    <a href="https://www.RWJBHBenefits.com" target="_blank" class="btn btn-primary" style="font-size:16px;padding:14px 36px;">Enroll at RWJBHBenefits.com →</a>
+  </div>
+</section>
+
+<footer>
+  <strong>RWJBarnabas Health — 2026 Employee Benefits Showcase</strong>
+  <p>Questions? Contact the RWJBH Benefits Center at 844.690.0920 or visit RWJBHBenefits.com &nbsp;|&nbsp; Powered by Flimp Communications</p>
+  <p style="margin-top:8px;">This guide describes benefit highlights in non-technical language. Official plan documents govern all benefits.</p>
+</footer>
+
+<script>
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-bar a');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#'+current);
+  });
+});
+navLinks.forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+</script>
+</body>
+</html>
