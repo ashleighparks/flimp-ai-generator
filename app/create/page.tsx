@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect, Suspense } from 'react';
+import { useState, useEffect, Suspense, useRef } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import AppShell from '../components/AppShell';
 import DropZone from '../components/DropZone';
@@ -21,6 +21,9 @@ function CreateFlow() {
   const [genStatus, setGenStatus] = useState('');
   const [genDone, setGenDone] = useState(false);
   const [createdProjectId, setCreatedProjectId] = useState<string | null>(null);
+  const [expandedFolders, setExpandedFolders] = useState<Set<string>>(new Set());
+  const [copyFeedback, setCopyFeedback] = useState('');
+  const copyTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Pre-select type from query param
   useEffect(() => {
@@ -118,21 +121,55 @@ function CreateFlow() {
             <>
               <div style={{ fontSize: '12px', fontWeight: 600, color: '#888', marginBottom: '10px', marginTop: '24px' }}>Or select from existing content:</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', maxHeight: '300px', overflowY: 'auto' }}>
-                {content.map(c => (
-                  <div key={c.id} onClick={() => toggleSelect(c.id)} style={{
-                    display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px',
-                    background: selectedIds.includes(c.id) ? 'rgba(103,231,78,0.08)' : '#fff',
-                    border: `1.5px solid ${selectedIds.includes(c.id) ? '#67E74E' : '#e2e8f0'}`,
-                    borderRadius: '10px', cursor: 'pointer', transition: 'all 0.15s',
-                  }}>
-                    <div style={{ width: '20px', height: '20px', borderRadius: '4px', border: `2px solid ${selectedIds.includes(c.id) ? '#67E74E' : '#ccc'}`, background: selectedIds.includes(c.id) ? '#67E74E' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '12px', fontWeight: 700 }}>
-                      {selectedIds.includes(c.id) && '✓'}
-                    </div>
-                    <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: `${fileTypeColors[c.fileType] || '#888'}15`, color: fileTypeColors[c.fileType] || '#888', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: 700 }}>{c.fileType}</div>
-                    <div style={{ flex: 1 }}>
-                      <div style={{ fontSize: '13px', fontWeight: 500, color: '#08212D' }}>{c.name}</div>
-                      <div style={{ fontSize: '11px', color: '#888' }}>{c.folder}</div>
-                    </div>
+                {Array.from(
+                  content.reduce((folders, c) => {
+                    if (!folders.has(c.folder)) folders.set(c.folder, []);
+                    folders.get(c.folder)!.push(c);
+                    return folders;
+                  }, new Map<string, ContentItem[]>())
+                ).map(([folder, items]) => (
+                  <div key={folder}>
+                    <button
+                      onClick={() => setExpandedFolders(prev => {
+                        const next = new Set(prev);
+                        if (next.has(folder)) next.delete(folder);
+                        else next.add(folder);
+                        return next;
+                      })}
+                      style={{
+                        width: '100%', padding: '12px 16px', background: '#f8fafc', border: '1px solid #e2e8f0',
+                        borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '12px', color: '#555',
+                        textAlign: 'left', display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+                        transition: 'background 0.15s',
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.background = '#f0f4f8'}
+                      onMouseLeave={(e) => e.currentTarget.style.background = '#f8fafc'}
+                    >
+                      {folder}
+                      <span style={{ fontSize: '10px', color: '#888' }}>
+                        {expandedFolders.has(folder) ? '▼' : '▶'} {items.length}
+                      </span>
+                    </button>
+                    {expandedFolders.has(folder) && (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', marginTop: '6px', marginLeft: '6px', paddingLeft: '6px', borderLeft: '2px solid #e2e8f0' }}>
+                        {items.map(c => (
+                          <div key={c.id} onClick={() => toggleSelect(c.id)} style={{
+                            display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 16px',
+                            background: selectedIds.includes(c.id) ? 'rgba(103,231,78,0.08)' : '#fff',
+                            border: `1.5px solid ${selectedIds.includes(c.id) ? '#67E74E' : '#e2e8f0'}`,
+                            borderRadius: '10px', cursor: 'pointer', transition: 'all 0.15s',
+                          }}>
+                            <div style={{ width: '20px', height: '20px', borderRadius: '4px', border: `2px solid ${selectedIds.includes(c.id) ? '#67E74E' : '#ccc'}`, background: selectedIds.includes(c.id) ? '#67E74E' : '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '12px', fontWeight: 700 }}>
+                              {selectedIds.includes(c.id) && '✓'}
+                            </div>
+                            <div style={{ width: '28px', height: '28px', borderRadius: '6px', background: `${fileTypeColors[c.fileType] || '#888'}15`, color: fileTypeColors[c.fileType] || '#888', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '9px', fontWeight: 700 }}>{c.fileType}</div>
+                            <div style={{ flex: 1 }}>
+                              <div style={{ fontSize: '13px', fontWeight: 500, color: '#08212D' }}>{c.name}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -230,7 +267,46 @@ function CreateFlow() {
               <div style={{ fontSize: '14px', color: '#888', marginBottom: '28px' }}>Your microsite is live and ready to distribute.</div>
               <div style={{ background: '#f8fafc', borderRadius: '12px', padding: '16px 20px', marginBottom: '24px', display: 'inline-flex', alignItems: 'center', gap: '12px' }}>
                 <code style={{ fontSize: '13px', color: '#08212D' }}>{typeof window !== 'undefined' ? window.location.origin : ''}/output/{createdProjectId}</code>
-                <button onClick={() => navigator.clipboard.writeText(`${window.location.origin}/output/${createdProjectId}`)} style={{ padding: '6px 12px', background: '#08212D', color: '#fff', border: 'none', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer' }}>Copy URL</button>
+                <button onClick={() => {
+                  const url = `${window.location.origin}/output/${createdProjectId}`;
+                  let copied = false;
+
+                  // Try modern clipboard API first
+                  if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(url).then(() => {
+                      copied = true;
+                      setCopyFeedback('Copied!');
+                      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+                      copyTimeoutRef.current = setTimeout(() => setCopyFeedback(''), 2000);
+                    }).catch(() => {
+                      // Fallback to execCommand
+                      fallbackCopy(url);
+                    });
+                  } else {
+                    // Fallback for older browsers
+                    fallbackCopy(url);
+                  }
+
+                  function fallbackCopy(text: string) {
+                    try {
+                      const textarea = document.createElement('textarea');
+                      textarea.value = text;
+                      textarea.style.position = 'fixed';
+                      textarea.style.opacity = '0';
+                      document.body.appendChild(textarea);
+                      textarea.select();
+                      document.execCommand('copy');
+                      document.body.removeChild(textarea);
+                      setCopyFeedback('Copied!');
+                      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+                      copyTimeoutRef.current = setTimeout(() => setCopyFeedback(''), 2000);
+                    } catch (e) {
+                      console.error('Copy failed', e);
+                    }
+                  }
+                }} style={{ padding: '6px 12px', background: copyFeedback ? '#67E74E' : '#08212D', color: copyFeedback ? '#08212D' : '#fff', border: 'none', borderRadius: '6px', fontSize: '11px', fontWeight: 600, cursor: 'pointer', transition: 'background 0.2s' }}>
+                  {copyFeedback || 'Copy URL'}
+                </button>
               </div>
               <div style={{ display: 'flex', gap: '12px', justifyContent: 'center' }}>
                 <button onClick={() => router.push(`/output/${createdProjectId}`)} style={{ padding: '14px 28px', background: '#08212D', color: '#fff', border: 'none', borderRadius: '10px', fontWeight: 700, fontSize: '14px', cursor: 'pointer' }}>View Output ↗</button>

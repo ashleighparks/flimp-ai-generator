@@ -1,6 +1,7 @@
 'use client';
 import { useParams } from 'next/navigation';
-import { StoreProvider, useStore } from '../../components/store';
+import { useEffect, useState } from 'react';
+import { StoreProvider, useStore, type Project } from '../../components/store';
 import ResourceCenter from '../../components/outputs/ResourceCenter';
 import Showcase from '../../components/outputs/Showcase';
 import VirtualFair from '../../components/outputs/VirtualFair';
@@ -20,9 +21,22 @@ const DEMO_OUTPUTS: Record<string, { clientName: string; outputType: string }> =
 function OutputRenderer() {
   const { id } = useParams<{ id: string }>();
   const { projects } = useStore();
+  const [storedProject, setStoredProject] = useState<Project | null>(null);
 
-  // Check projects from store first, then demo outputs
-  const project = projects.find(p => p.id === id);
+  // Load from localStorage as fallback
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('flimp_projects');
+      const parsed: Project[] = stored ? JSON.parse(stored) : [];
+      const found = parsed.find(p => p.id === id);
+      if (found) setStoredProject(found);
+    } catch (e) {
+      console.warn('Failed to load project from localStorage', e);
+    }
+  }, [id]);
+
+  // Check projects from store first, then localStorage, then demo outputs
+  const project = projects.find(p => p.id === id) || storedProject;
   const demo = DEMO_OUTPUTS[id];
 
   const clientName = project?.clientName || demo?.clientName || 'Demo Company';

@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 
 // ── Types ──────────────────────────────────────────────────────────
 export type ContentItem = {
@@ -42,6 +42,28 @@ const DEMO_PROJECTS: Project[] = [
   { id: 'p3', name: 'GlobalTech Virtual Benefits Fair', clientName: 'GlobalTech', outputType: 'virtual-fair', sourceIds: ['c6'], status: 'draft', createdAt: '2026-03-21T09:30:00Z' },
 ];
 
+// ── LocalStorage Persistence ───────────────────────────────────────
+const STORAGE_KEY_PROJECTS = 'flimp_projects';
+
+function loadProjectsFromStorage(): Project[] {
+  if (typeof window === 'undefined') return DEMO_PROJECTS;
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY_PROJECTS);
+    return stored ? JSON.parse(stored) : DEMO_PROJECTS;
+  } catch {
+    return DEMO_PROJECTS;
+  }
+}
+
+function saveProjectsToStorage(projects: Project[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem(STORAGE_KEY_PROJECTS, JSON.stringify(projects));
+  } catch (e) {
+    console.warn('Failed to save projects to localStorage', e);
+  }
+}
+
 // ── Context ────────────────────────────────────────────────────────
 type StoreContextType = {
   content: ContentItem[];
@@ -59,9 +81,20 @@ type StoreContextType = {
 const StoreContext = createContext<StoreContextType | null>(null);
 
 export function StoreProvider({ children }: { children: ReactNode }) {
-  const [content, setContent] = useState<ContentItem[]>(DEMO_CONTENT);
   const [projects, setProjects] = useState<Project[]>(DEMO_PROJECTS);
+  const [content, setContent] = useState<ContentItem[]>(DEMO_CONTENT);
   const [folders, setFolders] = useState<string[]>(['RWJBarnabas Health', 'Acme Corp', 'GlobalTech', 'Templates']);
+
+  // Load projects from localStorage on mount
+  useEffect(() => {
+    const stored = loadProjectsFromStorage();
+    setProjects(stored);
+  }, []);
+
+  // Save projects to localStorage whenever they change
+  useEffect(() => {
+    saveProjectsToStorage(projects);
+  }, [projects]);
 
   const addContent = useCallback((item: Omit<ContentItem, 'id' | 'uploadedAt'>): ContentItem => {
     const newItem: ContentItem = { ...item, id: 'c' + Date.now(), uploadedAt: new Date().toISOString() };
