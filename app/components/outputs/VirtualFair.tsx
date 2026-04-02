@@ -6,215 +6,189 @@ const BOOTHS = [
     id: 'medical',
     name: 'Medical Plans',
     icon: '🏥',
-    description: 'Explore your medical plan options and understand coverage details.',
-    video: 'Understanding Your Medical Options',
+    description: 'Aetna medical plans with $0 RWJBH care across all options.',
+    video: 'Medical Plan: PPO Preferred Provider Organization',
     content: [
-      'Our medical plans are designed to provide comprehensive healthcare coverage with options to fit different needs and budgets.',
-      'You can choose between our preferred provider network (OAP) or high-deductible health plan (HDHP) with Health Savings Account eligibility.',
-      'All plans include preventive care at no cost, access to in-network providers, and transparent pricing structures.'
+      'Medical plans are administered by Aetna. Care received within the RWJBarnabas Health system is completely free across all plans. Choose the plan that fits where you live and how you use care.',
+      'Core Plan: Best for RWJBH system users in NJ. No out-of-network coverage, lowest cost. Flex Plan: For NJ residents wanting flexibility with out-of-network coverage at 60%. Out-of-Area Plan: For employees who live outside New Jersey.',
+      'All plans feature tiered networks: Premier Tier (RWJBH/HTC facilities) with $0 copays, and extended networks for flexibility. Preventive care and behavioral health are covered at $0 copay across all tiers.'
     ],
     keyInfo: [
-      { title: 'Network OAP', text: '$25/$40 copay structure with annual deductible' },
-      { title: 'HDHP Option', text: 'High deductible with Health Savings Account eligible' },
-      { title: 'Coverage', text: '80/20 coinsurance after deductible' }
+      { title: 'Premier Tier (RWJBH)', text: '$0 deductible, $0 copay, 0% coinsurance' },
+      { title: 'Extended Tier (HTC)', text: '$1K/$2K deductible, $20 PCP/$40 specialist' },
+      { title: 'Aetna Network', text: '$2.5K/$5K deductible, $40 PCP/$80 specialist' },
+      { title: 'ER Copay', text: '$200 (all plans)' }
     ],
     contacts: [
-      { label: 'Plan Administrator', value: 'benefits@company.com' },
-      { label: 'Benefits Hotline', value: '1-800-555-0199' }
-    ]
-  },
-  {
-    id: 'pharmacy',
-    name: 'Pharmacy',
-    icon: '💊',
-    description: 'Access affordable prescription drug coverage and programs.',
-    video: 'Pharmacy Benefits Guide',
-    content: [
-      'Our pharmacy benefit plan offers comprehensive coverage for both brand-name and generic medications.',
-      'We partner with a nationwide network of pharmacies to ensure convenient access to your medications.',
-      'Copayments vary by drug tier, with generic medications available at the lowest cost.'
-    ],
-    keyInfo: [
-      { title: 'Generic Copay', text: '$10 per prescription' },
-      { title: 'Brand Copay', text: '$30 per prescription' },
-      { title: 'Network Pharmacies', text: '50,000+ locations nationwide' }
-    ],
-    contacts: [
-      { label: 'Pharmacy Support', value: '1-800-555-0199' },
-      { label: 'Email', value: 'pharmacy@benefits.com' }
+      { label: 'Aetna Medical', value: '855.546.5415' },
+      { label: 'Provider Search', value: 'aetnaresource.com/n/RWJBH' },
+      { label: 'Benefits Center', value: '844.690.0920' }
     ]
   },
   {
     id: 'dental',
-    name: 'Dental',
-    icon: '🦷',
-    description: 'Maintain your dental health with comprehensive coverage.',
-    video: 'Your Dental Benefits Explained',
+    name: 'Dental & Vision',
+    icon: '😁',
+    description: 'Delta Dental and EyeMed — comprehensive preventive care.',
+    video: 'Dental Insurance Explained',
     content: [
-      'Our dental plans provide preventive, basic, and major coverage through a large network of dentists.',
-      'Preventive care including cleanings and exams is covered at 100% with in-network providers.',
-      'Basic and major services are covered at 80% and 50% respectively after meeting your annual deductible.'
+      'Dental coverage through Delta Dental with two plan options: Base Plan (preventive 100%, basic 20%, major 50%, $1,500 annual max) and Buy-Up Plan (same coverage, $2,000 annual max, implants covered at 50%).',
+      'Vision coverage through EyeMed includes $0 copay eye exams for PLUS providers, $175 frame allowance in-network, and $0 copay contact lenses. Once per calendar year for exams, lenses, and frames.',
+      'Preventive dental (exams, cleanings 3x/year) is 100% covered with no deductible under both plans. Orthodontia available at 50% coverage with $1,500 (Base) or $2,000 (Buy-Up) lifetime maximum.'
     ],
     keyInfo: [
-      { title: 'Preventive Care', text: '100% coverage, no deductible' },
-      { title: 'Basic Services', text: '80% coverage after $50 deductible' },
-      { title: 'Network Dentists', text: '200,000+ participating providers' }
+      { title: 'Preventive Dental', text: '100% coverage, no deductible' },
+      { title: 'Basic Dental', text: '20% coinsurance after deductible' },
+      { title: 'Eye Exams (EyeMed)', text: '$0 copay PLUS, $175 frame allowance' },
+      { title: 'Contact Lenses', text: '$0 copay + $175 allowance' }
     ],
     contacts: [
-      { label: 'Dental Plan Support', value: '1-800-555-0199' },
-      { label: 'Find a Dentist', value: 'www.dentalnetwork.com' }
+      { label: 'Delta Dental', value: '800.810.5234' },
+      { label: 'Find Dentist', value: 'deltadentalnj.com/RWJBH' },
+      { label: 'EyeMed Vision', value: '866.800.5457' },
+      { label: 'Find Provider', value: 'eyemed.com' }
     ]
   },
   {
-    id: 'vision',
-    name: 'Vision',
-    icon: '👓',
-    description: 'Get coverage for eye exams, glasses, and contacts.',
-    video: 'Vision Coverage Overview',
+    id: 'prescriptions',
+    name: 'Prescriptions',
+    icon: '💊',
+    description: 'CVS Caremark with 3 convenient pharmacy options.',
+    video: 'How to Stretch Your Healthcare Dollars',
     content: [
-      'Our vision plan covers routine eye exams, corrective lenses, and contact lens fittings.',
-      'You have access to thousands of optometrists and ophthalmologists nationwide.',
-      'Annual allowances help cover the cost of frames, lenses, or contact lenses.'
+      'Prescription coverage through CVS Caremark is included automatically when you enroll in a medical plan. Three convenient options for maintenance medications: RWJBH on-site retail pharmacies, CVS Caremark Mail Service, or nearest CVS Pharmacy.',
+      'Retail (30-day) copay structure: Generic $10, Preferred Brand $40, Non-Preferred Brand $80. Mail Order (90-day): Generic $20, Preferred Brand $100, Non-Preferred Brand $200. Specialty medications available with preferred brand at $200 or $0 via PrudentRx.',
+      'Use your Caremark member portal to find pharmacies, check copay amounts, and manage your prescriptions. Many maintenance medications save money with 90-day mail order.'
     ],
     keyInfo: [
-      { title: 'Eye Exam', text: '$0 copay in-network' },
-      { title: 'Frames Allowance', text: '$150 every 24 months' },
-      { title: 'Lens Coverage', text: '100% standard lenses' }
+      { title: 'Retail Generic (30-day)', text: '$10 copay' },
+      { title: 'Retail Brand (30-day)', text: '$40 preferred / $80 non-preferred' },
+      { title: 'Mail Order (90-day)', text: '$20 generic / $100 brand / $200 non-preferred' },
+      { title: 'Specialty (30-day)', text: '$200 or $0 via PrudentRx' }
     ],
     contacts: [
-      { label: 'Vision Support', value: '1-800-555-0199' },
-      { label: 'Find a Provider', value: 'www.visionnetwork.com' }
-    ]
-  },
-  {
-    id: 'hsa',
-    name: 'HSA',
-    icon: '🏦',
-    description: 'Save pre-tax dollars for qualified health expenses.',
-    video: 'Health Savings Account Basics',
-    content: [
-      'A Health Savings Account (HSA) allows you to set aside pre-tax dollars to pay for qualified medical expenses.',
-      'HSAs are only available if you enroll in a high-deductible health plan.',
-      'Unlike FSAs, HSA funds roll over year to year and can be invested for long-term health savings.'
-    ],
-    keyInfo: [
-      { title: '2026 Individual Limit', text: '$4,300' },
-      { title: '2026 Family Limit', text: '$8,550' },
-      { title: 'Employer Contribution', text: 'Up to $1,000' }
-    ],
-    contacts: [
-      { label: 'HSA Administrator', value: 'hsa@benefits.com' },
-      { label: 'Support Line', value: '1-800-555-0199' }
+      { label: 'CVS Caremark', value: '833.290.5676' },
+      { label: 'Member Portal', value: 'caremarkrxplaninfo.com/RWJBH' },
+      { label: 'Find Pharmacy', value: 'cvs.com' }
     ]
   },
   {
     id: 'fsa',
-    name: 'FSA',
+    name: 'Spending Accounts',
     icon: '💰',
-    description: 'Flexible Spending Account for healthcare and dependent care.',
-    video: 'Flexible Spending Account Guide',
+    description: 'Healthcare FSA ($3,400) and Dependent Care FSA ($7,500).',
+    video: 'FSA Flexible Spending Account',
     content: [
-      'A Flexible Spending Account (FSA) lets you use pre-tax dollars to pay for eligible healthcare and dependent care expenses.',
-      'You elect an amount annually during open enrollment that is deducted from your paycheck throughout the year.',
-      'FSAs offer immediate access to your elected amount, even if not all contributions have been made.'
+      'Flexible Spending Accounts (FSAs) let you use pre-tax dollars to pay for eligible healthcare and dependent care expenses, reducing your taxable income. Two types available: Healthcare FSA (up to $3,400/year) and Dependent Care FSA (up to $7,500/year).',
+      'Healthcare FSA: You may roll over up to $680 into 2027. Dependent Care FSA: No rollover — plan contributions carefully. Both have 31-day grace periods after year-end to use remaining funds. Changes only allowed during Annual Enrollment or after a Qualifying Life Event.',
+      'Immediate access to your elected amount — even if not all contributions have been made yet. Use for copays, deductibles, prescriptions (healthcare FSA) or childcare, preschool, adult day care (dependent care FSA).'
     ],
     keyInfo: [
-      { title: 'Healthcare FSA Limit', text: '$3,300 annually' },
-      { title: 'Dependent Care FSA', text: '$5,000 per year' },
-      { title: 'Grace Period', text: '2.5 months to use funds' }
+      { title: 'Healthcare FSA Limit', text: '$3,400 annually' },
+      { title: 'Rollover to Next Year', text: 'Up to $680 (Healthcare only)' },
+      { title: 'Dependent Care FSA', text: '$7,500 per year' },
+      { title: 'Grace Period', text: '31 days after year-end to use funds' }
     ],
     contacts: [
-      { label: 'FSA Support', value: 'fsa@benefits.com' },
-      { label: 'Phone', value: '1-800-555-0199' }
+      { label: 'Benefits Center', value: '844.690.0920' },
+      { label: 'Enrollment Portal', value: 'RWJBHBenefits.com' }
     ]
   },
   {
-    id: 'retirement',
-    name: 'Retirement',
-    icon: '📈',
-    description: 'Build your retirement savings with our 401(k) plan.',
-    video: '401(k) Plan Overview',
-    content: [
-      'Our 401(k) plan helps you save for retirement with tax advantages and employer matching.',
-      'You can contribute up to the annual IRS limit and choose from a diverse selection of investment options.',
-      'The plan features low-cost index funds and target-date funds appropriate for your retirement timeline.'
-    ],
-    keyInfo: [
-      { title: 'Employer Match', text: '100% match up to 6% of salary' },
-      { title: 'Vesting', text: '3-year graded vesting schedule' },
-      { title: '2026 Limit', text: '$23,500 employee contribution' }
-    ],
-    contacts: [
-      { label: 'Plan Administrator', value: 'fidelity@company.com' },
-      { label: 'NetBenefits Portal', value: 'www.netbenefits.com' }
-    ]
-  },
-  {
-    id: 'life',
-    name: 'Life Insurance',
-    icon: '🛡️',
-    description: 'Protect your family with life and accidental death insurance.',
-    video: 'Life Insurance & AD&D Benefits',
-    content: [
-      'Basic life insurance is provided by the company at no cost to all eligible employees.',
-      'Voluntary life insurance options are available at competitive group rates to supplement your basic coverage.',
-      'Accidental death and dismemberment coverage is also available for additional protection.'
-    ],
-    keyInfo: [
-      { title: 'Basic Life', text: 'Employer-paid, equal to 1x salary' },
-      { title: 'Voluntary Life', text: 'Available up to 5x your salary' },
-      { title: 'AD&D Coverage', text: 'Integrated with life insurance' }
-    ],
-    contacts: [
-      { label: 'Life Insurance', value: 'life@benefits.com' },
-      { label: 'Claims Support', value: '1-800-555-0199' }
-    ]
-  },
-  {
-    id: 'disability',
-    name: 'Disability',
-    icon: '🤝',
-    description: 'Income protection through short and long-term disability.',
-    video: 'Short & Long Term Disability',
-    content: [
-      'Our disability plans protect your income if you become unable to work due to illness or injury.',
-      'Short-term disability provides coverage for temporary disabilities, while long-term disability protects you for extended absences.',
-      'Most plans are company-paid, ensuring coverage regardless of whether you enroll.'
-    ],
-    keyInfo: [
-      { title: 'Short-Term Disability', text: 'Benefits start on day 8' },
-      { title: 'Long-Term Disability', text: '60% income replacement' },
-      { title: 'Benefit Period', text: 'To age 65 or recovery' }
-    ],
-    contacts: [
-      { label: 'Disability Claims', value: '1-800-555-0199' },
-      { label: 'Claims Portal', value: 'www.disabilityclaims.com' }
-    ]
-  },
-  {
-    id: 'eap',
-    name: 'EAP',
+    id: 'wellness',
+    name: 'Wellness & EAP',
     icon: '🧠',
-    description: 'Employee Assistance Program for mental health and wellness.',
-    video: 'Employee Assistance Program',
+    description: 'Free counseling, Calm app, behavioral health support.',
+    video: 'Employee Assistance Programs (EAP)',
     content: [
-      'The Employee Assistance Program (EAP) provides confidential counseling and support services for you and your family.',
-      'Services include counseling for personal, family, and work-related issues, as well as referrals to specialists.',
-      'All EAP services are provided at no cost to you with a commitment to complete confidentiality.'
+      'Employee Assistance Program (EAP) provides free, confidential counseling available 24/7 for you and your family — in-person and virtually. Covers life\'s challenges: stress, relationships, grief, substance use, and more.',
+      'Calm App: Free premium subscription for you plus 5 family members or friends. Meditations, sleep stories, and stress-relief tools at no cost. All in-network behavioral health copays are waived for employees and enrolled family members on an RWJBH medical plan.',
+      'Aetna Behavioral Health: Free provider search and appointments. BHealthy Wellness through Personify Health: personalized wellness coaching. All services confidential and integrated with your benefits.'
     ],
     keyInfo: [
-      { title: 'Counseling Sessions', text: 'Up to 8 free sessions per issue' },
-      { title: 'Coverage', text: 'Employee and family members' },
-      { title: 'Availability', text: '24/7 phone support' }
+      { title: 'EAP Counseling', text: 'Free 24/7 — call 800.300.0628' },
+      { title: 'Calm App Subscription', text: 'Free premium for you + 5 guests' },
+      { title: 'Behavioral Health Copay', text: '$0 in-network (waived)' },
+      { title: 'BHealthy Wellness', text: 'Personalized coaching' }
     ],
     contacts: [
-      { label: 'EAP Support Line', value: '1-800-555-0199' },
-      { label: 'EAP Portal', value: 'www.eap.benefits.com' }
+      { label: 'EAP Support Line', value: '800.300.0628' },
+      { label: 'Get Calm Free', value: 'calm.com/b2b/RWJBarnabasHealth' },
+      { label: 'Aetna Providers', value: 'aetnaresource.com/n/RWJBH' },
+      { label: 'BHealthy Wellness', value: '888.671.9395' }
+    ]
+  },
+  {
+    id: 'financial',
+    name: 'Financial & Retirement',
+    icon: '📈',
+    description: '401(k) with 50% match, Life Insurance, Student Loan Support.',
+    video: 'How to Optimize Your HSA/Retirement Savings',
+    content: [
+      '401(k) Retirement Plan through Fidelity: 50% employer match on the first 6% you contribute (contribute 6%, RWJBH adds 3% = 9% total). Auto-enrollment at 3% after 30 days. 3-year vesting period. Annual non-elective contribution available based on system results.',
+      'Life Insurance: Basic Life Insurance (auto, employer-paid) — 1.5x salary, up to $500k at no cost. Long-Term Disability (auto, employer-paid) — 60% of salary, up to $10k/month. Voluntary Life Insurance and Spouse/Child Life options available for additional coverage.',
+      'Additional Benefits: Tuition Reimbursement (up to $5,250/year via ISTS), Student Loan Navigation (Savi — personalized support), Employee Discounts (PerkSpot — travel, dining, electronics), Purchasing Program (payroll deduction purchases).'
+    ],
+    keyInfo: [
+      { title: '401(k) Employer Match', text: '50% on first 6% you contribute' },
+      { title: 'Auto-Enrollment', text: '3% after 30 days' },
+      { title: 'Basic Life Insurance', text: '1.5x salary, up to $500k — FREE' },
+      { title: 'Long-Term Disability', text: '60% salary, up to $10k/month — FREE' }
+    ],
+    contacts: [
+      { label: 'Fidelity 401(k)', value: '800.513.5015' },
+      { label: 'NetBenefits Portal', value: 'netbenefits.com/RWJBarnabasHealth' },
+      { label: 'Benefits Enrollment', value: '844.690.0920' }
+    ]
+  },
+  {
+    id: 'pto',
+    name: 'Paid Time Off',
+    icon: '🏖️',
+    description: 'Vacation accrual, 8 holidays, 12 weeks parental leave.',
+    video: 'Family and Medical Leave Act (FMLA)',
+    content: [
+      'Vacation accrual for 40-hr/week employees: Starting at 120 hours (15 days) for hourly staff and 160 hours (20 days) for salaried. Increases with tenure: 136-176 hours at 3 years, up to 200-240 hours at 20+ years.',
+      '8 Paid Holidays per year: 7 fixed (New Year\'s Day, MLK Jr. Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, Christmas) plus 1 flexible day you can use anytime. 40 hours of New Jersey Earned Sick Leave (NJESL) frontloaded January 1 each year.',
+      'Paid Parental Leave: 12 weeks at 100% pay for all eligible new parents (birthing and non-birthing), combined with NJ TDI/FLI. Must have 1 year continuous service. Paid Short-Term Disability: up to 26 weeks at 66⅔% pay.'
+    ],
+    keyInfo: [
+      { title: 'Starting Vacation', text: '120 hrs (hourly) / 160 hrs (salaried)' },
+      { title: 'Paid Holidays', text: '8 per year (7 fixed + 1 flex day)' },
+      { title: 'Sick Leave', text: '40 hours NJESL — frontloaded annually' },
+      { title: 'Parental Leave', text: '12 weeks at 100% pay' }
+    ],
+    contacts: [
+      { label: 'HR Benefits Center', value: '844.690.0920' },
+      { label: 'Leave Questions', value: 'RWJBHBenefits.com' }
+    ]
+  },
+  {
+    id: 'contacts',
+    name: 'Contacts & Resources',
+    icon: '📞',
+    description: 'Key benefits contacts and enrollment information.',
+    video: '',
+    content: [
+      'RWJBH Benefits Center: Your first stop for enrollment questions, life events, and account management. Available at 844.690.0920 or RWJBHBenefits.com.',
+      'Care Navigation & Appointments: 844.424.2628 or RWJBHTotalWellbeing.com for scheduling and support. All plan documents and detailed information available through official plan documents.',
+      'Voluntary Benefits through Aon: 844.428.6672 or mybenefits.aon.com. Questions about any benefit? Contact the Benefits Center — they\'re here to help you understand your options and make the right choices for you and your family.'
+    ],
+    keyInfo: [
+      { title: 'Benefits Enrollment', text: '844.690.0920' },
+      { title: 'Care Navigation', text: '844.424.2628' },
+      { title: 'Website', text: 'RWJBHBenefits.com' },
+      { title: 'EAP (24/7)', text: '800.300.0628' }
+    ],
+    contacts: [
+      { label: 'Benefits Center', value: '844.690.0920' },
+      { label: 'Care Navigation', value: '844.424.2628' },
+      { label: 'Enrollment Portal', value: 'RWJBHBenefits.com' }
     ]
   }
 ];
 
-const SECTIONS = ['Entrance', 'Exhibit Hall', 'Medical Plans', 'Pharmacy', 'Dental', 'Vision', 'HSA', 'FSA', 'Retirement', 'Life Insurance', 'Disability', 'EAP', 'Contacts'];
+const SECTIONS = ['Entrance', 'Exhibit Hall', 'Medical Plans', 'Dental & Vision', 'Prescriptions', 'Spending Accounts', 'Wellness & EAP', 'Financial & Retirement', 'Paid Time Off', 'Contacts'];
 
 export default function VirtualFair({ clientName }: { clientName: string }) {
   const [activeSection, setActiveSection] = useState('Entrance');
@@ -222,15 +196,13 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
 
   const boothMap: { [key: string]: string } = {
     'Medical Plans': 'medical',
-    'Pharmacy': 'pharmacy',
-    'Dental': 'dental',
-    'Vision': 'vision',
-    'HSA': 'hsa',
-    'FSA': 'fsa',
-    'Retirement': 'retirement',
-    'Life Insurance': 'life',
-    'Disability': 'disability',
-    'EAP': 'eap',
+    'Dental & Vision': 'dental',
+    'Prescriptions': 'prescriptions',
+    'Spending Accounts': 'fsa',
+    'Wellness & EAP': 'wellness',
+    'Financial & Retirement': 'financial',
+    'Paid Time Off': 'pto',
+    'Contacts': 'contacts',
   };
 
   const handleNavClick = (section: string) => {
@@ -248,15 +220,15 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
     <div style={{ minHeight: '100vh', background: '#ffffff', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       {/* Navigation Bar */}
       <nav style={{
-        background: '#ffffff',
-        borderBottom: '1px solid #e5e7eb',
+        background: '#1B2F5C',
+        borderBottom: '2px solid #0F1F3F',
         padding: '0',
         position: 'sticky',
         top: 0,
         zIndex: 50,
-        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
       }}>
-        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', height: '60px', paddingLeft: '20px', paddingRight: '20px', overflowX: 'auto' }}>
+        <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', height: '62px', paddingLeft: '20px', paddingRight: '20px', overflowX: 'auto' }}>
           <div style={{ display: 'flex', gap: '0', flex: 1, overflowX: 'auto', scrollBehavior: 'smooth' }}>
             {SECTIONS.map(section => (
               <button
@@ -265,14 +237,14 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  padding: '16px 14px',
+                  padding: '16px 12px',
                   fontSize: '13px',
                   fontWeight: 500,
-                  color: activeSection === section ? '#3880EE' : '#170643',
+                  color: activeSection === section ? '#4FC3F7' : '#B0BEC5',
                   cursor: 'pointer',
                   transition: 'all 0.2s ease',
                   whiteSpace: 'nowrap',
-                  borderBottom: activeSection === section ? '3px solid #3880EE' : 'none',
+                  borderBottom: activeSection === section ? '3px solid #4FC3F7' : 'none',
                   display: 'flex',
                   alignItems: 'center',
                   height: '100%'
@@ -292,25 +264,25 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
           <div>
             {/* Hero Banner */}
             <div style={{
-              background: 'linear-gradient(135deg, #3880EE 0%, #170643 100%)',
+              background: 'linear-gradient(135deg, #1B2F5C 0%, #0F1F3F 100%)',
               color: '#ffffff',
               padding: '80px 40px',
               textAlign: 'center'
             }}>
               <h1 style={{ fontSize: '48px', fontWeight: 800, margin: '0 0 16px 0', letterSpacing: '-1px' }}>
-                {clientName}
+                {clientName} Benefits Fair
               </h1>
               <p style={{ fontSize: '18px', fontWeight: 400, margin: '0 0 8px 0', opacity: 0.9 }}>
-                2026 Open Enrollment Benefits Fair
+                2026 Virtual Open Enrollment
               </p>
-              <p style={{ fontSize: '14px', margin: '8px 0 24px 0', opacity: 0.8 }}>
+              <p style={{ fontSize: '14px', margin: '8px 0 24px 0', opacity: 0.85 }}>
                 Explore your benefits options and make informed decisions about your coverage
               </p>
               <button
                 onClick={() => handleNavClick('Exhibit Hall')}
                 style={{
-                  background: '#ffffff',
-                  color: '#3880EE',
+                  background: '#4FC3F7',
+                  color: '#1B2F5C',
                   border: 'none',
                   padding: '14px 32px',
                   fontSize: '16px',
@@ -321,7 +293,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 }}
                 onMouseEnter={e => {
                   (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)';
-                  (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 4px 12px rgba(56, 128, 238, 0.3)';
+                  (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 16px rgba(79, 195, 247, 0.4)';
                 }}
                 onMouseLeave={e => {
                   (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(0)';
@@ -333,32 +305,32 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
             </div>
 
             {/* Info Section */}
-            <div style={{ padding: '60px 40px', background: '#f9fafb' }}>
+            <div style={{ padding: '60px 40px', background: '#f5f5f5' }}>
               <div style={{ maxWidth: '900px', margin: '0 auto' }}>
-                <h2 style={{ fontSize: '32px', fontWeight: 700, margin: '0 0 24px 0', color: '#170643' }}>
+                <h2 style={{ fontSize: '32px', fontWeight: 700, margin: '0 0 24px 0', color: '#1B2F5C' }}>
                   Important Information
                 </h2>
                 <div style={{ display: 'grid', gap: '24px' }}>
                   <div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: '#170643' }}>
-                      Enrollment Reminder
+                    <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: '#1B2F5C' }}>
+                      Enrollment Timeline
                     </h3>
-                    <p style={{ fontSize: '14px', color: '#666666', margin: 0, lineHeight: 1.6 }}>
-                      Open enrollment runs from November 1 through November 15, 2026. All eligible employees must review their benefits options and make elections during this window. Changes will be effective January 1, 2027.
+                    <p style={{ fontSize: '14px', color: '#555555', margin: 0, lineHeight: 1.6 }}>
+                      You have 30 days from your hire date to enroll. All eligible employees must review their benefits options and make elections. Changes will be effective per your hire date.
                     </p>
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: '#170643' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 600, margin: '0 0 8px 0', color: '#1B2F5C' }}>
                       Eligibility
                     </h3>
-                    <p style={{ fontSize: '14px', color: '#666666', margin: 0, lineHeight: 1.6 }}>
-                      All full-time employees (30+ hours per week) are eligible for benefits. Part-time employees may be eligible for certain plans. Please contact HR for your specific eligibility status.
+                    <p style={{ fontSize: '14px', color: '#555555', margin: 0, lineHeight: 1.6 }}>
+                      All full-time employees (30+ hours per week) are eligible for benefits. Contact the Benefits Center at 844.690.0920 or visit RWJBHBenefits.com for your specific eligibility status.
                     </p>
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <button
                       style={{
-                        background: '#3880EE',
+                        background: '#1B2F5C',
                         color: '#ffffff',
                         border: 'none',
                         padding: '12px 16px',
@@ -368,15 +340,15 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
-                      onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = '#2563d9'}
-                      onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = '#3880EE'}
+                      onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = '#0F1F3F'}
+                      onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = '#1B2F5C'}
                     >
-                      Benefits Guide
+                      View Benefits Guide
                     </button>
                     <button
                       style={{
-                        background: '#170643',
-                        color: '#ffffff',
+                        background: '#4FC3F7',
+                        color: '#1B2F5C',
                         border: 'none',
                         padding: '12px 16px',
                         fontSize: '14px',
@@ -385,10 +357,10 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                         cursor: 'pointer',
                         transition: 'all 0.2s ease'
                       }}
-                      onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = '#2a0d5e'}
-                      onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = '#170643'}
+                      onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.background = '#29B6F6'}
+                      onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.background = '#4FC3F7'}
                     >
-                      Enrollment Portal
+                      Enroll Now
                     </button>
                   </div>
                 </div>
@@ -401,7 +373,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
         {(activeSection === 'Exhibit Hall' || (activeSection !== 'Entrance' && !activeBooth)) && !activeBooth && (
           <div style={{ padding: '60px 40px', background: '#ffffff' }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-              <h2 style={{ fontSize: '32px', fontWeight: 700, margin: '0 0 12px 0', color: '#170643' }}>
+              <h2 style={{ fontSize: '32px', fontWeight: 700, margin: '0 0 12px 0', color: '#1B2F5C' }}>
                 Exhibit Hall
               </h2>
               <p style={{ fontSize: '14px', color: '#666666', margin: '0 0 40px 0' }}>
@@ -414,32 +386,32 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                     onClick={() => setActiveBooth(b.id)}
                     style={{
                       background: '#ffffff',
-                      border: '1px solid #e5e7eb',
+                      border: '2px solid #E3F2FD',
                       borderRadius: '8px',
                       padding: '28px',
                       textAlign: 'center',
                       cursor: 'pointer',
-                      transition: 'all 0.2s ease'
+                      transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.borderColor = '#3880EE';
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 12px rgba(56, 128, 238, 0.15)';
+                      (e.currentTarget as HTMLDivElement).style.borderColor = '#4FC3F7';
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 16px rgba(27, 47, 92, 0.12)';
                       (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)';
                     }}
                     onMouseLeave={e => {
-                      (e.currentTarget as HTMLDivElement).style.borderColor = '#e5e7eb';
+                      (e.currentTarget as HTMLDivElement).style.borderColor = '#E3F2FD';
                       (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
                       (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
                     }}
                   >
                     <div style={{ fontSize: '48px', marginBottom: '16px' }}>{b.icon}</div>
-                    <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 8px 0', color: '#170643' }}>
+                    <h3 style={{ fontSize: '16px', fontWeight: 700, margin: '0 0 8px 0', color: '#1B2F5C' }}>
                       {b.name}
                     </h3>
                     <p style={{ fontSize: '13px', color: '#666666', margin: 0, lineHeight: 1.5 }}>
                       {b.description}
                     </p>
-                    <div style={{ marginTop: '16px', padding: '8px 12px', background: '#f3f4f6', color: '#3880EE', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}>
+                    <div style={{ marginTop: '16px', padding: '8px 12px', background: '#E3F2FD', color: '#1B2F5C', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}>
                       View Details →
                     </div>
                   </div>
@@ -451,7 +423,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
 
         {/* Individual Booth Section */}
         {activeBooth && booth && (
-          <div style={{ padding: '60px 40px', background: '#f9fafb' }}>
+          <div style={{ padding: '60px 40px', background: '#f5f5f5' }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
               {/* Back Button */}
               <button
@@ -462,7 +434,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 style={{
                   background: 'transparent',
                   border: 'none',
-                  color: '#3880EE',
+                  color: '#1B2F5C',
                   padding: '0 0 24px 0',
                   fontSize: '14px',
                   fontWeight: 600,
@@ -476,11 +448,11 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
               </button>
 
               {/* Booth Header */}
-              <div style={{ background: '#ffffff', borderRadius: '8px', padding: '40px', marginBottom: '32px', border: '1px solid #e5e7eb' }}>
+              <div style={{ background: '#ffffff', borderRadius: '8px', padding: '40px', marginBottom: '32px', border: '1px solid #E3F2FD' }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '24px', marginBottom: '24px' }}>
                   <div style={{ fontSize: '64px' }}>{booth.icon}</div>
                   <div>
-                    <h1 style={{ fontSize: '40px', fontWeight: 800, margin: '0 0 12px 0', color: '#170643' }}>
+                    <h1 style={{ fontSize: '40px', fontWeight: 800, margin: '0 0 12px 0', color: '#1B2F5C' }}>
                       {booth.name}
                     </h1>
                     <p style={{ fontSize: '16px', color: '#666666', margin: 0, lineHeight: 1.6 }}>
@@ -493,13 +465,13 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
               {/* Content */}
               <div style={{ display: 'grid', gap: '32px' }}>
                 {/* Description */}
-                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #e5e7eb' }}>
-                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 16px 0', color: '#170643' }}>
+                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #E3F2FD' }}>
+                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 16px 0', color: '#1B2F5C' }}>
                     Overview
                   </h2>
                   <div style={{ display: 'grid', gap: '16px' }}>
                     {booth.content.map((paragraph, idx) => (
-                      <p key={idx} style={{ fontSize: '14px', color: '#666666', margin: 0, lineHeight: 1.7 }}>
+                      <p key={idx} style={{ fontSize: '14px', color: '#555555', margin: 0, lineHeight: 1.7 }}>
                         {paragraph}
                       </p>
                     ))}
@@ -507,60 +479,62 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 </div>
 
                 {/* Video Thumbnail */}
-                <div style={{ background: '#ffffff', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e5e7eb' }}>
-                  <div style={{
-                    background: 'linear-gradient(135deg, #3880EE 0%, #170643 100%)',
-                    padding: '80px 40px',
-                    textAlign: 'center',
-                    position: 'relative',
-                    minHeight: '300px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }}>
-                    <div style={{ textAlign: 'center' }}>
-                      <div style={{
-                        width: '80px',
-                        height: '80px',
-                        background: 'rgba(255,255,255,0.25)',
-                        borderRadius: '50%',
-                        margin: '0 auto 24px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        transition: 'all 0.2s ease'
-                      }}
-                      onMouseEnter={e => {
-                        (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.35)';
-                        (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.1)';
-                      }}
-                      onMouseLeave={e => {
-                        (e.currentTarget as HTMLDivElement).style.background = 'rgba(255,255,255,0.25)';
-                        (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
-                      }}
-                      >
-                        <div style={{ fontSize: '32px' }}>▶</div>
+                {booth.video && (
+                  <div style={{ background: '#ffffff', borderRadius: '8px', overflow: 'hidden', border: '1px solid #E3F2FD' }}>
+                    <div style={{
+                      background: 'linear-gradient(135deg, #1B2F5C 0%, #0F1F3F 100%)',
+                      padding: '80px 40px',
+                      textAlign: 'center',
+                      position: 'relative',
+                      minHeight: '300px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center'
+                    }}>
+                      <div style={{ textAlign: 'center' }}>
+                        <div style={{
+                          width: '80px',
+                          height: '80px',
+                          background: 'rgba(79, 195, 247, 0.3)',
+                          borderRadius: '50%',
+                          margin: '0 auto 24px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={e => {
+                          (e.currentTarget as HTMLDivElement).style.background = 'rgba(79, 195, 247, 0.45)';
+                          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.1)';
+                        }}
+                        onMouseLeave={e => {
+                          (e.currentTarget as HTMLDivElement).style.background = 'rgba(79, 195, 247, 0.3)';
+                          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
+                        }}
+                        >
+                          <div style={{ fontSize: '32px' }}>▶</div>
+                        </div>
+                        <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff', margin: 0 }}>
+                          {booth.video}
+                        </h3>
+                        <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)', margin: '8px 0 0 0' }}>
+                          Click to watch video
+                        </p>
                       </div>
-                      <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff', margin: 0 }}>
-                        {booth.video}
-                      </h3>
-                      <p style={{ fontSize: '12px', color: 'rgba(255,255,255,0.8)', margin: '8px 0 0 0' }}>
-                        Click to watch video
-                      </p>
                     </div>
                   </div>
-                </div>
+                )}
 
                 {/* Key Information */}
-                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #e5e7eb' }}>
-                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0', color: '#170643' }}>
+                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #E3F2FD' }}>
+                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0', color: '#1B2F5C' }}>
                     Key Information
                   </h2>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
                     {booth.keyInfo.map((info, idx) => (
-                      <div key={idx} style={{ borderLeft: '3px solid #3880EE', paddingLeft: '16px' }}>
-                        <h4 style={{ fontSize: '13px', fontWeight: 700, margin: '0 0 6px 0', color: '#170643' }}>
+                      <div key={idx} style={{ borderLeft: '4px solid #4FC3F7', paddingLeft: '16px' }}>
+                        <h4 style={{ fontSize: '13px', fontWeight: 700, margin: '0 0 6px 0', color: '#1B2F5C' }}>
                           {info.title}
                         </h4>
                         <p style={{ fontSize: '13px', color: '#666666', margin: 0 }}>
@@ -572,17 +546,17 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 </div>
 
                 {/* Contacts */}
-                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #e5e7eb' }}>
-                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0', color: '#170643' }}>
+                <div style={{ background: '#ffffff', borderRadius: '8px', padding: '32px', border: '1px solid #E3F2FD' }}>
+                  <h2 style={{ fontSize: '18px', fontWeight: 700, margin: '0 0 20px 0', color: '#1B2F5C' }}>
                     Contact Information
                   </h2>
                   <div style={{ display: 'grid', gap: '12px' }}>
                     {booth.contacts.map((contact, idx) => (
-                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', padding: '12px 0', borderBottom: idx < booth.contacts.length - 1 ? '1px solid #e5e7eb' : 'none' }}>
-                        <span style={{ fontSize: '14px', fontWeight: 500, color: '#170643' }}>
+                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: idx < booth.contacts.length - 1 ? '1px solid #E3F2FD' : 'none', flexWrap: 'wrap', gap: '12px' }}>
+                        <span style={{ fontSize: '14px', fontWeight: 500, color: '#1B2F5C' }}>
                           {contact.label}
                         </span>
-                        <span style={{ fontSize: '14px', color: '#3880EE', fontWeight: 600 }}>
+                        <span style={{ fontSize: '14px', color: '#4FC3F7', fontWeight: 600 }}>
                           {contact.value}
                         </span>
                       </div>
@@ -597,14 +571,14 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
 
       {/* Footer */}
       <footer style={{
-        background: '#f9fafb',
-        borderTop: '1px solid #e5e7eb',
+        background: '#f5f5f5',
+        borderTop: '2px solid #E3F2FD',
         padding: '32px 40px',
         textAlign: 'center',
         marginTop: '40px'
       }}>
         <p style={{ fontSize: '12px', color: '#999999', margin: 0 }}>
-          Powered by Flimp® • {clientName} Virtual Benefits Fair 2026
+          Powered by Flimp® • {clientName} Virtual Benefits Fair 2026 • Contact Benefits Center: 844.690.0920
         </p>
       </footer>
     </div>
