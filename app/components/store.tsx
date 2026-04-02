@@ -12,7 +12,7 @@ export type ContentItem = {
   uploadedAt: string;
 };
 
-export type OutputType = 'resource-center' | 'showcase' | 'virtual-fair' | 'benefits-at-a-glance';
+export type OutputType = 'resource-center' | 'showcase' | 'virtual-fair' | 'benefits-at-a-glance' | 'digital-benefits-guide';
 
 export type Project = {
   id: string;
@@ -153,6 +153,7 @@ export const OUTPUT_TYPE_META: Record<OutputType, { label: string; description: 
   'showcase': { label: 'Showcase', description: 'Scrolling branded microsite with benefit sections and embedded videos', icon: '✨', color: '#67E74E' },
   'virtual-fair': { label: 'Virtual Benefits Fair', description: 'Interactive virtual event with booths for each benefit category', icon: '🎪', color: '#FFB21B' },
   'benefits-at-a-glance': { label: 'Benefits at a Glance', description: 'Static branded summary with plan details, rates, and carrier info', icon: '📋', color: '#D83A31' },
+  'digital-benefits-guide': { label: 'Digital Benefits Guide', description: 'Comprehensive interactive guide with left-nav, full plan details, and carrier info', icon: '📖', color: '#6366F1' },
 };
 
 export function formatFileSize(bytes: number): string {

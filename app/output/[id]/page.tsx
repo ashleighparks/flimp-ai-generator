@@ -6,6 +6,7 @@ import ResourceCenter from '../../components/outputs/ResourceCenter';
 import Showcase from '../../components/outputs/Showcase';
 import VirtualFair from '../../components/outputs/VirtualFair';
 import BenefitsAtAGlance from '../../components/outputs/BenefitsAtAGlance';
+import DigitalBenefitsGuide from '../../components/outputs/DigitalBenefitsGuide';
 
 // Pre-built demo outputs for shareable links
 const DEMO_OUTPUTS: Record<string, { clientName: string; outputType: string }> = {
@@ -16,6 +17,7 @@ const DEMO_OUTPUTS: Record<string, { clientName: string; outputType: string }> =
   'demo-resource-center': { clientName: 'Demo Company', outputType: 'resource-center' },
   'demo-virtual-fair': { clientName: 'Demo Company', outputType: 'virtual-fair' },
   'demo-baag': { clientName: 'Demo Company', outputType: 'benefits-at-a-glance' },
+  'demo-guide': { clientName: 'RWJBarnabas Health', outputType: 'digital-benefits-guide' },
 };
 
 function OutputRenderer() {
@@ -51,6 +53,8 @@ function OutputRenderer() {
       return <VirtualFair clientName={clientName} />;
     case 'benefits-at-a-glance':
       return <BenefitsAtAGlance clientName={clientName} />;
+    case 'digital-benefits-guide':
+      return <DigitalBenefitsGuide clientName={clientName} />;
     default:
       return <Showcase clientName={clientName} />;
   }

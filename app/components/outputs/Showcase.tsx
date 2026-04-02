@@ -26,27 +26,181 @@ const NAV_ITEMS = [
   { id: 'contacts', label: 'Contacts' },
 ];
 
-const VideoPlaceholder = ({ title, subtitle }: { title: string; subtitle: string }) => (
-  <div style={{ borderRadius: '14px', overflow: 'hidden', position: 'relative', cursor: 'pointer', aspectRatio: '16/9', background: NAVY }}>
-    <div style={{ width: '100%', height: '100%', background: `linear-gradient(135deg, ${NAVY} 0%, ${LIGHT_NAVY} 100%)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '24px', textAlign: 'center' }}>
-      <div style={{ width: '58px', height: '58px', background: 'rgba(255,255,255,.15)', border: '2px solid rgba(255,255,255,.4)', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '14px', transition: 'all .2s' }}>
-        <svg viewBox="0 0 24 24" style={{ width: '22px', height: '22px', fill: 'white', marginLeft: '3px' }}><path d="M8 5v14l11-7z" /></svg>
+// Get gradient colors based on video topic
+const getVideoGradient = (title: string): { from: string; to: string } => {
+  const lowerTitle = title.toLowerCase();
+  if (lowerTitle.includes('medical') || lowerTitle.includes('plan') || lowerTitle.includes('insurance')) {
+    return { from: '#0066cc', to: '#0099ff' }; // Medical blue
+  } else if (lowerTitle.includes('dental') || lowerTitle.includes('vision')) {
+    return { from: '#00aa00', to: '#00dd00' }; // Dental green
+  } else if (lowerTitle.includes('fsa') || lowerTitle.includes('hsa') || lowerTitle.includes('spending') || lowerTitle.includes('retirement')) {
+    return { from: '#9933ff', to: '#cc66ff' }; // Financial purple
+  } else if (lowerTitle.includes('stretch') || lowerTitle.includes('healthcare') || lowerTitle.includes('optimize')) {
+    return { from: '#00aa66', to: '#00dd88' }; // Wellness green
+  } else if (lowerTitle.includes('stress') || lowerTitle.includes('mental') || lowerTitle.includes('wellbeing') || lowerTitle.includes('eap')) {
+    return { from: '#ff6699', to: '#ff99bb' }; // Wellness pink
+  } else if (lowerTitle.includes('fmla') || lowerTitle.includes('leave') || lowerTitle.includes('pto')) {
+    return { from: '#ff8800', to: '#ffaa00' }; // PTO orange
+  } else {
+    return { from: NAVY, to: LIGHT_NAVY }; // Default navy
+  }
+};
+
+const VideoPlaceholder = ({ title, subtitle }: { title: string; subtitle: string }) => {
+  const gradient = getVideoGradient(title);
+
+  const handleClick = () => {
+    window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank');
+  };
+
+  return (
+    <div
+      onClick={handleClick}
+      style={{
+        borderRadius: '14px',
+        overflow: 'hidden',
+        position: 'relative',
+        cursor: 'pointer',
+        aspectRatio: '16/9',
+        background: gradient.from,
+        boxShadow: '0 4px 16px rgba(0, 0, 0, 0.15)',
+        transition: 'all 0.3s ease',
+        transform: 'scale(1)'
+      }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.25)';
+        (e.currentTarget as HTMLElement).style.transform = 'scale(1.02)';
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.15)';
+        (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+      }}
+    >
+      {/* Gradient background with pattern overlay */}
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          background: `linear-gradient(135deg, ${gradient.from} 0%, ${gradient.to} 100%)`,
+          position: 'relative',
+          overflow: 'hidden'
+        }}
+      >
+        {/* Subtle pattern overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage:
+              'radial-gradient(circle at 20% 50%, rgba(255,255,255,0.1) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 0%, transparent 50%)',
+            pointerEvents: 'none'
+          }}
+        />
+
+        {/* Content container */}
+        <div
+          style={{
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px',
+            textAlign: 'center',
+            position: 'relative',
+            zIndex: 1
+          }}
+        >
+          {/* Play button */}
+          <div
+            style={{
+              width: '64px',
+              height: '64px',
+              background: 'rgba(255, 255, 255, 0.25)',
+              border: '3px solid white',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginBottom: '16px',
+              transition: 'all 0.3s ease',
+              backdropFilter: 'blur(4px)'
+            }}
+          >
+            <svg
+              viewBox="0 0 24 24"
+              style={{
+                width: '28px',
+                height: '28px',
+                fill: 'white',
+                marginLeft: '2px'
+              }}
+            >
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+
+          {/* Video title */}
+          <div
+            style={{
+              color: 'white',
+              fontWeight: 700,
+              fontSize: '16px',
+              marginBottom: '8px',
+              lineHeight: 1.3,
+              textShadow: '0 2px 4px rgba(0, 0, 0, 0.2)'
+            }}
+          >
+            {title}
+          </div>
+
+          {/* Video subtitle */}
+          <div
+            style={{
+              color: 'rgba(255, 255, 255, 0.85)',
+              fontSize: '13px',
+              textShadow: '0 1px 2px rgba(0, 0, 0, 0.1)'
+            }}
+          >
+            {subtitle}
+          </div>
+        </div>
       </div>
-      <div style={{ color: 'white', fontWeight: 600, fontSize: '14px', marginBottom: '6px' }}>{title}</div>
-      <div style={{ color: 'rgba(255,255,255,.55)', fontSize: '12px' }}>{subtitle}</div>
+
+      {/* Duration/Watch badge */}
+      <div
+        style={{
+          position: 'absolute',
+          top: '12px',
+          right: '12px',
+          background: 'rgba(0, 0, 0, 0.4)',
+          color: 'white',
+          fontSize: '11px',
+          fontWeight: 600,
+          padding: '5px 11px',
+          borderRadius: '20px',
+          backdropFilter: 'blur(4px)',
+          border: '1px solid rgba(255, 255, 255, 0.3)',
+          zIndex: 2
+        }}
+      >
+        ▶ Watch Video
+      </div>
     </div>
-    <div style={{ position: 'absolute', top: '12px', right: '12px', background: RED, color: 'white', fontSize: '11px', fontWeight: 600, padding: '3px 9px', borderRadius: '20px' }}>▶ Watch</div>
-  </div>
-);
+  );
+};
 
 const TableCell = ({ children, highlight, free }: { children: React.ReactNode; highlight?: boolean; free?: boolean }) => (
-  <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, color: highlight ? RED : free ? '#0a7c42' : TEXT, fontWeight: free ? 700 : highlight ? 700 : 400 }}>
+  <td style={{ padding: '12px 14px', borderBottom: `1px solid ${BORDER}`, color: highlight ? RED : free ? '#0a7c42' : TEXT, fontWeight: free ? 700 : highlight ? 700 : 400 }}>
     {children}
   </td>
 );
 
-const TableRow = ({ children }: { children: React.ReactNode }) => (
-  <tr>{children}</tr>
+const TableRow = ({ children, isHeader, index }: { children: React.ReactNode; isHeader?: boolean; index?: number }) => (
+  <tr style={{ background: isHeader ? NAVY : (index ?? 0) % 2 === 0 ? 'white' : TAG_BG, transition: 'background 0.2s ease' }}>
+    {children}
+  </tr>
 );
 
 export default function Showcase({ clientName }: { clientName: string }) {
@@ -129,18 +283,24 @@ export default function Showcase({ clientName }: { clientName: string }) {
       </header>
 
       {/* HERO */}
-      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${LIGHT_NAVY} 100%)`, color: 'white', padding: '56px 32px', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${LIGHT_NAVY} 100%)`, color: 'white', padding: '80px 32px', textAlign: 'center', position: 'relative', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0, 0, 0, 0.3)' }}>
+        {/* Background pattern */}
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'url("data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'0.04\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")', backgroundRepeat: 'repeat' }} />
+
+        {/* Accent red shapes */}
+        <div style={{ position: 'absolute', width: '300px', height: '300px', background: RED, borderRadius: '50%', opacity: 0.08, top: '-100px', right: '-100px', zIndex: 0 }} />
+        <div style={{ position: 'absolute', width: '200px', height: '200px', background: RED, borderRadius: '50%', opacity: 0.05, bottom: '-50px', left: '10%', zIndex: 0 }} />
+
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <div style={{ background: RED, display: 'inline-block', padding: '4px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '16px' }}>Open Enrollment 2026</div>
-          <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '44px', lineHeight: 1.1, marginBottom: '14px', margin: '0 0 14px 0' }}>Your Benefits.<br /><span style={{ color: 'rgba(255,255,255,.7)' }}>Your Wellbeing.</span></h1>
-          <p style={{ fontSize: '17px', opacity: 0.8, maxWidth: '560px', margin: '0 auto 28px', lineHeight: 1.6 }}>Everything you need to understand and enroll in your 2026 RWJBarnabas Health benefits in one place.</p>
-          <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" style={{ background: RED, color: 'white', textDecoration: 'none', padding: '13px 30px', borderRadius: '8px', fontWeight: 600, fontSize: '15px', display: 'inline-block', transition: 'all .2s', cursor: 'pointer' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}>Enroll Now →</a>
+          <div style={{ background: RED, display: 'inline-block', padding: '6px 16px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '1px', textTransform: 'uppercase', marginBottom: '20px', boxShadow: '0 2px 8px rgba(204, 31, 52, 0.3)' }}>Open Enrollment 2026</div>
+          <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: '52px', lineHeight: 1.15, margin: '0 0 16px 0', fontWeight: 700, letterSpacing: '-0.5px' }}>Your Benefits.<br /><span style={{ color: 'rgba(255,255,255,.75)', fontSize: '48px' }}>Your Wellbeing.</span></h1>
+          <p style={{ fontSize: '18px', opacity: 0.9, maxWidth: '640px', margin: '0 auto 36px', lineHeight: 1.7, fontWeight: 500 }}>Everything you need to understand and enroll in your 2026 RWJBarnabas Health benefits in one place. Your health journey starts here.</p>
+          <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" style={{ background: RED, color: 'white', textDecoration: 'none', padding: '15px 36px', borderRadius: '8px', fontWeight: 700, fontSize: '16px', display: 'inline-block', transition: 'all 0.3s ease', cursor: 'pointer', boxShadow: '0 4px 16px rgba(204, 31, 52, 0.4)', letterSpacing: '0.3px' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 24px rgba(204, 31, 52, 0.5)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 16px rgba(204, 31, 52, 0.4)'; }}>Enroll Now →</a>
         </div>
       </div>
 
       {/* WELCOME SECTION */}
-      <section id="welcome" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="welcome" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(235, 240, 245, 0.5) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Getting Started
         </div>
@@ -196,7 +356,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* MEDICAL SECTION */}
-      <section id="medical" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="medical" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(0, 102, 204, 0.03) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Physical Wellbeing
         </div>
@@ -241,7 +401,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
         </div>
 
         <h3 style={{ fontSize: '18px', fontWeight: 700, color: NAVY, marginBottom: '12px' }}>Core Plan Coverage by Tier</h3>
-        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '28px' }}>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '28px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)', background: 'white' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
               <tr style={{ background: NAVY, color: 'white' }}>
@@ -261,7 +421,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                 ['Preventive Care', '$0', '$0', '$0', true],
                 ['Emergency Room', '$200 copay', '$200 copay', '$200 copay', false],
               ].map((row, i) => (
-                <TableRow key={i}>
+                <TableRow key={i} index={i}>
                   <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, fontWeight: 600 }}>{row[0]}</td>
                   <TableCell free={row[4] as boolean}>{row[1]}</TableCell>
                   <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}` }}>{row[2]}</td>
@@ -273,7 +433,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
         </div>
 
         <h3 style={{ fontSize: '16px', fontWeight: 700, color: NAVY, margin: '28px 0 12px' }}>Per-Paycheck Medical Contributions (Full-Time, Non-Tobacco)</h3>
-        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '28px' }}>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '28px', boxShadow: '0 2px 8px rgba(0, 0, 0, 0.08)', background: 'white' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
               <tr style={{ background: NAVY, color: 'white' }}>
@@ -292,7 +452,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                 ['$125,000 – $174,999', '$131.29', '$208.39', '$357.54', '$584.76'],
                 ['$175,000+', '$164.21', '$262.39', '$456.30', '$750.84'],
               ].map((row, i) => (
-                <TableRow key={i}>
+                <TableRow key={i} index={i}>
                   <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, fontWeight: 600, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>
                   <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[1]}</td>
                   <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[2]}</td>
@@ -310,7 +470,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
         </div>
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer' }}>Aetna Provider Search</a>
+          <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.3)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Aetna Provider Search</a>
           <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer' }}>Enroll Now</a>
         </div>
       </section>
@@ -318,7 +478,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* DENTAL & VISION SECTION */}
-      <section id="dental" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="dental" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(235, 240, 245, 0.5) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Physical Wellbeing
         </div>
@@ -333,7 +493,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
               <VideoPlaceholder title="Dental Insurance Explained" subtitle="Flimp HR Benefits Video Library" />
             </div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: NAVY, marginBottom: '12px' }}>Delta Dental Plans</h3>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -351,7 +511,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['Implants', 'Not covered', 'You pay 50%'],
                     ['Annual Maximum (per person)', '$1,500', '$2,000'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, fontWeight: 600, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD, color: row[1].includes('%') ? '#0a7c42' : TEXT, fontWeight: row[1].includes('%') ? 700 : 400 }}>{row[1]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD, color: row[2].includes('%') ? '#0a7c42' : TEXT, fontWeight: row[2].includes('%') ? 700 : 400 }}>{row[2]}</td>
@@ -361,7 +521,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
               </table>
             </div>
             <h4 style={{ fontSize: '14px', fontWeight: 600, color: MUTED, margin: '16px 0 8px' }}>Per-Pay Dental Contributions (Full-Time)</h4>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -377,7 +537,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['Employee + Spouse', '$18.94', '$22.35'],
                     ['Family', '$36.71', '$43.26'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[1]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[2]}</td>
@@ -386,12 +546,12 @@ export default function Showcase({ clientName }: { clientName: string }) {
                 </tbody>
               </table>
             </div>
-            <a href="https://www.deltadentalnj.com/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '12px' }}>Find a Delta Dental Provider</a>
+            <a href="https://www.deltadentalnj.com/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '12px', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = NAVY; (e.currentTarget as HTMLElement).style.color = 'white'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(27, 47, 92, 0.2)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = NAVY; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Find a Delta Dental Provider</a>
           </div>
 
           <div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: NAVY, marginBottom: '12px' }}>EyeMed Vision Plan</h3>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -408,7 +568,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['Contact Lenses Conventional', '$0 + $175 allowance', 'Up to $140'],
                     ['Medically Necessary Contacts', '$0 paid in full', 'Up to $210'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD, color: row[1].includes('$0') ? '#0a7c42' : TEXT, fontWeight: row[1].includes('$0') ? 700 : 400 }}>{row[1]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[2]}</td>
@@ -418,7 +578,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
               </table>
             </div>
             <h4 style={{ fontSize: '14px', fontWeight: 600, color: MUTED, margin: '16px 0 8px' }}>Vision Contributions (Bi-Weekly)</h4>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -433,7 +593,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['Employee + Spouse', '$5.12'],
                     ['Family', '$9.75'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[1]}</td>
                     </TableRow>
@@ -441,7 +601,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                 </tbody>
               </table>
             </div>
-            <a href="https://www.eyemed.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '12px' }}>Find EyeMed Provider</a>
+            <a href="https://www.eyemed.com" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '12px', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = NAVY; (e.currentTarget as HTMLElement).style.color = 'white'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(27, 47, 92, 0.2)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = NAVY; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Find EyeMed Provider</a>
           </div>
         </div>
       </section>
@@ -449,7 +609,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* PRESCRIPTIONS SECTION */}
-      <section id="prescriptions" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="prescriptions" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(0, 102, 204, 0.03) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Physical Wellbeing
         </div>
@@ -462,7 +622,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
           <VideoPlaceholder title="How to Stretch Your Healthcare Dollars" subtitle="Flimp HR Benefits Video Library" />
           <div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: NAVY, marginBottom: '12px' }}>Copay Schedule</h3>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -482,7 +642,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['Specialty (30-day)', 'Preferred Brand', '$200 ($0 via PrudentRx)'],
                     ['', 'Non-Preferred Brand', '$400 ($0 via PrudentRx)'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       {row[0] && <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, fontWeight: 600, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[0]}</td>}
                       {!row[0] && <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }} />}
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[1]}</td>
@@ -496,7 +656,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
               <h4 style={{ fontSize: '15px', fontWeight: 700, marginBottom: '6px' }}>Maintenance Meds (90-day supply) 3 Options</h4>
               <p style={{ margin: 0 }}>1. RWJBH on-site retail pharmacies   2. CVS Caremark Mail Service   3. Nearest CVS Pharmacy</p>
             </div>
-            <a href="https://caremarkrxplaninfo.com/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer' }}>CVS Caremark Member Portal</a>
+            <a href="https://caremarkrxplaninfo.com/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.3)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>CVS Caremark Member Portal</a>
           </div>
         </div>
       </section>
@@ -504,7 +664,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* SPENDING ACCOUNTS SECTION */}
-      <section id="spending" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="spending" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(153, 51, 255, 0.02) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Financial Wellbeing
         </div>
@@ -541,7 +701,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* EMOTIONAL WELLBEING SECTION */}
-      <section id="emotional" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="emotional" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(235, 240, 245, 0.5) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Emotional Wellbeing
         </div>
@@ -572,17 +732,17 @@ export default function Showcase({ clientName }: { clientName: string }) {
                   </li>
                 ))}
               </ul>
-              <a href="tel:8003000628" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer', marginTop: '16px' }}>Call EAP: 800.300.0628</a>
+              <a href="tel:8003000628" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer', marginTop: '16px', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.3)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Call EAP: 800.300.0628</a>
             </div>
             <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: '14px', padding: '28px', marginBottom: '16px' }}>
               <h3 style={{ fontSize: '17px', fontWeight: 700, color: NAVY, marginBottom: '12px', margin: '0 0 12px 0' }}>😌 Calm App Free for You + 5 Family/Friends</h3>
               <p style={{ color: MUTED, fontSize: '14px', marginBottom: '14px', margin: '0 0 14px 0' }}>Meditations, sleep stories, stress-relief tools. Full premium subscription at no cost.</p>
-              <a href="https://www.calm.com/b2b/RWJBarnabasHealth/subscribe" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer' }}>Get Calm Free</a>
+              <a href="https://www.calm.com/b2b/RWJBarnabasHealth/subscribe" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = NAVY; (e.currentTarget as HTMLElement).style.color = 'white'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(27, 47, 92, 0.2)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = NAVY; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Get Calm Free</a>
             </div>
             <div style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: '14px', padding: '28px' }}>
               <h3 style={{ fontSize: '17px', fontWeight: 700, color: NAVY, marginBottom: '8px', margin: '0 0 8px 0' }}>❤️ Aetna Behavioral Health</h3>
               <p style={{ color: MUTED, fontSize: '14px', margin: '0 0 14px 0' }}><strong>In-network behavioral health copays are waived</strong> for employees and enrolled family members including therapy, ABA therapy, and psychiatric care.</p>
-              <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '14px' }}>Find a Provider</a>
+              <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', marginTop: '14px', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = NAVY; (e.currentTarget as HTMLElement).style.color = 'white'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(27, 47, 92, 0.2)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = NAVY; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Find a Provider</a>
             </div>
           </div>
         </div>
@@ -591,7 +751,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* FINANCIAL & RETIREMENT SECTION */}
-      <section id="financial" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="financial" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(153, 51, 255, 0.02) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Financial Wellbeing
         </div>
@@ -621,8 +781,8 @@ export default function Showcase({ clientName }: { clientName: string }) {
               <p style={{ margin: 0 }}>Contribute 6% RWJBH adds 3% = 9% total going into your retirement. Consider increasing from the auto-enrolled 3%.</p>
             </div>
             <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-              <a href="https://www.netbenefits.com/RWJBarnabasHealth" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer' }}>Manage at Fidelity</a>
-              <a href="tel:8005135015" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer' }}>Fidelity: 800.513.5015</a>
+              <a href="https://www.netbenefits.com/RWJBarnabasHealth" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: RED, color: 'white', cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = '#b01a2c'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.3)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = RED; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Manage at Fidelity</a>
+              <a href="tel:8005135015" style={{ display: 'inline-block', textDecoration: 'none', padding: '12px 24px', borderRadius: '8px', fontWeight: 600, fontSize: '14px', background: 'transparent', color: NAVY, border: `1.5px solid ${NAVY}`, cursor: 'pointer', transition: 'all 0.2s ease' }} onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = NAVY; (e.currentTarget as HTMLElement).style.color = 'white'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-1px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 4px 12px rgba(27, 47, 92, 0.2)'; }} onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = 'transparent'; (e.currentTarget as HTMLElement).style.color = NAVY; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; (e.currentTarget as HTMLElement).style.boxShadow = 'none'; }}>Fidelity: 800.513.5015</a>
             </div>
           </div>
           <div>
@@ -668,7 +828,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* PTO SECTION */}
-      <section id="pto" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="pto" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(235, 240, 245, 0.5) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Personal Wellbeing
         </div>
@@ -691,7 +851,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
           </div>
           <div>
             <h3 style={{ fontSize: '18px', fontWeight: 700, color: NAVY, marginBottom: '12px' }}>Vacation Accrual (40-hr/week employees)</h3>
-            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom: '20px' }}>
+            <div style={{ overflowX: 'auto', border: `1px solid ${BORDER}`, borderRadius: '12px', marginBottom:  '20px' }}>
               <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
                 <thead>
                   <tr style={{ background: NAVY, color: 'white' }}>
@@ -709,7 +869,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
                     ['15 years', '184 hrs (23 days)', '224 hrs (28 days)'],
                     ['20 years', '200 hrs (25 days)', '240 hrs (30 days)'],
                   ].map((row, i) => (
-                    <TableRow key={i}>
+                    <TableRow key={i} index={i}>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD, fontWeight: 600 }}>{row[0]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[1]}</td>
                       <td style={{ padding: '11px 14px', borderBottom: `1px solid ${BORDER}`, background: i % 2 === 0 ? '#F7FAFC' : CARD }}>{row[2]}</td>
@@ -729,7 +889,7 @@ export default function Showcase({ clientName }: { clientName: string }) {
       <div style={{ background: BORDER, height: '1px', margin: '0 32px' }} />
 
       {/* CONTACTS SECTION */}
-      <section id="contacts" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto' }}>
+      <section id="contacts" style={{ padding: '60px 32px', maxWidth: '1100px', margin: '0 auto', background: 'linear-gradient(180deg, rgba(0, 102, 204, 0.03) 0%, transparent 50%)' }}>
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: TAG_BG, color: TAG_TEXT, padding: '5px 12px', borderRadius: '20px', fontSize: '12px', fontWeight: 600, letterSpacing: '.5px', textTransform: 'uppercase', marginBottom: '14px' }}>
           <div style={{ width: '6px', height: '6px', background: RED, borderRadius: '50%' }} />Resources
         </div>

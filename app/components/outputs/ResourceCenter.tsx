@@ -266,8 +266,10 @@ const TAB_CONTENT: TabContent = {
 
 function VideoCard({ title, duration }: { title: string; duration: string }) {
   const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe'];
+  const emojis = ['🎓', '💊', '👨‍⚕️', '🏥', '💪', '🧘', '👨‍👩‍👧‍👦', '📋', '💰'];
   const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   const bgColor = colors[hash % colors.length];
+  const emoji = emojis[hash % emojis.length];
 
   return (
     <div style={{
@@ -280,18 +282,20 @@ function VideoCard({ title, duration }: { title: string; duration: string }) {
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
     }}
+    onClick={() => window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank')}
     onMouseEnter={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 28px rgba(0,0,0,0.1)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+      (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 32px rgba(0,0,0,0.15)';
+      (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
     }}
     onMouseLeave={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
+      (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
       (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
     }}
     >
       <div style={{
-        background: bgColor,
+        background: `linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%)`,
         height: '140px',
         display: 'flex',
         alignItems: 'center',
@@ -299,19 +303,25 @@ function VideoCard({ title, duration }: { title: string; duration: string }) {
         position: 'relative',
       }}>
         <div style={{
-          width: '56px',
-          height: '56px',
-          background: 'rgba(255,255,255,0.3)',
+          fontSize: '48px',
+          marginRight: '16px',
+        }}>
+          {emoji}
+        </div>
+        <div style={{
+          width: '64px',
+          height: '64px',
+          background: '#fff',
           borderRadius: '50%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          fontSize: '24px',
-          color: '#fff',
-          backdropFilter: 'blur(5px)',
+          fontSize: '28px',
+          color: bgColor,
+          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
           transition: 'transform 0.3s ease',
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.15)'; }}
+        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.2)'; }}
         onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
         >
           ▶
@@ -355,13 +365,14 @@ function DocumentCard({ title, description }: { title: string; description: stri
       transition: 'all 0.3s ease',
       display: 'flex',
       gap: '12px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
     }}
     onMouseEnter={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 28px rgba(0,0,0,0.1)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(-4px)';
+      (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 32px rgba(0,0,0,0.15)';
+      (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
     }}
     onMouseLeave={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 3px rgba(0,0,0,0.05)';
+      (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
       (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
     }}
     >
@@ -454,8 +465,11 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
   return (
     <div style={{ minHeight: '100vh', background: '#FFFFFF', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
       {/* Header */}
-      <div style={{ background: RWJBH_COLORS.navy, padding: '24px 40px', color: '#fff', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+      <div style={{ background: RWJBH_COLORS.navy, padding: '24px 40px', color: '#fff', borderBottom: `3px solid ${RWJBH_COLORS.red}` }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+          <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: RWJBH_COLORS.red, marginBottom: '12px' }}>
+            RWJBarnabas Health
+          </div>
           <div style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
             {clientName}
           </div>
@@ -469,7 +483,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
       </div>
 
       {/* Tab Navigation */}
-      <div style={{ background: '#fff', borderBottom: '2px solid #E5E7EB', position: 'sticky', top: 0, zIndex: 50 }}>
+      <div style={{ background: '#fff', borderBottom: `2px solid ${RWJBH_COLORS.lightBg}`, position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', overflowX: 'auto', paddingLeft: '40px', paddingRight: '40px' }}>
           {TABS.map(tab => (
             <button
@@ -478,7 +492,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
               style={{
                 padding: '16px 20px',
                 border: 'none',
-                background: activeTab === tab.id ? '#fff' : 'transparent',
+                background: activeTab === tab.id ? RWJBH_COLORS.lightBg : 'transparent',
                 borderBottom: activeTab === tab.id ? `3px solid ${RWJBH_COLORS.red}` : '3px solid transparent',
                 color: activeTab === tab.id ? RWJBH_COLORS.navy : '#6B7280',
                 fontSize: '14px',
@@ -490,11 +504,13 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
               onMouseEnter={e => {
                 if (activeTab !== tab.id) {
                   (e.currentTarget as HTMLElement).style.color = RWJBH_COLORS.navy;
+                  (e.currentTarget as HTMLElement).style.background = 'rgba(27, 47, 92, 0.02)';
                 }
               }}
               onMouseLeave={e => {
                 if (activeTab !== tab.id) {
                   (e.currentTarget as HTMLElement).style.color = '#6B7280';
+                  (e.currentTarget as HTMLElement).style.background = 'transparent';
                 }
               }}
             >
@@ -556,7 +572,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
                   </h3>
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                     <LinkButton label="Enroll at RWJBHBenefits.com" carrierInfo={CARRIERS.aetna} />
-                    <a href="#" style={{
+                    <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" style={{
                       display: 'block',
                       background: RWJBH_COLORS.red,
                       color: '#fff',
@@ -618,7 +634,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
                   </h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
                     {content.keyInfo.map(info => (
-                      <div key={info.label} style={{ background: RWJBH_COLORS.tagBg, padding: '20px', borderRadius: '8px', border: `1px solid #E5E7EB` }}>
+                      <div key={info.label} style={{ background: RWJBH_COLORS.tagBg, padding: '20px', borderRadius: '8px', border: `1px solid #E5E7EB`, boxShadow: '0 2px 6px rgba(0,0,0,0.06)', transition: 'all 0.2s ease' }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}>
                         <p style={{ fontSize: '12px', fontWeight: 600, color: '#6B7280', textTransform: 'uppercase', margin: '0 0 8px 0', letterSpacing: '0.3px' }}>
                           {info.label}
                         </p>
@@ -654,11 +670,11 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
       </div>
 
       {/* Footer */}
-      <div style={{ background: RWJBH_COLORS.navy, padding: '40px', color: '#fff', borderTop: `1px solid rgba(255,255,255,0.1)` }}>
+      <div style={{ background: RWJBH_COLORS.navy, padding: '48px 40px', color: '#fff', borderTop: `4px solid ${RWJBH_COLORS.red}` }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', marginBottom: '40px', paddingBottom: '40px', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '48px', marginBottom: '48px', paddingBottom: '48px', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
             <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>
+              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
                 Quick Support
               </h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -668,14 +684,14 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
                   </a>
                 </li>
                 <li style={{ marginBottom: '10px' }}>
-                  <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
+                  <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
                     RWJBHBenefits.com
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>
+              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
                 Browse Benefits
               </h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -697,7 +713,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
               </ul>
             </div>
             <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: 'rgba(255,255,255,0.6)', marginBottom: '16px' }}>
+              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
                 Resources
               </h4>
               <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
@@ -707,7 +723,7 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
                   </button>
                 </li>
                 <li style={{ marginBottom: '10px' }}>
-                  <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
+                  <a href="https://www.rwjbh.org/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
                     Privacy Policy
                   </a>
                 </li>
@@ -715,12 +731,15 @@ export default function ResourceCenter({ clientName }: { clientName: string }) {
             </div>
           </div>
 
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>
-              Powered by <strong style={{ color: '#fff' }}>Flimp®</strong> | RWJBarnabas Health Benefits Resource Center
+          <div style={{ textAlign: 'center', paddingTop: '12px' }}>
+            <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}>
+              RWJBarnabas Health Benefits Resource Center
             </p>
-            <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,0.5)' }}>
-              © {new Date().getFullYear()} All rights reserved
+            <p style={{ margin: '0 0 12px 0', fontSize: '12px', color: 'rgba(255,255,255,0.7)' }}>
+              Powered by <strong style={{ color: '#fff' }}>Flimp®</strong>
+            </p>
+            <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
+              © {new Date().getFullYear()} RWJBarnabas Health. All rights reserved.
             </p>
           </div>
         </div>

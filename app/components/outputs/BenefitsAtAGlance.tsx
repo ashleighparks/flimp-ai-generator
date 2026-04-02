@@ -24,84 +24,126 @@ export default function BenefitsAtAGlance({ clientName }: { clientName: string }
     <div style={{ minHeight: '100vh', background: '#f5f5f5' }}>
       {/* Sticky Download Bar */}
       <div className="no-print" style={{
-        background: '#1B2F5C', padding: '14px 40px',
+        background: '#1B2F5C', padding: '16px 40px',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         position: 'sticky', top: 0, zIndex: 20,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+        boxShadow: '0 6px 16px rgba(0,0,0,0.2)',
+        backdropFilter: 'blur(8px)',
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <div style={{ width: '36px', height: '36px', borderRadius: '6px', background: '#CC1F34', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '14px', fontWeight: 800 }}>BA</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ width: '40px', height: '40px', borderRadius: '8px', background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: '14px', fontWeight: 800, boxShadow: '0 2px 8px rgba(204, 31, 52, 0.3)' }}>BA</div>
           <div>
-            <div style={{ color: '#fff', fontSize: '14px', fontWeight: 700 }}>{clientName} — Benefits at a Glance</div>
-            <div style={{ color: '#0891b2', fontSize: '11px', fontWeight: 500 }}>2026 Quick Reference Guide</div>
+            <div style={{ color: '#fff', fontSize: '15px', fontWeight: 700, letterSpacing: '-0.3px' }}>{clientName} — Benefits at a Glance</div>
+            <div style={{ color: '#0891b2', fontSize: '12px', fontWeight: 500, marginTop: '2px' }}>2026 Quick Reference Guide</div>
           </div>
         </div>
         <button onClick={handleExportPDF} style={{
-          padding: '10px 20px', background: '#CC1F34', color: '#fff', border: 'none',
-          borderRadius: '6px', fontWeight: 700, fontSize: '13px', cursor: 'pointer',
-          display: 'flex', alignItems: 'center', gap: '8px',
-          transition: 'background 0.2s',
+          padding: '12px 24px', background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 100%)', color: '#fff', border: 'none',
+          borderRadius: '8px', fontWeight: 700, fontSize: '14px', cursor: 'pointer',
+          display: 'flex', alignItems: 'center', gap: '10px',
+          transition: 'all 0.3s',
+          boxShadow: '0 4px 12px rgba(204, 31, 52, 0.3)',
         }}
-        onMouseEnter={e => e.currentTarget.style.background = '#A61A2A'}
-        onMouseLeave={e => e.currentTarget.style.background = '#CC1F34'}
+        onMouseEnter={e => {
+          e.currentTarget.style.transform = 'translateY(-2px)';
+          e.currentTarget.style.boxShadow = '0 6px 16px rgba(204, 31, 52, 0.4)';
+        }}
+        onMouseLeave={e => {
+          e.currentTarget.style.transform = 'translateY(0)';
+          e.currentTarget.style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.3)';
+        }}
         >
-          <span>&#8681;</span> Download / Print PDF
+          <span style={{ fontSize: '16px' }}>&#8681;</span> Download / Print PDF
         </button>
       </div>
 
       {/* Document wrapper */}
       <div style={{
         maxWidth: '1000px', margin: '24px auto', background: '#fff',
-        borderRadius: '8px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+        borderRadius: '12px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
         fontFamily: '"Segoe UI", -apple-system, Arial, sans-serif',
         overflow: 'hidden',
       }}>
         {/* Header */}
         <div style={{
-          background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 100%)',
-          padding: '40px 48px',
+          background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 50%, #1B2F5C 100%)',
+          padding: '48px 48px',
           color: '#fff',
           position: 'relative',
           overflow: 'hidden',
         }}>
-          <div style={{ position: 'absolute', right: '-30px', top: '-30px', width: '150px', height: '150px', background: 'rgba(255,255,255,0.08)', borderRadius: '50%' }} />
-          <h1 style={{ fontSize: '32px', fontWeight: 800, margin: '0 0 8px 0', letterSpacing: '-0.5px' }}>Benefits at a Glance</h1>
-          <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.9)', margin: '4px 0 0 0' }}>{clientName} &bull; 2026 Employee Benefits</p>
+          {/* Decorative pattern background */}
+          <div style={{
+            position: 'absolute',
+            right: '-40px',
+            top: '-40px',
+            width: '200px',
+            height: '200px',
+            background: 'radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+            borderRadius: '50%',
+          }} />
+          <div style={{
+            position: 'absolute',
+            left: '-30px',
+            bottom: '-30px',
+            width: '150px',
+            height: '150px',
+            background: 'rgba(255,255,255,0.08)',
+            borderRadius: '50%',
+          }} />
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <h1 style={{ fontSize: '36px', fontWeight: 800, margin: '0 0 12px 0', letterSpacing: '-0.8px' }}>Benefits at a Glance</h1>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.95)', fontWeight: 600 }}>RWJBarnabas Health</span>
+              <span style={{ width: '4px', height: '4px', background: 'rgba(255,255,255,0.6)', borderRadius: '50%' }} />
+              <span style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', fontWeight: 500 }}>{clientName} &bull; 2026 Employee Benefits</span>
+            </div>
+          </div>
         </div>
 
         {/* Tab Bar */}
         <div className="no-print" style={{
-          display: 'flex', overflowX: 'auto', borderBottom: '2px solid #0891b2',
-          background: '#f8f9fa', paddingLeft: '48px', gap: '2px',
+          display: 'flex', overflowX: 'auto', borderBottom: '1px solid #e2e8f0',
+          background: 'linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)', paddingLeft: '48px', gap: '0px',
         }}>
-          {tabs.map(tab => (
+          {tabs.map((tab, index) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
-                padding: '12px 20px',
-                background: activeTab === tab.id ? '#fff' : 'transparent',
+                padding: '16px 22px',
+                background: activeTab === tab.id ? 'linear-gradient(to bottom, #fff 0%, #f8f9fa 100%)' : 'transparent',
                 border: 'none',
-                borderBottom: activeTab === tab.id ? '3px solid #CC1F34' : 'none',
+                borderBottom: activeTab === tab.id ? '3px solid #CC1F34' : '3px solid transparent',
                 color: activeTab === tab.id ? '#1B2F5C' : '#64748b',
                 fontWeight: activeTab === tab.id ? 700 : 600,
-                fontSize: '13px',
+                fontSize: '14px',
                 cursor: 'pointer',
                 whiteSpace: 'nowrap',
-                transition: 'all 0.2s',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '6px',
+                gap: '8px',
+                borderRight: index < tabs.length - 1 ? '1px solid #e2e8f0' : 'none',
+                position: 'relative',
               }}
               onMouseEnter={e => {
-                if (activeTab !== tab.id) e.currentTarget.style.background = '#f0f0f0';
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.background = '#f0f1f3';
+                  e.currentTarget.style.color = '#1B2F5C';
+                }
               }}
               onMouseLeave={e => {
-                if (activeTab !== tab.id) e.currentTarget.style.background = 'transparent';
+                if (activeTab !== tab.id) {
+                  e.currentTarget.style.background = 'transparent';
+                  e.currentTarget.style.color = '#64748b';
+                }
               }}
             >
-              <span>{tab.icon}</span> {tab.label}
+              <span style={{ fontSize: '16px' }}>{tab.icon}</span>
+              <span>{tab.label}</span>
             </button>
           ))}
         </div>
@@ -134,15 +176,22 @@ export default function BenefitsAtAGlance({ clientName }: { clientName: string }
 function MedicalTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#CC1F34', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #CC1F34 0%, #A61A2A 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Medical Plans</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>Aetna PPO Network</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Medical Plans</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>Aetna PPO Network</p>
         </div>
       </div>
 
       <CarrierInfo carrier="Aetna" phone="1-800-XXX-XXXX" website="https://www.aetnaresource.com/n/RWJBH" />
+
+      {/* Flimp Video Card */}
+      <VideoCard
+        title="Benefits Video Library"
+        description="Learn more about medical plans and health benefits"
+        onClick={() => window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank')}
+      />
 
       <div style={{ marginBottom: '32px' }}>
         <h3 style={{ fontSize: '14px', fontWeight: 700, color: '#1B2F5C', marginBottom: '12px' }}>Core Plan — Coverage by Tier</h3>
@@ -172,9 +221,20 @@ function MedicalTab() {
         ]} color="#CC1F34" />
       </div>
 
-      <Callout title="Care at RWJBH = $0 Cost" text="If you receive care at RWJBarnabas Health facilities, your cost is zero coinsurance in the Premier tier." color="#CC1F34" />
+      <div style={{ marginBottom: '24px', padding: '24px', background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 100%)', borderRadius: '10px', color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ position: 'absolute', right: '-30px', top: '-30px', width: '120px', height: '120px', background: 'rgba(255,255,255,0.1)', borderRadius: '50%' }} />
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px', marginBottom: '8px' }}>
+            <span style={{ fontSize: '24px', marginTop: '4px' }}>✓</span>
+            <div>
+              <div style={{ fontSize: '16px', fontWeight: 800, marginBottom: '6px' }}>Care at RWJBarnabas Health = $0 Cost</div>
+              <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.95)', lineHeight: 1.6 }}>If you receive care at RWJBarnabas Health facilities, your cost is zero coinsurance in the Premier tier. Maximum savings on quality healthcare.</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div style={{ marginTop: '24px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+      <div style={{ marginTop: '28px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
         <ButtonLink text="Aetna Provider Search" url="https://www.aetnaresource.com/n/RWJBH" />
         <ButtonLink text="Enroll Now" url="https://www.RWJBHBenefits.com" />
       </div>
@@ -185,11 +245,11 @@ function MedicalTab() {
 function DentalTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#0891b2', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #0891b2 0%, #0284c7 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Dental Plans</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>Delta Dental PPO</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Dental Plans</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>Delta Dental PPO</p>
         </div>
       </div>
 
@@ -229,11 +289,11 @@ function DentalTab() {
 function VisionTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#0891b2', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #0891b2 0%, #0284c7 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Vision Plan</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>EyeMed Coverage</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Vision Plan</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>EyeMed Coverage</p>
         </div>
       </div>
 
@@ -273,11 +333,11 @@ function VisionTab() {
 function HSAFSATab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#0891b2', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #0891b2 0%, #0284c7 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Savings Accounts</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>HSA & FSA Options</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Savings Accounts</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>HSA & FSA Options</p>
         </div>
       </div>
 
@@ -314,11 +374,11 @@ function HSAFSATab() {
 function LifeTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#CC1F34', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #CC1F34 0%, #A61A2A 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Life & Disability</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>MetLife Coverage</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Life & Disability</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>MetLife Coverage</p>
         </div>
       </div>
 
@@ -347,11 +407,11 @@ function LifeTab() {
 function RetirementTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#0891b2', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #0891b2 0%, #0284c7 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>401(k) Retirement Plan</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>Fidelity NetBenefits</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>401(k) Retirement Plan</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>Fidelity NetBenefits</p>
         </div>
       </div>
 
@@ -381,11 +441,11 @@ function RetirementTab() {
 function PTOTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#CC1F34', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #CC1F34 0%, #A61A2A 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Paid Time Off</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>Vacation, Holidays & Leave</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Paid Time Off</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>Vacation, Holidays & Leave</p>
         </div>
       </div>
 
@@ -415,11 +475,11 @@ function PTOTab() {
 function ContactsTab() {
   return (
     <div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '24px' }}>
-        <div style={{ width: '5px', height: '28px', background: '#0891b2', borderRadius: '3px' }} />
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '28px' }}>
+        <div style={{ width: '6px', height: '32px', background: 'linear-gradient(180deg, #0891b2 0%, #0284c7 100%)', borderRadius: '4px' }} />
         <div>
-          <h2 style={{ fontSize: '22px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Carrier Directory</h2>
-          <p style={{ fontSize: '12px', color: '#0891b2', fontWeight: 600, margin: '4px 0 0 0' }}>Phone & Web Resources</p>
+          <h2 style={{ fontSize: '24px', fontWeight: 800, color: '#1B2F5C', margin: 0 }}>Carrier Directory</h2>
+          <p style={{ fontSize: '13px', color: '#0891b2', fontWeight: 600, margin: '6px 0 0 0' }}>Phone & Web Resources</p>
         </div>
       </div>
 
@@ -454,27 +514,48 @@ function ContactsTab() {
 function CarrierInfo({ carrier, phone, website }: { carrier: string; phone: string; website: string }) {
   return (
     <div style={{
-      background: '#f8f9fa', borderLeft: '4px solid #CC1F34',
-      padding: '12px 16px', marginBottom: '24px', borderRadius: '4px', fontSize: '12px',
+      background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+      border: '1px solid #e2e8f0',
+      borderLeft: '4px solid #CC1F34',
+      padding: '18px 20px',
+      marginBottom: '28px',
+      borderRadius: '8px',
+      fontSize: '13px',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
     }}>
-      <strong>{carrier}</strong> | Phone: <a href={`tel:${phone}`} style={{ color: '#0891b2', textDecoration: 'none' }}>{phone}</a> |{' '}
-      <a href={website} target="_blank" rel="noopener noreferrer" style={{ color: '#0891b2', textDecoration: 'none' }}>
-        Visit Website
-      </a>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+        <span style={{ fontWeight: 700, color: '#1B2F5C', display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span style={{ fontSize: '18px' }}>🏢</span>{carrier}
+        </span>
+        <span style={{ color: '#cbd5e1', userSelect: 'none' }}>|</span>
+        <a href={`tel:${phone}`} style={{ color: '#0891b2', textDecoration: 'none', fontWeight: 600, transition: 'all 0.2s' }}
+          onMouseEnter={e => e.currentTarget.style.color = '#CC1F34'}
+          onMouseLeave={e => e.currentTarget.style.color = '#0891b2'}
+        >
+          <span style={{ marginRight: '4px' }}>📞</span>{phone}
+        </a>
+        <span style={{ color: '#cbd5e1', userSelect: 'none' }}>|</span>
+        <a href={website} target="_blank" rel="noopener noreferrer" style={{ color: '#0891b2', textDecoration: 'none', fontWeight: 600, transition: 'all 0.2s', display: 'flex', alignItems: 'center', gap: '4px' }}
+          onMouseEnter={e => e.currentTarget.style.color = '#CC1F34'}
+          onMouseLeave={e => e.currentTarget.style.color = '#0891b2'}
+        >
+          🌐 Visit Website →
+        </a>
+      </div>
     </div>
   );
 }
 
 function Table({ headers, rows, color }: { headers: string[]; rows: string[][]; color: string }) {
   return (
-    <div style={{ overflow: 'hidden', borderRadius: '6px', border: '1px solid #e2e8f0', marginBottom: '12px' }}>
-      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+    <div style={{ overflow: 'hidden', borderRadius: '8px', border: '1px solid #e2e8f0', marginBottom: '12px', boxShadow: '0 1px 3px rgba(0,0,0,0.04)' }}>
+      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '13px' }}>
         <thead>
-          <tr style={{ background: color }}>
+          <tr style={{ background: `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)` }}>
             {headers.map((h, i) => (
               <th key={i} style={{
-                padding: '10px 12px', color: '#fff', fontWeight: 700, textAlign: 'left',
-                fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.5px',
+                padding: '14px 14px', color: '#fff', fontWeight: 700, textAlign: 'left',
+                fontSize: '12px', textTransform: 'uppercase', letterSpacing: '0.6px',
                 borderRight: i < headers.length - 1 ? '1px solid rgba(255,255,255,0.2)' : 'none',
               }}>{h}</th>
             ))}
@@ -482,11 +563,17 @@ function Table({ headers, rows, color }: { headers: string[]; rows: string[][]; 
         </thead>
         <tbody>
           {rows.map((row, i) => (
-            <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#f8f9fa' }}>
+            <tr key={i} style={{
+              background: i % 2 === 0 ? '#fff' : '#f8f9fa',
+              transition: 'background 0.2s',
+              borderTop: '1px solid #f0f0f0',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = i % 2 === 0 ? '#f0f7ff' : '#e8f3ff'}
+            onMouseLeave={e => e.currentTarget.style.background = i % 2 === 0 ? '#fff' : '#f8f9fa'}
+            >
               {row.map((cell, j) => (
                 <td key={j} style={{
-                  padding: '10px 12px', color: '#1B2F5C', fontWeight: j === 0 ? 600 : 400,
-                  borderTop: '1px solid #f0f0f0',
+                  padding: '12px 14px', color: '#1B2F5C', fontWeight: j === 0 ? 600 : 400,
                   borderRight: j < row.length - 1 ? '1px solid #f0f0f0' : 'none',
                 }}>{cell}</td>
               ))}
@@ -513,11 +600,28 @@ function Callout({ title, text, color }: { title: string; text: string; color: s
 function InfoCard({ title, color, text }: { title: string; color: string; text: string }) {
   return (
     <div style={{
-      background: `${color}12`, borderRadius: '6px', padding: '16px',
-      border: `1px solid ${color}30`,
-    }}>
-      <div style={{ fontWeight: 700, fontSize: '12px', color, marginBottom: '4px' }}>{title}</div>
-      <div style={{ fontSize: '11px', color: '#475569', lineHeight: 1.5 }}>{text}</div>
+      background: `${color}12`,
+      borderRadius: '8px',
+      padding: '18px',
+      border: `1.5px solid ${color}40`,
+      transition: 'all 0.3s',
+      cursor: 'default',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.borderColor = `${color}80`;
+      e.currentTarget.style.boxShadow = `0 4px 12px ${color}20`;
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.borderColor = `${color}40`;
+      e.currentTarget.style.boxShadow = 'none';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }}
+    >
+      <div style={{ fontWeight: 700, fontSize: '13px', color, marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <span style={{ fontSize: '16px' }}>•</span>{title}
+      </div>
+      <div style={{ fontSize: '12px', color: '#475569', lineHeight: 1.6 }}>{text}</div>
     </div>
   );
 }
@@ -525,12 +629,28 @@ function InfoCard({ title, color, text }: { title: string; color: string; text: 
 function StatCard({ title, stat, desc }: { title: string; stat: string; desc: string }) {
   return (
     <div style={{
-      background: '#f8f9fa', borderRadius: '6px', padding: '16px',
-      border: '1px solid #e2e8f0', textAlign: 'center',
-    }}>
-      <div style={{ fontSize: '20px', fontWeight: 800, color: '#CC1F34', marginBottom: '4px' }}>{stat}</div>
-      <div style={{ fontSize: '12px', fontWeight: 700, color: '#1B2F5C', marginBottom: '2px' }}>{title}</div>
-      <div style={{ fontSize: '11px', color: '#64748b' }}>{desc}</div>
+      background: 'linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%)',
+      borderRadius: '8px',
+      padding: '20px',
+      border: '1.5px solid #e2e8f0',
+      textAlign: 'center',
+      transition: 'all 0.3s',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+    }}
+    onMouseEnter={e => {
+      e.currentTarget.style.borderColor = '#0891b2';
+      e.currentTarget.style.boxShadow = '0 4px 16px rgba(8, 145, 178, 0.15)';
+      e.currentTarget.style.transform = 'translateY(-4px)';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.borderColor = '#e2e8f0';
+      e.currentTarget.style.boxShadow = '0 2px 8px rgba(0,0,0,0.04)';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }}
+    >
+      <div style={{ fontSize: '28px', fontWeight: 800, background: 'linear-gradient(135deg, #CC1F34, #A61A2A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '8px' }}>{stat}</div>
+      <div style={{ fontSize: '13px', fontWeight: 700, color: '#1B2F5C', marginBottom: '4px' }}>{title}</div>
+      <div style={{ fontSize: '12px', color: '#64748b' }}>{desc}</div>
     </div>
   );
 }
@@ -539,15 +659,97 @@ function ButtonLink({ text, url }: { text: string; url: string }) {
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" style={{
       display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-      padding: '12px 20px', background: '#CC1F34', color: '#fff',
-      borderRadius: '6px', fontSize: '13px', fontWeight: 700,
-      textDecoration: 'none', transition: 'background 0.2s',
+      padding: '14px 24px', background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 100%)', color: '#fff',
+      borderRadius: '8px', fontSize: '14px', fontWeight: 700,
+      textDecoration: 'none', transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
       width: '100%',
+      boxShadow: '0 4px 12px rgba(204, 31, 52, 0.25)',
+      border: '1px solid rgba(204, 31, 52, 0.5)',
     }}
-    onMouseEnter={e => e.currentTarget.style.background = '#A61A2A'}
-    onMouseLeave={e => e.currentTarget.style.background = '#CC1F34'}
+    onMouseEnter={e => {
+      e.currentTarget.style.boxShadow = '0 6px 20px rgba(204, 31, 52, 0.35)';
+      e.currentTarget.style.transform = 'translateY(-2px)';
+    }}
+    onMouseLeave={e => {
+      e.currentTarget.style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.25)';
+      e.currentTarget.style.transform = 'translateY(0)';
+    }}
     >
-      {text} →
+      {text} <span style={{ marginLeft: '6px' }}>→</span>
     </a>
+  );
+}
+
+function VideoCard({ title, description, onClick }: { title: string; description: string; onClick: () => void }) {
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        background: 'linear-gradient(135deg, #CC1F34 0%, #A61A2A 50%, #0891b2 100%)',
+        borderRadius: '10px',
+        padding: '32px',
+        marginBottom: '28px',
+        cursor: 'pointer',
+        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        position: 'relative',
+        overflow: 'hidden',
+        color: '#fff',
+        boxShadow: '0 6px 20px rgba(204, 31, 52, 0.25)',
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.transform = 'translateY(-4px)';
+        e.currentTarget.style.boxShadow = '0 10px 32px rgba(204, 31, 52, 0.35)';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = '0 6px 20px rgba(204, 31, 52, 0.25)';
+      }}
+    >
+      {/* Decorative pattern */}
+      <div style={{
+        position: 'absolute',
+        right: '-40px',
+        top: '-40px',
+        width: '180px',
+        height: '180px',
+        background: 'radial-gradient(circle, rgba(255,255,255,0.15) 1px, transparent 1px)',
+        backgroundSize: '20px 20px',
+        borderRadius: '50%',
+        pointerEvents: 'none',
+      }} />
+
+      <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: '24px' }}>
+        {/* Play Button */}
+        <div style={{
+          width: '80px',
+          height: '80px',
+          background: 'rgba(255,255,255,0.2)',
+          borderRadius: '50%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          backdropFilter: 'blur(4px)',
+          border: '2px solid rgba(255,255,255,0.4)',
+          flexShrink: 0,
+          transition: 'all 0.3s',
+          fontSize: '36px',
+        }}>
+          ▶
+        </div>
+
+        {/* Content */}
+        <div>
+          <div style={{ fontSize: '16px', fontWeight: 800, marginBottom: '8px', letterSpacing: '-0.3px' }}>
+            {title}
+          </div>
+          <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.95)', lineHeight: 1.6, marginBottom: '12px' }}>
+            {description}
+          </div>
+          <div style={{ fontSize: '12px', fontWeight: 700, display: 'flex', alignItems: 'center', gap: '6px' }}>
+            Click to watch <span>→</span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

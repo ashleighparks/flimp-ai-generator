@@ -1,6 +1,28 @@
 'use client';
 import { useState } from 'react';
 
+// Helper function to determine if a value is a phone number
+const isPhoneNumber = (value: string): boolean => {
+  return /^\d{3}\.\d{3}\.\d{4}$|^\d{3}-\d{3}-\d{4}$|^\d{10}$|^[0-9\.\-\(\) ]+$/.test(value);
+};
+
+// Helper function to format phone number to tel: format
+const formatPhoneNumber = (value: string): string => {
+  const digitsOnly = value.replace(/\D/g, '');
+  return digitsOnly;
+};
+
+// Helper function to determine if a value is a URL
+const isUrl = (value: string): boolean => {
+  return /\.(com|net|org|gov|edu|io|co|dev|live)($|\/)/i.test(value) || value.startsWith('http');
+};
+
+// Helper function to add protocol if missing
+const formatUrl = (value: string): string => {
+  if (value.startsWith('http')) return value;
+  return `https://${value}`;
+};
+
 const BOOTHS = [
   {
     id: 'medical',
@@ -229,6 +251,9 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
         boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
       }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', display: 'flex', alignItems: 'center', height: '62px', paddingLeft: '20px', paddingRight: '20px', overflowX: 'auto' }}>
+          <div style={{ fontSize: '14px', fontWeight: 700, color: '#ffffff', marginRight: '40px', whiteSpace: 'nowrap' }}>
+            RWJBarnabas Health
+          </div>
           <div style={{ display: 'flex', gap: '0', flex: 1, overflowX: 'auto', scrollBehavior: 'smooth' }}>
             {SECTIONS.map(section => (
               <button
@@ -329,6 +354,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                     <button
+                      onClick={() => window.open('https://www.RWJBHBenefits.com', '_blank')}
                       style={{
                         background: '#1B2F5C',
                         color: '#ffffff',
@@ -346,6 +372,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                       View Benefits Guide
                     </button>
                     <button
+                      onClick={() => window.open('https://www.RWJBHBenefits.com', '_blank')}
                       style={{
                         background: '#4FC3F7',
                         color: '#1B2F5C',
@@ -394,14 +421,16 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                       transition: 'all 0.3s ease'
                     }}
                     onMouseEnter={e => {
-                      (e.currentTarget as HTMLDivElement).style.borderColor = '#4FC3F7';
-                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 6px 16px rgba(27, 47, 92, 0.12)';
-                      (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-4px)';
+                      (e.currentTarget as HTMLDivElement).style.borderColor = '#CC1F34';
+                      (e.currentTarget as HTMLDivElement).style.boxShadow = '0 12px 24px rgba(27, 47, 92, 0.2)';
+                      (e.currentTarget as HTMLDivElement).style.transform = 'translateY(-6px)';
+                      (e.currentTarget as HTMLDivElement).style.background = '#F8F9FA';
                     }}
                     onMouseLeave={e => {
                       (e.currentTarget as HTMLDivElement).style.borderColor = '#E3F2FD';
                       (e.currentTarget as HTMLDivElement).style.boxShadow = 'none';
                       (e.currentTarget as HTMLDivElement).style.transform = 'translateY(0)';
+                      (e.currentTarget as HTMLDivElement).style.background = '#ffffff';
                     }}
                   >
                     <div style={{ fontSize: '48px', marginBottom: '16px' }}>{b.icon}</div>
@@ -411,7 +440,7 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                     <p style={{ fontSize: '13px', color: '#666666', margin: 0, lineHeight: 1.5 }}>
                       {b.description}
                     </p>
-                    <div style={{ marginTop: '16px', padding: '8px 12px', background: '#E3F2FD', color: '#1B2F5C', borderRadius: '4px', fontSize: '12px', fontWeight: 600 }}>
+                    <div style={{ marginTop: '16px', padding: '8px 12px', background: '#E3F2FD', color: '#1B2F5C', borderRadius: '4px', fontSize: '12px', fontWeight: 600, transition: 'all 0.2s ease' }}>
                       View Details →
                     </div>
                   </div>
@@ -481,39 +510,53 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                 {/* Video Thumbnail */}
                 {booth.video && (
                   <div style={{ background: '#ffffff', borderRadius: '8px', overflow: 'hidden', border: '1px solid #E3F2FD' }}>
-                    <div style={{
-                      background: 'linear-gradient(135deg, #1B2F5C 0%, #0F1F3F 100%)',
-                      padding: '80px 40px',
-                      textAlign: 'center',
-                      position: 'relative',
-                      minHeight: '300px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}>
-                      <div style={{ textAlign: 'center' }}>
+                    <div
+                      onClick={() => window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank')}
+                      style={{
+                        background: 'linear-gradient(135deg, #1B2F5C 0%, #0F1F3F 100%)',
+                        padding: '80px 40px',
+                        textAlign: 'center',
+                        position: 'relative',
+                        minHeight: '300px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={e => {
+                        (e.currentTarget as HTMLDivElement).style.background = 'linear-gradient(135deg, #0F1F3F 0%, #060F20 100%)';
+                        (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.02)';
+                      }}
+                      onMouseLeave={e => {
+                        (e.currentTarget as HTMLDivElement).style.background = 'linear-gradient(135deg, #1B2F5C 0%, #0F1F3F 100%)';
+                        (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
+                      }}
+                    >
+                      <div style={{ textAlign: 'center', zIndex: 1 }}>
                         <div style={{
-                          width: '80px',
-                          height: '80px',
-                          background: 'rgba(79, 195, 247, 0.3)',
+                          width: '100px',
+                          height: '100px',
+                          background: '#CC1F34',
                           borderRadius: '50%',
                           margin: '0 auto 24px',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           cursor: 'pointer',
-                          transition: 'all 0.2s ease'
+                          transition: 'all 0.2s ease',
+                          boxShadow: '0 4px 16px rgba(204, 31, 52, 0.3)'
                         }}
                         onMouseEnter={e => {
-                          (e.currentTarget as HTMLDivElement).style.background = 'rgba(79, 195, 247, 0.45)';
-                          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.1)';
+                          (e.currentTarget as HTMLDivElement).style.transform = 'scale(1.15)';
+                          (e.currentTarget as HTMLDivElement).style.boxShadow = '0 8px 24px rgba(204, 31, 52, 0.5)';
                         }}
                         onMouseLeave={e => {
-                          (e.currentTarget as HTMLDivElement).style.background = 'rgba(79, 195, 247, 0.3)';
                           (e.currentTarget as HTMLDivElement).style.transform = 'scale(1)';
+                          (e.currentTarget as HTMLDivElement).style.boxShadow = '0 4px 16px rgba(204, 31, 52, 0.3)';
                         }}
                         >
-                          <div style={{ fontSize: '32px' }}>▶</div>
+                          <div style={{ fontSize: '48px', color: '#ffffff' }}>▶</div>
                         </div>
                         <h3 style={{ fontSize: '20px', fontWeight: 700, color: '#ffffff', margin: 0 }}>
                           {booth.video}
@@ -551,16 +594,31 @@ export default function VirtualFair({ clientName }: { clientName: string }) {
                     Contact Information
                   </h2>
                   <div style={{ display: 'grid', gap: '12px' }}>
-                    {booth.contacts.map((contact, idx) => (
-                      <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: idx < booth.contacts.length - 1 ? '1px solid #E3F2FD' : 'none', flexWrap: 'wrap', gap: '12px' }}>
-                        <span style={{ fontSize: '14px', fontWeight: 500, color: '#1B2F5C' }}>
-                          {contact.label}
-                        </span>
-                        <span style={{ fontSize: '14px', color: '#4FC3F7', fontWeight: 600 }}>
-                          {contact.value}
-                        </span>
-                      </div>
-                    ))}
+                    {booth.contacts.map((contact, idx) => {
+                      const isPhone = isPhoneNumber(contact.value);
+                      const isPortal = isUrl(contact.value);
+
+                      return (
+                        <div key={idx} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: idx < booth.contacts.length - 1 ? '1px solid #E3F2FD' : 'none', flexWrap: 'wrap', gap: '12px' }}>
+                          <span style={{ fontSize: '14px', fontWeight: 500, color: '#1B2F5C' }}>
+                            {contact.label}
+                          </span>
+                          {isPhone ? (
+                            <a href={`tel:${formatPhoneNumber(contact.value)}`} style={{ fontSize: '14px', color: '#4FC3F7', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'all 0.2s ease', borderBottom: '1px solid #4FC3F7' }} onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#29B6F6'} onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#4FC3F7'}>
+                              {contact.value}
+                            </a>
+                          ) : isPortal ? (
+                            <a href={formatUrl(contact.value)} target="_blank" rel="noopener noreferrer" style={{ fontSize: '14px', color: '#4FC3F7', fontWeight: 600, textDecoration: 'none', cursor: 'pointer', transition: 'all 0.2s ease', borderBottom: '1px solid #4FC3F7' }} onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#29B6F6'} onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = '#4FC3F7'}>
+                              {contact.value}
+                            </a>
+                          ) : (
+                            <span style={{ fontSize: '14px', color: '#4FC3F7', fontWeight: 600 }}>
+                              {contact.value}
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
