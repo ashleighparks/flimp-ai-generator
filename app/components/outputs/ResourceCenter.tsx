@@ -6,10 +6,14 @@ const RWJBH_COLORS = {
   navy: '#1B2F5C',
   red: '#CC1F34',
   lightBg: '#EBF0F5',
-  tagBg: '#E8F0FB',
+  darkGray: '#374151',
+  lightGray: '#F3F4F6',
+  border: '#E5E7EB',
 };
 
-const TABS = [
+type TabId = 'home' | 'medical' | 'dental' | 'prescriptions' | 'spending' | 'life' | 'retirement' | 'wellness' | 'contacts';
+
+const TABS: Array<{ id: TabId; label: string }> = [
   { id: 'home', label: 'Home' },
   { id: 'medical', label: 'Medical Plans' },
   { id: 'dental', label: 'Dental & Vision' },
@@ -22,728 +26,775 @@ const TABS = [
 ];
 
 const CARRIERS = {
-  aetna: {
-    name: 'Aetna',
-    phone: '855-546-5415',
-    portal: 'https://www.aetnaresource.com/n/RWJBH',
-  },
-  delta: {
-    name: 'Delta Dental',
-    phone: '800-810-5234',
-    portal: 'https://www.deltadentalnj.com/RWJBH',
-  },
-  eyemed: {
-    name: 'EyeMed',
-    phone: '866-800-5457',
-    portal: 'https://www.eyemed.com',
-  },
-  cvs: {
-    name: 'CVS Caremark',
-    phone: '833-290-5676',
-    portal: 'https://caremarkrxplaninfo.com/RWJBH',
-  },
-  fidelity: {
-    name: 'Fidelity',
-    phone: '800-513-5015',
-    portal: 'https://www.netbenefits.com/RWJBarnabasHealth',
-  },
-  metlife: {
-    name: 'MetLife',
-    phone: '866-450-2263',
-    portal: 'https://www.metlife.com',
-  },
+  aetna: { name: 'Aetna', phone: '855-546-5415', portal: 'https://www.aetnaresource.com/n/RWJBH' },
+  delta: { name: 'Delta Dental', phone: '800-810-5234', portal: 'https://www.deltadentalnj.com/RWJBH' },
+  eyemed: { name: 'EyeMed', phone: '866-800-5457', portal: 'https://www.eyemed.com' },
+  cvs: { name: 'CVS Caremark', phone: '833-290-5676', portal: 'https://caremarkrxplaninfo.com/RWJBH' },
+  fidelity: { name: 'Fidelity', phone: '800-513-5015', portal: 'https://www.netbenefits.com/RWJBarnabasHealth' },
+  metlife: { name: 'MetLife', phone: '866-450-2263', portal: 'https://www.metlife.com' },
+  calm: { name: 'Calm', phone: '1-844-GO-CALM', portal: 'https://calm.com/b2b/RWJBarnabasHealth/subscribe' },
+  personify: { name: 'Personify Health', phone: '', portal: 'https://join.personifyhealth.com/bhealthy' },
+  aon: { name: 'Aon Benefits', phone: '1-833-266-9922', portal: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
 };
 
-interface TabContent {
-  [key: string]: {
-    title: string;
-    description: string;
-    videos: Array<{ title: string; duration: string }>;
-    documents: Array<{ title: string; description: string }>;
-    links: Array<{ label: string; carrier: keyof typeof CARRIERS; type: string }>;
-    keyInfo?: Array<{ label: string; value: string }>;
-  };
+interface QuickInfoCard {
+  label: string;
+  value: string;
 }
 
-const TAB_CONTENT: TabContent = {
-  home: {
-    title: 'Welcome to Your 2026 Benefits',
-    description: 'Everything you need to understand and maximize your benefits. Start here to learn about your coverage options.',
-    videos: [
-      { title: 'Benefits Key Terms Explained', duration: '5:32' },
-      { title: 'How to Use Your Benefits', duration: '3:45' },
-    ],
-    documents: [
-      { title: 'Open Enrollment Checklist', description: 'Step-by-step guide to making your benefits elections' },
-      { title: 'Benefits Summary Guide', description: 'Overview of all available benefits' },
-    ],
-    links: [
-      { label: 'Enroll at RWJBHBenefits.com', carrier: 'aetna', type: 'enrollment' },
-      { label: 'Total Wellbeing Site', carrier: 'aetna', type: 'wellness' },
-    ],
-  },
-  medical: {
-    title: 'Medical Plans',
-    description: 'Medical plans are administered by Aetna. Care received within the RWJBarnabas Health system is completely free across all plans.',
-    videos: [
-      { title: 'Understanding Your Medical Plan Options', duration: '4:32' },
-      { title: 'Network vs Out-of-Network Coverage', duration: '3:15' },
-      { title: 'How Deductibles Work', duration: '2:48' },
-    ],
-    documents: [
-      { title: 'Medical Plan Comparison Chart', description: 'Side-by-side comparison of all available plans' },
-      { title: 'In-Network Provider Directory', description: 'Find doctors, hospitals, and specialists' },
-      { title: 'Plan Summary of Benefits', description: 'Copays, deductibles, and coverage details' },
-    ],
-    links: [
-      { label: 'Aetna Provider Search', carrier: 'aetna', type: 'provider' },
-      { label: 'Aetna Member Portal', carrier: 'aetna', type: 'portal' },
-      { label: 'Check Claim Status', carrier: 'aetna', type: 'claims' },
-    ],
-    keyInfo: [
-      { label: 'Plans Available', value: '3 Tiers' },
-      { label: 'Deductible Range', value: '$500 - $2,000' },
-      { label: 'In-Network Care', value: 'Free at RWJBarnabas' },
-      { label: 'Out-of-Pocket Max', value: 'Varies by plan' },
-    ],
-  },
-  dental: {
-    title: 'Dental & Vision Benefits',
-    description: 'Comprehensive dental coverage through Delta Dental and vision benefits through EyeMed — keeping you and your family healthy from eyes to teeth.',
-    videos: [
-      { title: 'Dental Coverage Overview', duration: '4:10' },
-      { title: 'Vision Benefits Explained', duration: '3:30' },
-      { title: 'Preventive Care & Cleanings', duration: '2:45' },
-    ],
-    documents: [
-      { title: 'Delta Dental Plan Summary', description: 'Copays, deductibles, and coverage limits' },
-      { title: 'EyeMed Vision Benefits', description: 'Eye exams, glasses, and contact lens coverage' },
-      { title: 'Dental Network Providers', description: 'Find dentists and specialists' },
-    ],
-    links: [
-      { label: 'Find Delta Dental Provider', carrier: 'delta', type: 'provider' },
-      { label: 'Find EyeMed Provider', carrier: 'eyemed', type: 'provider' },
-      { label: 'Dental Claims Portal', carrier: 'delta', type: 'portal' },
-    ],
-    keyInfo: [
-      { label: 'Preventive Cleanings', value: '2 per year, $0' },
-      { label: 'Basic Coverage', value: '80%' },
-      { label: 'Major Coverage', value: '50%' },
-      { label: 'Eye Exam', value: '$0 copay' },
-    ],
-  },
-  prescriptions: {
-    title: 'Prescription Drug Benefits',
-    description: 'Prescription coverage through CVS Caremark is included automatically when you enroll in a medical plan. Three convenient options for maintenance medications.',
-    videos: [
-      { title: 'Understanding Your Prescription Coverage', duration: '3:50' },
-      { title: 'Using Mail Service Pharmacy', duration: '3:12' },
-      { title: 'Generic vs Brand Name Drugs', duration: '2:30' },
-    ],
-    documents: [
-      { title: 'CVS Caremark Member Handbook', description: 'Complete prescription coverage details' },
-      { title: 'Medication Copay Tiers', description: 'Generic, brand name, and specialty drug costs' },
-      { title: 'Pharmacy Directory', description: 'Find in-network pharmacies near you' },
-    ],
-    links: [
-      { label: 'CVS Caremark Member Portal', carrier: 'cvs', type: 'portal' },
-      { label: 'Find CVS Pharmacy', carrier: 'cvs', type: 'provider' },
-      { label: 'Mail Service Pharmacy', carrier: 'cvs', type: 'service' },
-    ],
-    keyInfo: [
-      { label: 'Pharmacy Options', value: 'RWJBH, CVS, Mail Service' },
-      { label: 'Generic Copay', value: '$10' },
-      { label: 'Brand Name Copay', value: '$35' },
-      { label: 'Annual Deductible', value: 'Varies' },
-    ],
-  },
-  spending: {
-    title: 'Spending Accounts',
-    description: 'Flexible Spending Accounts (FSA) and Health Savings Accounts (HSA) help you save on qualified healthcare and dependent care expenses with pre-tax dollars.',
-    videos: [
-      { title: 'FSA vs HSA: Which is Right for You?', duration: '5:15' },
-      { title: 'Eligible Healthcare Expenses', duration: '4:30' },
-      { title: 'Dependent Care FSA Explained', duration: '3:20' },
-    ],
-    documents: [
-      { title: 'FSA Quick Reference Guide', description: 'Contribution limits and eligible expenses' },
-      { title: 'HSA Guide & Rules', description: 'What you need to know about HSAs' },
-      { title: 'Eligible Expense Checklist', description: 'Complete list of qualifying expenses' },
-    ],
-    links: [
-      { label: 'FSA/HSA Administrator Portal', carrier: 'aetna', type: 'portal' },
-      { label: 'Expense Reimbursement', carrier: 'aetna', type: 'claims' },
-    ],
-    keyInfo: [
-      { label: 'FSA Limit (2026)', value: '$3,300' },
-      { label: 'Dependent Care Limit', value: '$5,250' },
-      { label: 'HSA Available', value: 'With HDHP' },
-      { label: 'Carryover (FSA)', value: '$640' },
-    ],
-  },
-  life: {
-    title: 'Life & Disability Benefits',
-    description: 'MetLife provides comprehensive life insurance, accidental death and dismemberment (AD&D) coverage, and short/long-term disability protection.',
-    videos: [
-      { title: 'Life Insurance Options', duration: '4:05' },
-      { title: 'Disability Insurance Explained', duration: '3:40' },
-      { title: 'Beneficiary Designations', duration: '2:55' },
-    ],
-    documents: [
-      { title: 'Life & Disability Overview', description: 'Benefits, coverage amounts, and beneficiary information' },
-      { title: 'Coverage Summary', description: 'What is included in your life insurance' },
-      { title: 'Beneficiary Form', description: 'Update your beneficiary information' },
-    ],
-    links: [
-      { label: 'MetLife Benefits Portal', carrier: 'metlife', type: 'portal' },
-      { label: 'File a Claim', carrier: 'metlife', type: 'claims' },
-    ],
-    keyInfo: [
-      { label: 'Basic Life Insurance', value: '2x salary' },
-      { label: 'Voluntary Coverage', value: 'Up to 8x salary' },
-      { label: 'AD&D Coverage', value: 'Equal to life insurance' },
-      { label: 'Disability Benefit Period', value: 'To age 65' },
-    ],
-  },
-  retirement: {
-    title: 'Retirement & Financial Benefits',
-    description: 'Save for your future with the 401(k) plan administered by Fidelity. Get company matching contributions and investment flexibility.',
-    videos: [
-      { title: '401(k) Retirement Planning', duration: '5:45' },
-      { title: 'Understanding Investment Options', duration: '4:20' },
-      { title: 'Company Match & How to Maximize It', duration: '3:30' },
-      { title: 'Required Minimum Distributions', duration: '3:15' },
-    ],
-    documents: [
-      { title: '401(k) Plan Document', description: 'Complete plan rules and details' },
-      { title: 'Investment Fund Options', description: 'Review all available fund choices' },
-      { title: 'Contribution Limits (2026)', description: 'IRS limits and rules' },
-    ],
-    links: [
-      { label: 'Manage at Fidelity', carrier: 'fidelity', type: 'portal' },
-      { label: 'Fidelity Phone Support', carrier: 'fidelity', type: 'support' },
-    ],
-    keyInfo: [
-      { label: 'Company Match', value: '100% up to 3%' },
-      { label: 'Employee Contribution Limit', value: '$23,500' },
-      { label: 'Vesting', value: 'Immediate' },
-      { label: 'Investment Options', value: '50+ funds' },
-    ],
-  },
-  wellness: {
-    title: 'Wellness & EAP',
-    description: 'Access mental health support, counseling services, and wellness programs to support your emotional and physical wellbeing.',
-    videos: [
-      { title: 'Your Employee Assistance Program (EAP)', duration: '4:25' },
-      { title: 'Mental Health Resources', duration: '3:50' },
-      { title: 'Wellness Program Overview', duration: '3:10' },
-      { title: 'Stress Management & Resilience', duration: '4:00' },
-    ],
-    documents: [
-      { title: 'EAP Services Guide', description: 'Confidential counseling and support services' },
-      { title: 'Wellness Program Guide', description: 'Available wellness initiatives and programs' },
-      { title: 'Mental Health Resources', description: 'Support for emotional wellbeing' },
-    ],
-    links: [
-      { label: 'EAP Portal', carrier: 'aetna', type: 'portal' },
-      { label: 'Find a Mental Health Provider', carrier: 'aetna', type: 'provider' },
-    ],
-    keyInfo: [
-      { label: 'EAP Counseling Sessions', value: 'Unlimited, free' },
-      { label: 'Legal Consultation', value: 'Included' },
-      { label: 'Financial Counseling', value: 'Available' },
-      { label: 'Telehealth Therapy', value: '24/7 access' },
-    ],
-  },
-  contacts: {
-    title: 'Key Benefits Contacts',
-    description: 'Direct contact information for all your benefits carriers and support services.',
-    videos: [],
-    documents: [],
-    links: [],
-  },
+interface DocumentCard {
+  title: string;
+  description: string;
+}
+
+interface VideoCard {
+  title: string;
+  duration: string;
+}
+
+interface PortalButton {
+  label: string;
+  carrier: keyof typeof CARRIERS;
+  url?: string;
+}
+
+interface ContactCard {
+  name: string;
+  phone: string;
+  portal: string;
+}
+
+// Quick info cards for each tab
+const QUICK_INFO: Record<TabId, QuickInfoCard[]> = {
+  home: [],
+  medical: [
+    { label: 'Plans Available', value: '3 Tiers' },
+    { label: 'Deductible Range', value: '$500 - $2,000' },
+    { label: 'In-Network Care', value: 'Free at RWJBH' },
+    { label: 'Out-of-Pocket Max', value: 'Varies by plan' },
+  ],
+  dental: [
+    { label: 'Preventive Cleanings', value: '2 per year, $0' },
+    { label: 'Basic Coverage', value: '80%' },
+    { label: 'Major Coverage', value: '50%' },
+    { label: 'Eye Exam', value: '$0 copay' },
+  ],
+  prescriptions: [
+    { label: 'Tier 1 (Generic)', value: '$5 copay' },
+    { label: 'Tier 2 (Brand)', value: '$25 copay' },
+    { label: 'Tier 3 (Specialty)', value: '$50 copay' },
+    { label: 'Mail Service', value: '90-day supply' },
+  ],
+  spending: [
+    { label: 'HSA Rollover', value: 'Yes, unlimited' },
+    { label: 'FSA Annual Limit', value: '$3,300' },
+    { label: 'DCFSA Annual Limit', value: '$5,000' },
+    { label: 'Carryover', value: '$0 - $610' },
+  ],
+  life: [
+    { label: 'Life Insurance', value: '1x - 4x salary' },
+    { label: 'AD&D', value: 'Included' },
+    { label: 'Short-Term Disability', value: 'Available' },
+    { label: 'Long-Term Disability', value: '60% replacement' },
+  ],
+  retirement: [
+    { label: 'Plan Type', value: '401(k)' },
+    { label: 'Employer Match', value: 'Varies' },
+    { label: 'Vesting', value: 'Check plan' },
+    { label: 'Investment Options', value: '50+' },
+  ],
+  wellness: [
+    { label: 'EAP Sessions', value: '3 free per issue' },
+    { label: 'Calm Access', value: 'Included' },
+    { label: 'BHealthy Program', value: 'Available' },
+    { label: 'Health Coaching', value: 'Yes' },
+  ],
+  contacts: [],
 };
 
-function VideoCard({ title, duration }: { title: string; duration: string }) {
-  const colors = ['#667eea', '#764ba2', '#f093fb', '#4facfe', '#00f2fe'];
-  const emojis = ['🎓', '💊', '👨‍⚕️', '🏥', '💪', '🧘', '👨‍👩‍👧‍👦', '📋', '💰'];
-  const hash = title.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  const bgColor = colors[hash % colors.length];
-  const emoji = emojis[hash % emojis.length];
+// Document cards for each tab
+const DOCUMENTS: Record<TabId, DocumentCard[]> = {
+  home: [
+    { title: 'Open Enrollment Checklist', description: 'Step-by-step guide to making your benefits elections' },
+    { title: 'Benefits Summary Guide', description: 'Overview of all available benefits' },
+    { title: 'Plan Comparison Sheet', description: 'Side-by-side review of all options' },
+  ],
+  medical: [
+    { title: 'Medical Plan Comparison', description: 'Deductibles, copays, and coverage details' },
+    { title: 'Summary of Benefits', description: 'Official plan documentation' },
+    { title: 'Provider Directory', description: 'Search for in-network providers' },
+  ],
+  dental: [
+    { title: 'Delta Dental Plan Summary', description: 'Copays, deductibles, and coverage limits' },
+    { title: 'EyeMed Vision Benefits', description: 'Eye exams, glasses, and contact lens coverage' },
+    { title: 'Network Providers', description: 'Find dentists and eye doctors' },
+  ],
+  prescriptions: [
+    { title: 'CVS Caremark Member Handbook', description: 'Complete prescription coverage guide' },
+    { title: 'Medication Copay Tiers', description: 'Generic, brand, and specialty drug costs' },
+    { title: 'Pharmacy Directory', description: 'Locate in-network pharmacies' },
+  ],
+  spending: [
+    { title: 'HSA Plan Document', description: 'Full HSA rules and contribution limits' },
+    { title: 'FSA & DCFSA Guide', description: 'Eligible expenses and enrollment limits' },
+    { title: 'Carryover & Grace Period Policy', description: 'How unused funds are handled' },
+  ],
+  life: [
+    { title: 'Life Insurance Summary', description: 'Coverage amounts and beneficiary information' },
+    { title: 'Disability Insurance', description: 'Short-term and long-term disability details' },
+    { title: 'Beneficiary Forms', description: 'Update your beneficiaries' },
+  ],
+  retirement: [
+    { title: '401(k) Plan Document', description: 'Comprehensive plan rules' },
+    { title: 'Investment Prospectuses', description: 'Fund options and performance' },
+    { title: 'Contribution Limits', description: 'Annual maximums and catch-up rules' },
+  ],
+  wellness: [
+    { title: 'EAP Program Details', description: 'Services and how to access' },
+    { title: 'Wellness Program Guide', description: 'Available wellness initiatives' },
+    { title: 'Mental Health Resources', description: 'Counseling and support services' },
+  ],
+  contacts: [],
+};
+
+// Video cards for each tab
+const VIDEOS: Record<TabId, VideoCard[]> = {
+  home: [
+    { title: 'Benefits Key Terms Explained', duration: '5:32' },
+    { title: 'How to Use Your Benefits', duration: '3:45' },
+    { title: 'Getting Started Checklist', duration: '2:20' },
+  ],
+  medical: [
+    { title: 'Understanding Your Medical Options', duration: '4:32' },
+    { title: 'Network vs Out-of-Network Coverage', duration: '3:15' },
+    { title: 'How Deductibles Work', duration: '2:48' },
+  ],
+  dental: [
+    { title: 'Dental Coverage Overview', duration: '4:10' },
+    { title: 'Vision Benefits Explained', duration: '3:30' },
+    { title: 'Preventive Care & Cleanings', duration: '2:45' },
+  ],
+  prescriptions: [
+    { title: 'Understanding Your Prescription Coverage', duration: '3:50' },
+    { title: 'Using Mail Service Pharmacy', duration: '3:12' },
+    { title: 'Generic vs Brand Name Drugs', duration: '2:30' },
+  ],
+  spending: [
+    { title: 'HSA vs FSA: What is the Difference', duration: '5:00' },
+    { title: 'How to Use Your Spending Accounts', duration: '4:15' },
+    { title: 'Dependent Care FSA Explained', duration: '3:20' },
+  ],
+  life: [
+    { title: 'Life Insurance Basics', duration: '4:20' },
+    { title: 'Disability Insurance Overview', duration: '3:50' },
+    { title: 'Choosing Your Coverage Amount', duration: '2:55' },
+  ],
+  retirement: [
+    { title: 'Getting Started with Your 401k', duration: '5:10' },
+    { title: 'Investment Basics for Your Plan', duration: '6:30' },
+    { title: 'Retirement Planning Tips', duration: '4:45' },
+  ],
+  wellness: [
+    { title: 'Mental Health Resources & EAP', duration: '3:40' },
+    { title: 'Getting Started with Calm', duration: '2:25' },
+    { title: 'Wellness Programs Overview', duration: '3:15' },
+  ],
+  contacts: [],
+};
+
+// Portal buttons for each tab
+const PORTALS: Record<TabId, PortalButton[]> = {
+  home: [
+    { label: 'Enroll Now at RWJBHBenefits.com', carrier: 'aon', url: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+    { label: 'RWJBH Total Wellbeing Site', carrier: 'aon', url: 'https://RWJBHTotalWellbeing.com' },
+  ],
+  medical: [
+    { label: 'Aetna Provider Search', carrier: 'aetna' },
+    { label: 'Aetna Member Portal', carrier: 'aetna' },
+    { label: 'Check Claim Status', carrier: 'aetna' },
+  ],
+  dental: [
+    { label: 'Find Delta Dental Provider', carrier: 'delta' },
+    { label: 'Find EyeMed Provider', carrier: 'eyemed' },
+    { label: 'Dental Claims Portal', carrier: 'delta' },
+  ],
+  prescriptions: [
+    { label: 'CVS Caremark Pharmacy Search', carrier: 'cvs' },
+    { label: 'Refill Prescriptions', carrier: 'cvs' },
+    { label: 'Formulary & Drug Information', carrier: 'cvs' },
+  ],
+  spending: [
+    { label: 'Manage Your HSA', carrier: 'fidelity', url: 'https://www.netbenefits.com/RWJBarnabasHealth' },
+    { label: 'View Eligible Expenses', carrier: 'aon', url: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+    { label: 'Upload Receipts', carrier: 'aon', url: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+  ],
+  life: [
+    { label: 'MetLife Portal', carrier: 'metlife' },
+    { label: 'Update Beneficiaries', carrier: 'metlife' },
+    { label: 'View Coverage', carrier: 'metlife' },
+  ],
+  retirement: [
+    { label: 'Fidelity 401k Portal', carrier: 'fidelity' },
+    { label: 'Review Investments', carrier: 'fidelity' },
+    { label: 'Calculate Retirement', carrier: 'fidelity' },
+  ],
+  wellness: [
+    { label: 'Access EAP Portal', carrier: 'aon', url: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+    { label: 'Calm App', carrier: 'calm' },
+    { label: 'BHealthy by Personify', carrier: 'personify' },
+  ],
+  contacts: [],
+};
+
+// Contact information for each benefit area
+const BENEFIT_CONTACTS: Record<TabId, ContactCard[]> = {
+  home: [],
+  medical: [
+    { name: 'Aetna Medical', phone: '855-546-5415', portal: 'https://www.aetnaresource.com/n/RWJBH' },
+  ],
+  dental: [
+    { name: 'Delta Dental', phone: '800-810-5234', portal: 'https://www.deltadentalnj.com/RWJBH' },
+    { name: 'EyeMed Vision', phone: '866-800-5457', portal: 'https://www.eyemed.com' },
+  ],
+  prescriptions: [
+    { name: 'CVS Caremark', phone: '833-290-5676', portal: 'https://caremarkrxplaninfo.com/RWJBH' },
+  ],
+  spending: [
+    { name: 'Fidelity HSA', phone: '800-513-5015', portal: 'https://www.netbenefits.com/RWJBarnabasHealth' },
+    { name: 'Aon Benefits', phone: '1-833-266-9922', portal: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+  ],
+  life: [
+    { name: 'MetLife Insurance', phone: '866-450-2263', portal: 'https://www.metlife.com' },
+  ],
+  retirement: [
+    { name: 'Fidelity Retirement', phone: '800-513-5015', portal: 'https://www.netbenefits.com/RWJBarnabasHealth' },
+  ],
+  wellness: [
+    { name: 'Employee Assistance Program', phone: '1-833-266-9922', portal: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+    { name: 'Calm Premium', phone: '1-844-GO-CALM', portal: 'https://calm.com/b2b/RWJBarnabasHealth/subscribe' },
+    { name: 'BHealthy by Personify', phone: '', portal: 'https://join.personifyhealth.com/bhealthy' },
+  ],
+  contacts: [
+    { name: 'Aetna Medical', phone: '855-546-5415', portal: 'https://www.aetnaresource.com/n/RWJBH' },
+    { name: 'Delta Dental', phone: '800-810-5234', portal: 'https://www.deltadentalnj.com/RWJBH' },
+    { name: 'EyeMed Vision', phone: '866-800-5457', portal: 'https://www.eyemed.com' },
+    { name: 'CVS Caremark', phone: '833-290-5676', portal: 'https://caremarkrxplaninfo.com/RWJBH' },
+    { name: 'Fidelity', phone: '800-513-5015', portal: 'https://www.netbenefits.com/RWJBarnabasHealth' },
+    { name: 'MetLife', phone: '866-450-2263', portal: 'https://www.metlife.com' },
+    { name: 'Employee Assistance Program', phone: '1-833-266-9922', portal: 'https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home' },
+    { name: 'Calm', phone: '1-844-GO-CALM', portal: 'https://calm.com/b2b/RWJBarnabasHealth/subscribe' },
+  ],
+};
+
+interface ResourceCenterProps {
+  clientName?: string;
+}
+
+export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: ResourceCenterProps) {
+  const [activeTab, setActiveTab] = useState<TabId>('home');
+
+  const openVideo = () => {
+    window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank');
+  };
 
   return (
-    <div style={{
-      background: '#fff',
-      border: '1px solid #E5E7EB',
-      borderRadius: '8px',
-      overflow: 'hidden',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      display: 'flex',
-      flexDirection: 'column',
-      height: '100%',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-    }}
-    onClick={() => window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank')}
-    onMouseEnter={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 32px rgba(0,0,0,0.15)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
-    }}
-    onMouseLeave={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-    }}
-    >
-      <div style={{
-        background: `linear-gradient(135deg, ${bgColor} 0%, ${bgColor}dd 100%)`,
-        height: '140px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'white' }}>
+      {/* Header */}
+      <header style={{
+        backgroundColor: RWJBH_COLORS.navy,
+        color: 'white',
+        padding: '24px 40px',
+        borderBottom: `4px solid ${RWJBH_COLORS.red}`,
+      }}>
+        <h1 style={{ margin: '0 0 8px 0', fontSize: '28px', fontWeight: 'bold' }}>
+          Benefits Resource Center
+        </h1>
+        <p style={{ margin: 0, fontSize: '14px', opacity: 0.9 }}>
+          {clientName}
+        </p>
+      </header>
+
+      {/* Sticky Tab Bar */}
+      <nav style={{
+        backgroundColor: 'white',
+        borderBottom: `1px solid ${RWJBH_COLORS.border}`,
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+        overflowX: 'auto',
       }}>
         <div style={{
-          fontSize: '48px',
-          marginRight: '16px',
-        }}>
-          {emoji}
-        </div>
-        <div style={{
-          width: '64px',
-          height: '64px',
-          background: '#fff',
-          borderRadius: '50%',
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontSize: '28px',
-          color: bgColor,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-          transition: 'transform 0.3s ease',
-        }}
-        onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1.2)'; }}
-        onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = 'scale(1)'; }}
-        >
-          ▶
-        </div>
-      </div>
-      <div style={{ padding: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <span style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '6px',
-          padding: '4px 10px',
-          background: '#E8F4FF',
-          color: '#0066CC',
-          borderRadius: '4px',
-          fontSize: '10px',
-          fontWeight: 700,
-          width: 'fit-content',
-          marginBottom: '10px',
+          gap: 0,
         }}>
-          ▶ VIDEO
-        </span>
-        <h4 style={{ fontSize: '14px', fontWeight: 700, color: RWJBH_COLORS.navy, margin: '0 0 8px 0', lineHeight: '1.4', flex: 1 }}>
-          {title}
-        </h4>
-        <p style={{ fontSize: '12px', color: '#9CA3AF', margin: 0 }}>
-          ⏱ {duration}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function DocumentCard({ title, description }: { title: string; description: string }) {
-  return (
-    <div style={{
-      background: '#fff',
-      border: '1px solid #E5E7EB',
-      borderRadius: '8px',
-      padding: '20px',
-      cursor: 'pointer',
-      transition: 'all 0.3s ease',
-      display: 'flex',
-      gap: '12px',
-      boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
-    }}
-    onMouseEnter={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 16px 32px rgba(0,0,0,0.15)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(-8px)';
-    }}
-    onMouseLeave={e => {
-      (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.08)';
-      (e.currentTarget as HTMLElement).style.transform = 'translateY(0)';
-    }}
-    >
-      <div style={{ fontSize: '32px' }}>📄</div>
-      <div style={{ flex: 1 }}>
-        <h4 style={{ fontSize: '14px', fontWeight: 700, color: RWJBH_COLORS.navy, margin: '0 0 4px 0' }}>
-          {title}
-        </h4>
-        <p style={{ fontSize: '13px', color: '#6B7280', margin: 0 }}>
-          {description}
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function LinkButton({ label, carrierInfo }: { label: string; carrierInfo: typeof CARRIERS[keyof typeof CARRIERS] }) {
-  return (
-    <a href={carrierInfo.portal} target="_blank" rel="noopener noreferrer" style={{
-      display: 'block',
-      background: RWJBH_COLORS.navy,
-      color: '#fff',
-      padding: '14px 18px',
-      borderRadius: '6px',
-      textDecoration: 'none',
-      fontSize: '13px',
-      fontWeight: 600,
-      transition: 'all 0.3s ease',
-      textAlign: 'center',
-    }}
-    onMouseEnter={e => {
-      (e.currentTarget as HTMLElement).style.background = RWJBH_COLORS.red;
-    }}
-    onMouseLeave={e => {
-      (e.currentTarget as HTMLElement).style.background = RWJBH_COLORS.navy;
-    }}
-    >
-      {label} →
-    </a>
-  );
-}
-
-function ContactsTab() {
-  return (
-    <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-      <div style={{ background: '#fff', borderRadius: '8px', overflow: 'hidden', border: '1px solid #E5E7EB' }}>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ background: RWJBH_COLORS.tagBg }}>
-              <th style={{ padding: '14px 20px', textAlign: 'left', fontWeight: 700, color: RWJBH_COLORS.navy, borderBottom: '2px solid #E5E7EB' }}>Carrier/Service</th>
-              <th style={{ padding: '14px 20px', textAlign: 'left', fontWeight: 700, color: RWJBH_COLORS.navy, borderBottom: '2px solid #E5E7EB' }}>Phone</th>
-              <th style={{ padding: '14px 20px', textAlign: 'left', fontWeight: 700, color: RWJBH_COLORS.navy, borderBottom: '2px solid #E5E7EB' }}>Portal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Object.entries(CARRIERS).map(([key, info]) => (
-              <tr key={key} style={{ borderBottom: '1px solid #E5E7EB' }}>
-                <td style={{ padding: '14px 20px', fontWeight: 600, color: RWJBH_COLORS.navy }}>{info.name}</td>
-                <td style={{ padding: '14px 20px' }}>
-                  <a href={`tel:${info.phone.replace(/-/g, '')}`} style={{ color: RWJBH_COLORS.red, textDecoration: 'none', fontWeight: 600 }}>
-                    {info.phone}
-                  </a>
-                </td>
-                <td style={{ padding: '14px 20px' }}>
-                  <a href={info.portal} target="_blank" rel="noopener noreferrer" style={{ color: RWJBH_COLORS.red, textDecoration: 'none', fontWeight: 600 }}>
-                    Visit Portal →
-                  </a>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div style={{ marginTop: '32px', padding: '20px', background: RWJBH_COLORS.tagBg, borderRadius: '8px', textAlign: 'center' }}>
-        <p style={{ fontSize: '14px', color: RWJBH_COLORS.navy, margin: '0 0 8px 0', fontWeight: 600 }}>
-          Questions about your benefits?
-        </p>
-        <p style={{ fontSize: '13px', color: '#6B7280', margin: 0 }}>
-          Contact the RWJBH Benefits Center at <strong>844-690-0920</strong> or visit <strong>RWJBHBenefits.com</strong>
-        </p>
-      </div>
-    </div>
-  );
-}
-
-export default function ResourceCenter({ clientName }: { clientName: string }) {
-  const [activeTab, setActiveTab] = useState('home');
-  const content = TAB_CONTENT[activeTab];
-
-  return (
-    <div style={{ minHeight: '100vh', background: '#FFFFFF', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif' }}>
-      {/* Header */}
-      <div style={{ background: RWJBH_COLORS.navy, padding: '24px 40px', color: '#fff', borderBottom: `3px solid ${RWJBH_COLORS.red}` }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '0.5px', textTransform: 'uppercase', color: RWJBH_COLORS.red, marginBottom: '12px' }}>
-            RWJBarnabas Health
-          </div>
-          <div style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.5px', textTransform: 'uppercase', color: 'rgba(255,255,255,0.6)', marginBottom: '8px' }}>
-            {clientName}
-          </div>
-          <h1 style={{ fontSize: '28px', fontWeight: 700, margin: '0 0 4px 0', color: '#fff' }}>
-            Benefits Resource Center
-          </h1>
-          <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)', margin: 0 }}>
-            Your complete guide to health, retirement, wellness, and financial benefits
-          </p>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div style={{ background: '#fff', borderBottom: `2px solid ${RWJBH_COLORS.lightBg}`, position: 'sticky', top: 0, zIndex: 50, boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', overflowX: 'auto', paddingLeft: '40px', paddingRight: '40px' }}>
-          {TABS.map(tab => (
+          {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               style={{
+                flex: '0 0 auto',
                 padding: '16px 20px',
+                backgroundColor: activeTab === tab.id ? RWJBH_COLORS.navy : 'white',
+                color: activeTab === tab.id ? 'white' : RWJBH_COLORS.darkGray,
                 border: 'none',
-                background: activeTab === tab.id ? RWJBH_COLORS.lightBg : 'transparent',
-                borderBottom: activeTab === tab.id ? `3px solid ${RWJBH_COLORS.red}` : '3px solid transparent',
-                color: activeTab === tab.id ? RWJBH_COLORS.navy : '#6B7280',
-                fontSize: '14px',
-                fontWeight: activeTab === tab.id ? 700 : 500,
+                borderBottom: activeTab === tab.id ? `3px solid ${RWJBH_COLORS.red}` : '1px solid transparent',
                 cursor: 'pointer',
+                fontSize: '14px',
+                fontWeight: activeTab === tab.id ? '600' : '500',
                 transition: 'all 0.2s ease',
                 whiteSpace: 'nowrap',
-              }}
-              onMouseEnter={e => {
-                if (activeTab !== tab.id) {
-                  (e.currentTarget as HTMLElement).style.color = RWJBH_COLORS.navy;
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(27, 47, 92, 0.02)';
-                }
-              }}
-              onMouseLeave={e => {
-                if (activeTab !== tab.id) {
-                  (e.currentTarget as HTMLElement).style.color = '#6B7280';
-                  (e.currentTarget as HTMLElement).style.background = 'transparent';
-                }
               }}
             >
               {tab.label}
             </button>
           ))}
         </div>
-      </div>
+      </nav>
 
-      {/* Tab Content */}
-      <div style={{ padding: '48px 40px', background: '#FFFFFF' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          {/* Title & Description */}
-          <div style={{ marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '28px', fontWeight: 700, color: RWJBH_COLORS.navy, margin: '0 0 12px 0' }}>
-              {content.title}
+      {/* Main Content Area */}
+      <main style={{ flex: 1, padding: '40px 40px' }}>
+        {/* Home Tab */}
+        {activeTab === 'home' && (
+          <div>
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+              Welcome to Your Benefits
             </h2>
-            <p style={{ fontSize: '15px', color: '#6B7280', margin: 0, lineHeight: '1.6', maxWidth: '800px' }}>
-              {content.description}
+            <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+              Everything you need to understand and maximize your benefits. Start here to learn about your coverage options and take action.
             </p>
-          </div>
 
-          {/* Home Tab Special Content */}
-          {activeTab === 'home' && (
+            {/* Quick Links Grid */}
             <div style={{ marginBottom: '40px' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '40px', marginBottom: '40px', alignItems: 'center' }}>
-                {/* Featured Video */}
-                <div>
-                  <VideoCard title="Benefits Key Terms Explained" duration="5:32" />
-                </div>
-                <div>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
-                    Open Enrollment Checklist
-                  </h3>
-                  <div style={{ background: RWJBH_COLORS.tagBg, padding: '20px', borderRadius: '8px', marginBottom: '20px' }}>
-                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy, borderBottom: '1px solid rgba(27, 47, 92, 0.1)' }}>
-                        ✓ Review medical plan options
-                      </li>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy, borderBottom: '1px solid rgba(27, 47, 92, 0.1)' }}>
-                        ✓ Compare dental & vision coverage
-                      </li>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy, borderBottom: '1px solid rgba(27, 47, 92, 0.1)' }}>
-                        ✓ Determine FSA/HSA needs
-                      </li>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy, borderBottom: '1px solid rgba(27, 47, 92, 0.1)' }}>
-                        ✓ Update beneficiaries
-                      </li>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy, borderBottom: '1px solid rgba(27, 47, 92, 0.1)' }}>
-                        ✓ Make 401(k) elections
-                      </li>
-                      <li style={{ padding: '8px 0', fontSize: '14px', color: RWJBH_COLORS.navy }}>
-                        ✓ Enroll online
-                      </li>
-                    </ul>
-                  </div>
-                  <h3 style={{ fontSize: '16px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '12px', marginTop: '24px' }}>
-                    Key Links
-                  </h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                    <LinkButton label="Enroll at RWJBHBenefits.com" carrierInfo={CARRIERS.aetna} />
-                    <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" style={{
-                      display: 'block',
-                      background: RWJBH_COLORS.red,
-                      color: '#fff',
-                      padding: '14px 18px',
-                      borderRadius: '6px',
-                      textDecoration: 'none',
-                      fontSize: '13px',
-                      fontWeight: 600,
-                      transition: 'all 0.3s ease',
+              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                Explore Your Benefits
+              </h3>
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+                gap: '16px',
+              }}>
+                {TABS.slice(1, 9).map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    style={{
+                      padding: '20px',
+                      backgroundColor: RWJBH_COLORS.lightGray,
+                      border: `2px solid ${RWJBH_COLORS.border}`,
+                      borderRadius: '8px',
+                      cursor: 'pointer',
                       textAlign: 'center',
+                      transition: 'all 0.2s ease',
                     }}
-                    onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = '0.9'; }}
-                    onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = '1'; }}
-                    >
-                      Total Wellbeing Site →
-                    </a>
-                  </div>
-                </div>
+                    onMouseOver={(e) => {
+                      const target = e.currentTarget;
+                      target.style.borderColor = RWJBH_COLORS.red;
+                      target.style.backgroundColor = RWJBH_COLORS.navy;
+                    }}
+                    onMouseOut={(e) => {
+                      const target = e.currentTarget;
+                      target.style.borderColor = RWJBH_COLORS.border;
+                      target.style.backgroundColor = RWJBH_COLORS.lightGray;
+                    }}
+                  >
+                    <div style={{ fontSize: '16px', fontWeight: '600', color: 'inherit' }}>
+                      {tab.label}
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
-          )}
 
-          {/* Contacts Tab */}
-          {activeTab === 'contacts' && <ContactsTab />}
-
-          {/* Other Tabs - Videos, Documents, Links */}
-          {activeTab !== 'home' && activeTab !== 'contacts' && (
-            <>
-              {content.videos && content.videos.length > 0 && (
-                <div style={{ marginBottom: '48px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '20px', paddingBottom: '12px', borderBottom: `2px solid ${RWJBH_COLORS.navy}` }}>
-                    Videos
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '20px' }}>
-                    {content.videos.map(video => (
-                      <VideoCard key={video.title} title={video.title} duration={video.duration} />
-                    ))}
-                  </div>
+            {/* Featured Video Card */}
+            <div style={{ marginBottom: '40px' }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                Featured Video
+              </h3>
+              <button
+                onClick={openVideo}
+                style={{
+                  width: '100%',
+                  maxWidth: '500px',
+                  padding: '32px',
+                  backgroundColor: RWJBH_COLORS.navy,
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  textAlign: 'center',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.backgroundColor = RWJBH_COLORS.red;
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.backgroundColor = RWJBH_COLORS.navy;
+                }}
+              >
+                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>
+                  Benefits Key Terms Explained
                 </div>
-              )}
-
-              {content.documents && content.documents.length > 0 && (
-                <div style={{ marginBottom: '48px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '20px', paddingBottom: '12px', borderBottom: `2px solid ${RWJBH_COLORS.navy}` }}>
-                    Documents & Guides
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '16px' }}>
-                    {content.documents.map(doc => (
-                      <DocumentCard key={doc.title} title={doc.title} description={doc.description} />
-                    ))}
-                  </div>
+                <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                  5:32 — Click to watch in video library
                 </div>
-              )}
+              </button>
+            </div>
 
-              {content.keyInfo && content.keyInfo.length > 0 && (
-                <div style={{ marginBottom: '48px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '20px', paddingBottom: '12px', borderBottom: `2px solid ${RWJBH_COLORS.navy}` }}>
-                    Key Plan Details
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: '16px' }}>
-                    {content.keyInfo.map(info => (
-                      <div key={info.label} style={{ background: RWJBH_COLORS.tagBg, padding: '20px', borderRadius: '8px', border: `1px solid #E5E7EB`, boxShadow: '0 2px 6px rgba(0,0,0,0.06)', transition: 'all 0.2s ease' }} onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 6px 16px rgba(0,0,0,0.1)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; }} onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 6px rgba(0,0,0,0.06)'; (e.currentTarget as HTMLElement).style.transform = 'translateY(0)'; }}>
-                        <p style={{ fontSize: '12px', fontWeight: 600, color: '#6B7280', textTransform: 'uppercase', margin: '0 0 8px 0', letterSpacing: '0.3px' }}>
-                          {info.label}
-                        </p>
-                        <p style={{ fontSize: '20px', fontWeight: 700, color: RWJBH_COLORS.navy, margin: 0 }}>
-                          {info.value}
-                        </p>
+            {/* Enrollment CTA */}
+            <div style={{
+              padding: '32px',
+              backgroundColor: RWJBH_COLORS.lightBg,
+              border: `2px solid ${RWJBH_COLORS.red}`,
+              borderRadius: '8px',
+              textAlign: 'center',
+            }}>
+              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+                Ready to Enroll?
+              </h3>
+              <p style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '16px' }}>
+                Visit RWJBHBenefits.com to review plans and make your elections.
+              </p>
+              <a
+                href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-block',
+                  padding: '12px 28px',
+                  backgroundColor: RWJBH_COLORS.red,
+                  color: 'white',
+                  textDecoration: 'none',
+                  borderRadius: '4px',
+                  fontWeight: '600',
+                  fontSize: '14px',
+                  transition: 'all 0.2s ease',
+                }}
+                onMouseOver={(e) => {
+                  e.currentTarget.style.opacity = '0.9';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }}
+                onMouseOut={(e) => {
+                  e.currentTarget.style.opacity = '1';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }}
+              >
+                Go to Enrollment
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* All other tabs use a shared layout */}
+        {activeTab !== 'home' && (
+          <div>
+            {/* Tab Title */}
+            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+              {TABS.find(t => t.id === activeTab)?.label}
+            </h2>
+
+            {/* Tab Description */}
+            {activeTab === 'medical' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Medical plans administered by Aetna. Care received within the RWJBarnabas Health system is completely free across all plans.
+              </p>
+            )}
+            {activeTab === 'dental' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Comprehensive dental and vision coverage through Delta Dental and EyeMed.
+              </p>
+            )}
+            {activeTab === 'prescriptions' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Prescription coverage through CVS Caremark is included when you enroll in a medical plan.
+              </p>
+            )}
+            {activeTab === 'spending' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Tax-advantaged accounts to save on healthcare, dependent care, and commuting expenses.
+              </p>
+            )}
+            {activeTab === 'life' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Life, accidental death and dismemberment, and disability insurance to protect your family.
+              </p>
+            )}
+            {activeTab === 'retirement' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                401(k) retirement savings plan through Fidelity with employer matching.
+              </p>
+            )}
+            {activeTab === 'wellness' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                Employee assistance, mental health support, and wellness programs to support your wellbeing.
+              </p>
+            )}
+            {activeTab === 'contacts' && (
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
+                All carrier and benefit provider contact information in one place.
+              </p>
+            )}
+
+            {/* Quick Info Cards (if applicable) */}
+            {QUICK_INFO[activeTab] && QUICK_INFO[activeTab].length > 0 && (
+              <div style={{ marginBottom: '40px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                  Key Information
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '16px',
+                }}>
+                  {QUICK_INFO[activeTab].map((info, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '16px',
+                        backgroundColor: RWJBH_COLORS.lightGray,
+                        borderLeft: `4px solid ${RWJBH_COLORS.red}`,
+                        borderRadius: '4px',
+                      }}
+                    >
+                      <div style={{ fontSize: '12px', fontWeight: '600', color: RWJBH_COLORS.darkGray, textTransform: 'uppercase', marginBottom: '4px' }}>
+                        {info.label}
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {content.links && content.links.length > 0 && (
-                <div style={{ marginBottom: '48px' }}>
-                  <h3 style={{ fontSize: '18px', fontWeight: 700, color: RWJBH_COLORS.navy, marginBottom: '20px', paddingBottom: '12px', borderBottom: `2px solid ${RWJBH_COLORS.navy}` }}>
-                    Carrier Portals & Resources
-                  </h3>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))', gap: '16px' }}>
-                    {content.links.map(link => (
-                      <div key={link.label}>
-                        <LinkButton label={link.label} carrierInfo={CARRIERS[link.carrier]} />
-                        <p style={{ fontSize: '12px', color: '#6B7280', marginTop: '8px', textAlign: 'center' }}>
-                          {CARRIERS[link.carrier].name}
-                        </p>
+                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: RWJBH_COLORS.navy }}>
+                        {info.value}
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
-              )}
-            </>
-          )}
-        </div>
-      </div>
+              </div>
+            )}
+
+            {/* Portal Buttons */}
+            {PORTALS[activeTab] && PORTALS[activeTab].length > 0 && (
+              <div style={{ marginBottom: '40px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                  Access Your Account
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                  gap: '12px',
+                }}>
+                  {PORTALS[activeTab].map((button, idx) => (
+                    <a
+                      key={idx}
+                      href={button.url || CARRIERS[button.carrier].portal}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        padding: '14px 18px',
+                        backgroundColor: RWJBH_COLORS.navy,
+                        color: 'white',
+                        textDecoration: 'none',
+                        borderRadius: '4px',
+                        fontWeight: '600',
+                        fontSize: '13px',
+                        textAlign: 'center',
+                        transition: 'all 0.2s ease',
+                        border: 'none',
+                        cursor: 'pointer',
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.backgroundColor = RWJBH_COLORS.red;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.backgroundColor = RWJBH_COLORS.navy;
+                      }}
+                    >
+                      {button.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Videos */}
+            {VIDEOS[activeTab] && VIDEOS[activeTab].length > 0 && (
+              <div style={{ marginBottom: '40px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                  Videos
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '16px',
+                }}>
+                  {VIDEOS[activeTab].map((video, idx) => (
+                    <button
+                      key={idx}
+                      onClick={openVideo}
+                      style={{
+                        padding: '20px',
+                        backgroundColor: RWJBH_COLORS.lightGray,
+                        border: `1px solid ${RWJBH_COLORS.border}`,
+                        borderRadius: '8px',
+                        cursor: 'pointer',
+                        textAlign: 'left',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.red;
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.border;
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px' }}>
+                        {video.title}
+                      </div>
+                      <div style={{ fontSize: '13px', color: RWJBH_COLORS.darkGray }}>
+                        {video.duration} — Click to watch
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Documents */}
+            {DOCUMENTS[activeTab] && DOCUMENTS[activeTab].length > 0 && (
+              <div style={{ marginBottom: '40px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                  Documents & Resources
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '16px',
+                }}>
+                  {DOCUMENTS[activeTab].map((doc, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '20px',
+                        backgroundColor: 'white',
+                        border: `1px solid ${RWJBH_COLORS.border}`,
+                        borderRadius: '8px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.red;
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.border;
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      <div style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '8px' }}>
+                        PDF Document
+                      </div>
+                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px' }}>
+                        {doc.title}
+                      </div>
+                      <div style={{ fontSize: '13px', color: RWJBH_COLORS.darkGray }}>
+                        {doc.description}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Contact Cards */}
+            {BENEFIT_CONTACTS[activeTab] && BENEFIT_CONTACTS[activeTab].length > 0 && (
+              <div style={{ marginBottom: '40px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+                  Contact Information
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gap: '16px',
+                }}>
+                  {BENEFIT_CONTACTS[activeTab].map((contact, idx) => (
+                    <div
+                      key={idx}
+                      style={{
+                        padding: '20px',
+                        backgroundColor: 'white',
+                        border: `1px solid ${RWJBH_COLORS.border}`,
+                        borderRadius: '8px',
+                      }}
+                    >
+                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+                        {contact.name}
+                      </div>
+                      {contact.phone && (
+                        <div style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '8px' }}>
+                          <a href={`tel:${contact.phone.replace(/\D/g, '')}`} style={{ color: RWJBH_COLORS.red, textDecoration: 'none' }}>
+                            {contact.phone}
+                          </a>
+                        </div>
+                      )}
+                      <a
+                        href={contact.portal}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                          display: 'inline-block',
+                          fontSize: '13px',
+                          color: RWJBH_COLORS.red,
+                          textDecoration: 'none',
+                          fontWeight: '600',
+                        }}
+                      >
+                        Visit Portal
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </main>
 
       {/* Footer */}
-      <div style={{ background: RWJBH_COLORS.navy, padding: '48px 40px', color: '#fff', borderTop: `4px solid ${RWJBH_COLORS.red}` }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '48px', marginBottom: '48px', paddingBottom: '48px', borderBottom: '1px solid rgba(255,255,255,0.15)' }}>
-            <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
-                Quick Support
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '10px' }}>
-                  <a href="tel:8446900920" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    844-690-0920 (Benefits Center)
-                  </a>
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    RWJBHBenefits.com
-                  </a>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
-                Browse Benefits
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '10px' }}>
-                  <button onClick={() => setActiveTab('medical')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    Medical Plans
-                  </button>
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <button onClick={() => setActiveTab('retirement')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    Retirement Plans
-                  </button>
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <button onClick={() => setActiveTab('wellness')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    Wellness & EAP
-                  </button>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 style={{ fontSize: '12px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', color: RWJBH_COLORS.red, marginBottom: '20px', paddingBottom: '12px', borderBottom: `1px solid rgba(255,255,255,0.15)` }}>
-                Resources
-              </h4>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '10px' }}>
-                  <button onClick={() => setActiveTab('contacts')} style={{ background: 'none', border: 'none', color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s', cursor: 'pointer', padding: 0 }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    Carrier Contacts
-                  </button>
-                </li>
-                <li style={{ marginBottom: '10px' }}>
-                  <a href="https://www.rwjbh.org/privacy-policy" target="_blank" rel="noopener noreferrer" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', fontSize: '13px', transition: 'color 0.2s' }} onMouseEnter={e => e.currentTarget.style.color = '#fff'} onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.85)'}>
-                    Privacy Policy
-                  </a>
-                </li>
-              </ul>
-            </div>
+      <footer style={{
+        backgroundColor: RWJBH_COLORS.navy,
+        color: 'white',
+        padding: '24px 40px',
+        borderTop: `1px solid ${RWJBH_COLORS.border}`,
+        fontSize: '13px',
+      }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gap: '20px',
+          marginBottom: '16px',
+        }}>
+          <div>
+            <div style={{ fontWeight: '600', marginBottom: '8px' }}>General Inquiries</div>
+            <a href="tel:1-833-266-9922" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
+              1-833-266-9922
+            </a>
           </div>
-
-          <div style={{ textAlign: 'center', paddingTop: '12px' }}>
-            <p style={{ margin: '0 0 8px 0', fontSize: '13px', color: 'rgba(255,255,255,0.9)', fontWeight: 600 }}>
-              RWJBarnabas Health Benefits Resource Center
-            </p>
-            <p style={{ margin: '0 0 12px 0', fontSize: '12px', color: 'rgba(255,255,255,0.7)' }}>
-              Powered by <strong style={{ color: '#fff' }}>Flimp®</strong>
-            </p>
-            <p style={{ margin: 0, fontSize: '11px', color: 'rgba(255,255,255,0.6)' }}>
-              © {new Date().getFullYear()} RWJBarnabas Health. All rights reserved.
-            </p>
+          <div>
+            <div style={{ fontWeight: '600', marginBottom: '8px' }}>Benefits & Enrollment</div>
+            <a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
+              RWJBHBenefits.com
+            </a>
+          </div>
+          <div>
+            <div style={{ fontWeight: '600', marginBottom: '8px' }}>Wellness Resources</div>
+            <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
+              Total Wellbeing Site
+            </a>
           </div>
         </div>
-      </div>
+        <div style={{
+          borderTop: `1px solid rgba(255, 255, 255, 0.2)`,
+          paddingTop: '16px',
+        }}>
+          Copyright {new Date().getFullYear()} RWJBarnabas Health. All rights reserved.
+        </div>
+      </footer>
     </div>
   );
 }
