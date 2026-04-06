@@ -515,10 +515,10 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                     </li>
                   </ul>
                   <a
-                    href="tel:1-800-555-0123"
+                    href="tel:8003000628"
                     className="text-[#CC1F34] hover:underline font-semibold inline-flex items-center gap-2"
                   >
-                    <span style={{ marginRight: '4px' }}>ph:</span> 1-800-555-0123
+                    800.300.0628 — Available 24/7
                   </a>
                 </div>
 
@@ -559,10 +559,10 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                       Therapy and counseling through your medical plan with Aetna.
                     </p>
                     <a
-                      href="tel:1-800-555-0124"
+                      href="tel:8555465415"
                       className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
                     >
-                      <span style={{ marginRight: '4px' }}>ph:</span> 1-800-555-0124
+                      855.546.5415 (Aetna Behavioral Health)
                     </a>
                   </div>
                 </div>
@@ -757,19 +757,19 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0100" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0100
+                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
+                        855.546.5415
                       </a>
                     </p>
                     <p>
                       <strong>Website:</strong>{' '}
                       <a
-                        href="https://www.aetna.com"
+                        href="https://www.aetnaresource.com/n/RWJBH"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#CC1F34] hover:underline"
                       >
-                        www.aetna.com
+                        aetnaresource.com/n/RWJBH
                       </a>
                     </p>
                     <p>
@@ -787,19 +787,19 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0101" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0101
+                      <a href="tel:8008105234" className="text-[#CC1F34] hover:underline">
+                        800.810.5234
                       </a>
                     </p>
                     <p>
                       <strong>Website:</strong>{' '}
                       <a
-                        href="https://www.deltadentalins.com"
+                        href="https://www.deltadentalnj.com/RWJBH"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#CC1F34] hover:underline"
                       >
-                        www.deltadentalins.com
+                        deltadentalnj.com/RWJBH
                       </a>
                     </p>
                     <p>
@@ -817,8 +817,8 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0102" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0102
+                      <a href="tel:8668005457" className="text-[#CC1F34] hover:underline">
+                        866.800.5457
                       </a>
                     </p>
                     <p>
@@ -847,8 +847,8 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0103" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0103
+                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
+                        855.546.5415
                       </a>
                     </p>
                     <p>
@@ -877,19 +877,19 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0104" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0104
+                      <a href="tel:8005135015" className="text-[#CC1F34] hover:underline">
+                        800.513.5015
                       </a>
                     </p>
                     <p>
                       <strong>Website:</strong>{' '}
                       <a
-                        href="https://www.fidelity.com"
+                        href="https://www.netbenefits.com/RWJBarnabasHealth"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#CC1F34] hover:underline"
                       >
-                        www.fidelity.com
+                        netbenefits.com/RWJBarnabasHealth
                       </a>
                     </p>
                     <p>
@@ -907,8 +907,8 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0123" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0123
+                      <a href="tel:8003000628" className="text-[#CC1F34] hover:underline">
+                        800.300.0628
                       </a>
                     </p>
                     <p>
@@ -924,13 +924,13 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                 <div className="bg-white border border-gray-300 rounded-lg p-8">
                   <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
                     <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Human Resources
+                    RWJBH Benefits Center
                   </h3>
                   <div className="space-y-3">
                     <p>
                       <strong>Phone:</strong>{' '}
-                      <a href="tel:1-800-555-0200" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0200
+                      <a href="tel:8446900920" className="text-[#CC1F34] hover:underline">
+                        844.690.0920
                       </a>
                     </p>
                     <p>
@@ -940,7 +940,10 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                       </a>
                     </p>
                     <p>
-                      <strong>Hours:</strong> Monday–Friday, 8 AM–5 PM EST
+                      <strong>Website:</strong>{' '}
+                      <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
+                        RWJBHBenefits.com
+                      </a>
                     </p>
                   </div>
                 </div>
@@ -966,18 +969,62 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
                     <p>
                       <strong>Personify Health:</strong>{' '}
                       <a
-                        href="https://www.personifyhealth.com"
+                        href="https://join.personifyhealth.com/bhealthy"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-[#CC1F34] hover:underline"
                       >
-                        www.personifyhealth.com
+                        join.personifyhealth.com/bhealthy
                       </a>
                     </p>
                     <p>
                       <strong>Behavioral Health:</strong>{' '}
-                      <a href="tel:1-800-555-0124" className="text-[#CC1F34] hover:underline">
-                        1-800-555-0124
+                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
+                        855.546.5415
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Care Navigation */}
+                <div className="bg-white border border-gray-300 rounded-lg p-8">
+                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
+                    Care Navigation
+                  </h3>
+                  <div className="space-y-3">
+                    <p>
+                      <strong>Phone:</strong>{' '}
+                      <a href="tel:8444242628" className="text-[#CC1F34] hover:underline">
+                        844.424.2628
+                      </a>
+                    </p>
+                    <p>
+                      <strong>Website:</strong>{' '}
+                      <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
+                        RWJBHTotalWellbeing.com
+                      </a>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Voluntary Benefits */}
+                <div className="bg-white border border-gray-300 rounded-lg p-8">
+                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
+                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
+                    Voluntary Benefits (Aon)
+                  </h3>
+                  <div className="space-y-3">
+                    <p>
+                      <strong>Phone:</strong>{' '}
+                      <a href="tel:8444286672" className="text-[#CC1F34] hover:underline">
+                        844.428.6672
+                      </a>
+                    </p>
+                    <p>
+                      <strong>Website:</strong>{' '}
+                      <a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
+                        mybenefits.aon.com
                       </a>
                     </p>
                   </div>
@@ -992,9 +1039,9 @@ export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: Virtu
       <footer className="bg-gray-100 border-t border-gray-300 py-8">
         <div className="max-w-7xl mx-auto text-center text-gray-600 text-sm">
           <p className="mb-2">
-            Questions? Contact Human Resources at{' '}
-            <a href="tel:1-800-555-0200" className="text-[#CC1F34] hover:underline">
-              1-800-555-0200
+            Questions? Contact RWJBH Benefits Center at{' '}
+            <a href="tel:8446900920" className="text-[#CC1F34] hover:underline">
+              844.690.0920
             </a>
             {' '}or{' '}
             <a href="mailto:benefits@rwjbh.org" className="text-[#CC1F34] hover:underline">

@@ -73,7 +73,7 @@ function ContentManager() {
                 color: activeFolder === f ? '#08212D' : '#666', fontWeight: activeFolder === f ? 600 : 400,
               }}
             >
-              📁 {f} ({count})
+              {f} ({count})
             </div>
           );
         })}
