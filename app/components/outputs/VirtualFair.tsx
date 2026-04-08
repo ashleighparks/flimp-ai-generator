@@ -32,1027 +32,1141 @@ const TABS: { id: Tab; label: string }[] = [
 ];
 
 const BOOTHS = [
-  { id: 'medicalPlans', label: 'Medical Plans', description: 'Aetna coverage options' },
-  { id: 'dentalVision', label: 'Dental & Vision', description: 'Delta Dental + EyeMed' },
-  { id: 'prescriptions', label: 'Prescriptions', description: 'CVS Caremark pharmacy' },
-  { id: 'spendingAccounts', label: 'Spending Accounts', description: 'HSA • FSA • DCFSA' },
-  { id: 'wellnessEap', label: 'Wellness & EAP', description: '24/7 Employee Assistance' },
-  { id: 'financialRetirement', label: 'Financial & Retirement', description: 'Fidelity 401(k)' },
-  { id: 'paidTimeOff', label: 'Paid Time Off', description: 'Vacation & Holidays' },
-  { id: 'contacts', label: 'Contacts', description: 'All resources & support' },
+  {
+    id: 'medicalPlans',
+    label: 'Medical Plans',
+    description: 'Aetna coverage options',
+    icon: 'A',
+    accentColor: '#CC1F34'
+  },
+  {
+    id: 'dentalVision',
+    label: 'Dental & Vision',
+    description: 'Delta Dental + EyeMed',
+    icon: 'D',
+    accentColor: '#1B2F5C'
+  },
+  {
+    id: 'prescriptions',
+    label: 'Prescriptions',
+    description: 'CVS Caremark pharmacy',
+    icon: 'C',
+    accentColor: '#CC1F34'
+  },
+  {
+    id: 'spendingAccounts',
+    label: 'Spending Accounts',
+    description: 'HSA • FSA • DCFSA',
+    icon: 'S',
+    accentColor: '#1B2F5C'
+  },
+  {
+    id: 'wellnessEap',
+    label: 'Wellness & EAP',
+    description: '24/7 Employee Assistance',
+    icon: 'W',
+    accentColor: '#CC1F34'
+  },
+  {
+    id: 'financialRetirement',
+    label: 'Financial & Retirement',
+    description: 'Fidelity 401(k)',
+    icon: 'F',
+    accentColor: '#1B2F5C'
+  },
+  {
+    id: 'paidTimeOff',
+    label: 'Paid Time Off',
+    description: 'Vacation & Holidays',
+    icon: 'P',
+    accentColor: '#CC1F34'
+  },
+  {
+    id: 'contacts',
+    label: 'Contacts',
+    description: 'All resources & support',
+    icon: '?',
+    accentColor: '#1B2F5C'
+  },
 ];
 
 export default function VirtualFair({ clientName = 'RWJBarnabas Health' }: VirtualFairProps) {
   const [activeTab, setActiveTab] = useState<Tab>('entrance');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | null>(null);
 
   const handleBoothClick = (boothId: string) => {
     setActiveTab(boothId as Tab);
+    setMobileMenuOpen(false);
   };
 
+  const toggleAccordion = (id: string) => {
+    setExpandedAccordion(expandedAccordion === id ? null : id);
+  };
+
+  const styles = {
+    container: {
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column' as const,
+      backgroundColor: '#ffffff'
+    },
+    headerBanner: {
+      backgroundColor: '#1B2F5C',
+      color: '#ffffff',
+      padding: '24px 16px',
+      borderBottom: '4px solid #CC1F34'
+    },
+    headerContent: {
+      maxWidth: '1280px',
+      margin: '0 auto',
+      width: '100%'
+    },
+    headerTitle: {
+      fontSize: '32px',
+      fontWeight: 'bold' as const,
+      margin: 0,
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    headerSubtitle: {
+      color: 'rgba(255, 255, 255, 0.7)',
+      marginTop: '8px',
+      margin: '8px 0 0 0',
+      fontSize: '16px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    stickyNav: {
+      position: 'sticky' as const,
+      top: 0,
+      backgroundColor: '#f8f9fa',
+      borderBottom: '1px solid #e2e8f0',
+      zIndex: 40,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingRight: '16px'
+    },
+    navContainer: {
+      maxWidth: '1280px',
+      width: '100%',
+      margin: '0 auto',
+      display: 'flex',
+      overflowX: 'auto' as const,
+      scrollBehavior: 'smooth' as const
+    },
+    navButton: (isActive: boolean) => ({
+      padding: '16px 20px',
+      fontSize: '14px',
+      fontWeight: '500' as const,
+      whiteSpace: 'nowrap' as const,
+      transition: 'all 0.2s ease',
+      border: 'none',
+      backgroundColor: isActive ? '#ffffff' : 'transparent',
+      borderBottom: isActive ? '3px solid #CC1F34' : '3px solid transparent',
+      color: isActive ? '#1B2F5C' : '#636366',
+      cursor: 'pointer',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif',
+      textTransform: 'capitalize' as const,
+      outline: 'none'
+    }),
+    mainContent: {
+      flex: 1,
+      backgroundColor: '#f8f9fa',
+      padding: '32px 16px'
+    },
+    contentWrapper: {
+      maxWidth: '1280px',
+      margin: '0 auto',
+      width: '100%'
+    },
+    // Entrance styles
+    entranceContainer: {
+      textAlign: 'center' as const
+    },
+    heroTitle: {
+      fontSize: '28px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '16px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    heroSubtitle: {
+      fontSize: '16px',
+      color: '#636366',
+      maxWidth: '640px',
+      margin: '0 auto 32px auto',
+      lineHeight: '1.5',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    infoCardsContainer: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+      gap: '24px',
+      marginBottom: '32px'
+    },
+    infoCard: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      padding: '24px',
+      textAlign: 'left' as const,
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+    },
+    infoCardTitle: {
+      fontSize: '16px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '8px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    infoCardText: {
+      fontSize: '14px',
+      color: '#636366',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    ctaButton: {
+      backgroundColor: '#CC1F34',
+      color: '#ffffff',
+      border: 'none',
+      fontWeight: 'bold' as const,
+      padding: '12px 32px',
+      borderRadius: '8px',
+      fontSize: '16px',
+      cursor: 'pointer',
+      transition: 'background-color 0.2s ease',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    // Exhibit Hall styles
+    exhibitTitle: {
+      fontSize: '28px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '32px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    boothGrid: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+      gap: '24px'
+    },
+    boothCard: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      overflow: 'hidden' as const,
+      cursor: 'pointer',
+      transition: 'all 0.2s ease',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)',
+      textDecoration: 'none',
+      color: 'inherit',
+      display: 'block'
+    },
+    boothCardAccentBar: (accentColor: string) => ({
+      backgroundColor: accentColor,
+      height: '4px',
+      width: '100%'
+    }),
+    boothCardContent: {
+      padding: '24px'
+    },
+    boothIconBadge: (accentColor: string) => ({
+      width: '48px',
+      height: '48px',
+      backgroundColor: accentColor,
+      color: '#ffffff',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: '8px',
+      fontSize: '20px',
+      fontWeight: 'bold' as const,
+      marginBottom: '16px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    }),
+    boothName: {
+      fontSize: '16px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '8px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    boothDescription: {
+      fontSize: '14px',
+      color: '#636366',
+      wordBreak: 'break-word' as const,
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    // Booth detail styles
+    boothDetailHeader: (accentColor: string) => ({
+      borderLeft: `4px solid ${accentColor}`,
+      paddingLeft: '24px',
+      marginBottom: '32px'
+    }),
+    boothDetailTitle: {
+      fontSize: '28px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '8px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    boothDetailSubtitle: {
+      fontSize: '14px',
+      color: '#636366',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    accordionSection: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      marginBottom: '24px',
+      overflow: 'hidden',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+    },
+    accordionHeader: (isExpanded: boolean) => ({
+      padding: '16px 24px',
+      cursor: 'pointer',
+      border: 'none',
+      fontSize: '16px',
+      fontWeight: '600' as const,
+      color: '#1B2F5C',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif',
+      transition: 'background-color 0.2s ease',
+      backgroundColor: isExpanded ? '#e8f0f7' : '#f8f9fa'
+    }),
+    accordionContent: {
+      padding: '24px',
+      fontSize: '14px',
+      color: '#636366',
+      lineHeight: '1.6',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif',
+      borderTop: '1px solid #e2e8f0'
+    },
+    contactCard: {
+      backgroundColor: '#ffffff',
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      padding: '24px',
+      marginBottom: '24px',
+      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+    },
+    contactLabel: {
+      fontSize: '12px',
+      color: '#636366',
+      textTransform: 'uppercase' as const,
+      fontWeight: '600' as const,
+      marginBottom: '8px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    contactValue: {
+      fontSize: '18px',
+      fontWeight: 'bold' as const,
+      color: '#1B2F5C',
+      marginBottom: '16px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    contactLink: {
+      color: '#CC1F34',
+      textDecoration: 'none',
+      fontWeight: '500' as const,
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginRight: '16px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    backLink: {
+      color: '#CC1F34',
+      textDecoration: 'none',
+      fontWeight: '600' as const,
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '8px',
+      marginTop: '32px',
+      cursor: 'pointer',
+      border: 'none',
+      backgroundColor: 'transparent',
+      fontSize: '14px',
+      fontFamily: 'Arial, Open Sans, Lato, sans-serif'
+    },
+    videoPlaceholder: {
+      backgroundColor: '#f0f0f0',
+      borderRadius: '8px',
+      height: '320px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      color: '#636366',
+      fontSize: '16px',
+      marginBottom: '24px',
+      border: '1px solid #e2e8f0'
+    },
+    gridTwoCol: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+      gap: '24px',
+      marginBottom: '24px'
+    }
+  };
+
+  const booth = BOOTHS.find(b => b.id === activeTab);
+  const boothAccent = booth?.accentColor || '#1B2F5C';
+
   return (
-    <div className="min-h-screen flex flex-col bg-white">
+    <div style={styles.container}>
       {/* Header Banner */}
-      <div className="bg-[#1B2F5C] text-white py-6 border-b-4 border-[#CC1F34]">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl font-bold">{clientName}</h1>
-          <p className="text-blue-100 mt-2">Virtual Benefits Fair 2026</p>
+      <div style={styles.headerBanner}>
+        <div style={styles.headerContent}>
+          <h1 style={styles.headerTitle}>{clientName}</h1>
+          <p style={styles.headerSubtitle}>Virtual Benefits Fair 2026</p>
         </div>
       </div>
 
       {/* Sticky Navigation Bar */}
-      <nav className="sticky top-0 bg-gray-100 border-b border-gray-300 z-40">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex overflow-x-auto">
-            {TABS.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-4 text-sm font-medium whitespace-nowrap transition-colors border-b-2 ${
-                  activeTab === tab.id
-                    ? 'border-[#CC1F34] text-[#1B2F5C] bg-white'
-                    : 'border-transparent text-gray-700 hover:text-[#1B2F5C] hover:bg-gray-50'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
-          </div>
+      <nav style={styles.stickyNav}>
+        <div style={styles.navContainer}>
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              style={styles.navButton(activeTab === tab.id)}
+              onMouseEnter={(e) => {
+                if (activeTab !== tab.id) {
+                  (e.target as HTMLElement).style.backgroundColor = '#f0f0f0';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeTab !== tab.id) {
+                  (e.target as HTMLElement).style.backgroundColor = 'transparent';
+                }
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </nav>
 
       {/* Content Area */}
-      <main className="flex-1 bg-white">
-        <div className="max-w-7xl mx-auto py-12">
+      <main style={styles.mainContent}>
+        <div style={styles.contentWrapper}>
           {/* Entrance Tab */}
           {activeTab === 'entrance' && (
-            <div>
-              <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-[#1B2F5C] mb-4">Welcome to the Virtual Benefits Fair</h2>
-                <p className="text-lg text-gray-700 max-w-2xl mx-auto">
-                  Explore our comprehensive benefits offerings designed for you and your family. Click "Exhibit Hall" to get started.
-                </p>
-              </div>
+            <div style={styles.entranceContainer}>
+              <h2 style={styles.heroTitle}>Welcome to the Virtual Benefits Fair</h2>
+              <p style={styles.heroSubtitle}>
+                Explore our comprehensive benefits offerings designed for you and your family.
+              </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-                <div className="bg-blue-50 border-l-4 border-[#1B2F5C] p-6">
-                  <h3 className="font-bold text-[#1B2F5C] mb-2">Open Enrollment Period</h3>
-                  <p className="text-gray-700">April 15 – May 15, 2026</p>
+              <div style={styles.infoCardsContainer}>
+                <div style={styles.infoCard}>
+                  <h3 style={styles.infoCardTitle}>Open Enrollment Period</h3>
+                  <p style={styles.infoCardText}>April 15 – May 15, 2026</p>
                 </div>
-                <div className="bg-blue-50 border-l-4 border-[#1B2F5C] p-6">
-                  <h3 className="font-bold text-[#1B2F5C] mb-2">Benefits Effective Date</h3>
-                  <p className="text-gray-700">July 1, 2026</p>
+                <div style={styles.infoCard}>
+                  <h3 style={styles.infoCardTitle}>Benefits Effective Date</h3>
+                  <p style={styles.infoCardText}>July 1, 2026</p>
                 </div>
-                <div className="bg-blue-50 border-l-4 border-[#1B2F5C] p-6">
-                  <h3 className="font-bold text-[#1B2F5C] mb-2">Questions?</h3>
-                  <p className="text-gray-700">Visit Contacts for support info</p>
+                <div style={styles.infoCard}>
+                  <h3 style={styles.infoCardTitle}>Questions?</h3>
+                  <p style={styles.infoCardText}>Visit Contacts for support info</p>
                 </div>
               </div>
 
-              <div className="text-center">
-                <button
-                  onClick={() => setActiveTab('exhibitHall')}
-                  className="bg-[#CC1F34] hover:bg-[#B01A2A] text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors"
-                >
-                  Enter Exhibit Hall
-                </button>
-              </div>
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={{
+                  ...styles.ctaButton,
+                  cursor: 'pointer'
+                }}
+                onMouseEnter={(e) => {
+                  (e.target as HTMLElement).style.backgroundColor = '#B01A2A';
+                }}
+                onMouseLeave={(e) => {
+                  (e.target as HTMLElement).style.backgroundColor = '#CC1F34';
+                }}
+              >
+                Enter Exhibit Hall
+              </button>
             </div>
           )}
 
           {/* Exhibit Hall Tab */}
           {activeTab === 'exhibitHall' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Exhibit Hall</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {BOOTHS.map((booth) => (
+              <h2 style={styles.exhibitTitle}>Exhibit Hall</h2>
+              <div style={styles.boothGrid}>
+                {BOOTHS.map((b) => (
                   <button
-                    key={booth.id}
-                    onClick={() => handleBoothClick(booth.id)}
-                    className="bg-white border-2 border-gray-200 hover:border-[#CC1F34] hover:shadow-lg rounded-lg p-6 text-left transition-all cursor-pointer"
+                    key={b.id}
+                    onClick={() => handleBoothClick(b.id)}
+                    style={{
+                      ...styles.boothCard,
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      const element = e.currentTarget;
+                      element.style.boxShadow = '0 8px 16px rgba(0, 0, 0, 0.1)';
+                      (element.style as any).borderColor = b.accentColor;
+                    }}
+                    onMouseLeave={(e) => {
+                      const element = e.currentTarget;
+                      element.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
+                      (element.style as any).borderColor = '#e2e8f0';
+                    }}
                   >
-                    <div className="w-12 h-12 bg-[#1B2F5C] rounded-lg mb-4"></div>
-                    <h3 className="font-bold text-[#1B2F5C] mb-2">{booth.label}</h3>
-                    <p className="text-gray-600 text-sm">{booth.description}</p>
+                    <div style={styles.boothCardAccentBar(b.accentColor)} />
+                    <div style={styles.boothCardContent}>
+                      <div style={styles.boothIconBadge(b.accentColor)}>
+                        {b.icon}
+                      </div>
+                      <h3 style={styles.boothName}>{b.label}</h3>
+                      <p style={styles.boothDescription}>{b.description}</p>
+                    </div>
                   </button>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Medical Plans Tab */}
+          {/* Medical Plans Booth */}
           {activeTab === 'medicalPlans' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-2">Medical Plans</h2>
-              <p className="text-gray-600 mb-8">Aetna Medical Coverage Options</p>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Medical Plans</h2>
+                <p style={styles.boothDetailSubtitle}>Aetna comprehensive coverage options</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Plan Comparison</h3>
-                  <div className="space-y-4 text-sm">
-                    <div className="border-t pt-3">
-                      <h4 className="font-bold text-[#1B2F5C] mb-2">Bronze Plan</h4>
-                      <ul className="text-gray-700 space-y-1">
-                        <li>Deductible: $2,000 individual / $4,000 family</li>
-                        <li>Out-of-Pocket Max: $7,000 / $14,000</li>
-                        <li>Coinsurance: 20%</li>
-                        <li>Preventive: No cost sharing</li>
-                      </ul>
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'medical-bronze')}
+                    onClick={() => toggleAccordion('medical-bronze')}
+                  >
+                    <span>Bronze Plan</span>
+                    <span>{expandedAccordion === 'medical-bronze' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'medical-bronze' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Deductible:</strong> $2,000 individual / $4,000 family</p>
+                      <p><strong>Out-of-Pocket Max:</strong> $7,000 / $14,000</p>
+                      <p><strong>Coinsurance:</strong> 20%</p>
+                      <p><strong>Preventive:</strong> No cost sharing</p>
+                      <p><strong>Employee Cost:</strong> $120/month</p>
                     </div>
-                    <div className="border-t pt-3">
-                      <h4 className="font-bold text-[#1B2F5C] mb-2">Silver Plan</h4>
-                      <ul className="text-gray-700 space-y-1">
-                        <li>Deductible: $1,500 individual / $3,000 family</li>
-                        <li>Out-of-Pocket Max: $6,000 / $12,000</li>
-                        <li>Coinsurance: 15%</li>
-                        <li>Preventive: No cost sharing</li>
-                      </ul>
-                    </div>
-                    <div className="border-t pt-3">
-                      <h4 className="font-bold text-[#1B2F5C] mb-2">Gold Plan</h4>
-                      <ul className="text-gray-700 space-y-1">
-                        <li>Deductible: $750 individual / $1,500 family</li>
-                        <li>Out-of-Pocket Max: $5,000 / $10,000</li>
-                        <li>Coinsurance: 10%</li>
-                        <li>Preventive: No cost sharing</li>
-                      </ul>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
-                <div className="space-y-6">
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-4">Employee Contributions</h3>
-                    <table className="w-full text-sm">
-                      <thead>
-                        <tr className="border-b-2 border-[#1B2F5C]">
-                          <th className="text-left py-2">Plan</th>
-                          <th className="text-left py-2">Employee</th>
-                          <th className="text-left py-2">Employer</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b border-gray-200">
-                          <td className="py-3">Bronze</td>
-                          <td>$120/month</td>
-                          <td>$480/month</td>
-                        </tr>
-                        <tr className="border-b border-gray-200">
-                          <td className="py-3">Silver</td>
-                          <td>$180/month</td>
-                          <td>$620/month</td>
-                        </tr>
-                        <tr>
-                          <td className="py-3">Gold</td>
-                          <td>$280/month</td>
-                          <td>$920/month</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'medical-silver')}
+                    onClick={() => toggleAccordion('medical-silver')}
+                  >
+                    <span>Silver Plan</span>
+                    <span>{expandedAccordion === 'medical-silver' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'medical-silver' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Deductible:</strong> $1,500 individual / $3,000 family</p>
+                      <p><strong>Out-of-Pocket Max:</strong> $6,000 / $12,000</p>
+                      <p><strong>Coinsurance:</strong> 15%</p>
+                      <p><strong>Preventive:</strong> No cost sharing</p>
+                      <p><strong>Employee Cost:</strong> $180/month</p>
+                    </div>
+                  )}
+                </div>
 
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-3">Aetna Carrier</h3>
-                    <p className="text-gray-700 mb-4">Our medical plans are administered by Aetna, one of the nation's leading health insurers.</p>
-                    <a
-                      href="https://www.aetna.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#CC1F34] hover:underline font-semibold inline-flex items-center gap-2"
-                    >
-                      <span style={{ marginRight: '4px' }}>→</span> Aetna Portal
-                    </a>
-                  </div>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'medical-gold')}
+                    onClick={() => toggleAccordion('medical-gold')}
+                  >
+                    <span>Gold Plan</span>
+                    <span>{expandedAccordion === 'medical-gold' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'medical-gold' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Deductible:</strong> $750 individual / $1,500 family</p>
+                      <p><strong>Out-of-Pocket Max:</strong> $5,000 / $10,000</p>
+                      <p><strong>Coinsurance:</strong> 10%</p>
+                      <p><strong>Preventive:</strong> No cost sharing</p>
+                      <p><strong>Employee Cost:</strong> $280/month</p>
+                    </div>
+                  )}
+                </div>
 
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-3">More Information</h3>
-                    <button
-                      onClick={() => {
-                        // Trigger video library - in real app this would open Flimp library
-                        alert('Flimp video library would open here');
-                      }}
-                      className="bg-[#1B2F5C] hover:bg-[#0F1A38] text-white font-semibold py-2 px-4 rounded transition-colors"
-                    >
-                      Watch Video
-                    </button>
-                  </div>
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Provider</div>
+                  <div style={styles.contactValue}>Aetna</div>
+                  <a href="tel:8555465415" style={styles.contactLink}>
+                    855.546.5415
+                  </a>
+                  <br />
+                  <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Aetna Portal
+                  </a>
                 </div>
               </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
 
-          {/* Dental & Vision Tab */}
+          {/* Dental & Vision Booth */}
           {activeTab === 'dentalVision' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Dental & Vision Coverage</h2>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Dental & Vision Coverage</h2>
+                <p style={styles.boothDetailSubtitle}>Delta Dental and EyeMed benefits</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-4">Delta Dental</h3>
-                  <table className="w-full text-sm mb-6">
-                    <thead>
-                      <tr className="border-b-2 border-[#1B2F5C]">
-                        <th className="text-left py-2">Service</th>
-                        <th className="text-left py-2">Coverage</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Preventive</td>
-                        <td>100%</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Basic</td>
-                        <td>80%</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Major</td>
-                        <td>50%</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3">Orthodontics</td>
-                        <td>50% (up to $1,500)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="space-y-3">
-                    <p className="text-gray-700"><strong>Annual Maximum:</strong> $1,200 per person</p>
-                    <p className="text-gray-700"><strong>Deductible:</strong> $50 individual / $150 family</p>
-                  </div>
-                  <a
-                    href="https://www.deltadentalins.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold mt-4 inline-flex items-center gap-2"
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'dental-preventive')}
+                    onClick={() => toggleAccordion('dental-preventive')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> Delta Dental Portal
-                  </a>
+                    <span>Dental Preventive</span>
+                    <span>{expandedAccordion === 'dental-preventive' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'dental-preventive' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Cleanings & Exams:</strong> 100% covered, 2x per year</p>
+                      <p><strong>Fluoride:</strong> 100% covered</p>
+                      <p><strong>X-rays:</strong> 100% covered</p>
+                      <p><strong>No deductible on preventive</strong></p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-4">EyeMed Vision</h3>
-                  <table className="w-full text-sm mb-6">
-                    <thead>
-                      <tr className="border-b-2 border-[#1B2F5C]">
-                        <th className="text-left py-2">Service</th>
-                        <th className="text-left py-2">Benefit</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Eye Exam</td>
-                        <td>$10 copay</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Frames</td>
-                        <td>$150 allowance</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Lenses</td>
-                        <td>$100 allowance</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3">Contacts</td>
-                        <td>$100 allowance</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="space-y-3">
-                    <p className="text-gray-700"><strong>Coverage Frequency:</strong> Once per calendar year</p>
-                  </div>
-                  <a
-                    href="https://www.eyemed.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold mt-4 inline-flex items-center gap-2"
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'dental-major')}
+                    onClick={() => toggleAccordion('dental-major')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> EyeMed Portal
+                    <span>Dental Major & Ortho</span>
+                    <span>{expandedAccordion === 'dental-major' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'dental-major' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Basic Fillings:</strong> 80% covered</p>
+                      <p><strong>Root Canals/Crowns:</strong> 50% covered</p>
+                      <p><strong>Deductible:</strong> $50 per person</p>
+                      <p><strong>Annual Max:</strong> $1,500</p>
+                      <p><strong>Orthodontics:</strong> 50% covered (lifetime max $1,500)</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'vision')}
+                    onClick={() => toggleAccordion('vision')}
+                  >
+                    <span>Vision (EyeMed)</span>
+                    <span>{expandedAccordion === 'vision' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'vision' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Eye Exams:</strong> 100% covered, 1x per year</p>
+                      <p><strong>Frames:</strong> $150 allowance</p>
+                      <p><strong>Lenses:</strong> 100% covered</p>
+                      <p><strong>Contacts:</strong> $150 allowance or lenses</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Dental Provider</div>
+                  <div style={styles.contactValue}>Delta Dental</div>
+                  <a href="tel:8008105234" style={styles.contactLink}>
+                    800.810.5234
+                  </a>
+                  <br />
+                  <a href="https://www.deltadentalnj.com/RWJBH" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Find Provider
                   </a>
                 </div>
               </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
 
-          {/* Prescriptions Tab */}
+          {/* Prescriptions Booth */}
           {activeTab === 'prescriptions' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Prescription Benefits</h2>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Prescription Benefits</h2>
+                <p style={styles.boothDetailSubtitle}>CVS Caremark pharmacy network</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-6">CVS Caremark Formulary</h3>
-                  <p className="text-gray-700 mb-6">
-                    CVS Caremark administers our prescription drug plan, offering access to a comprehensive formulary of medications.
-                  </p>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b-2 border-[#1B2F5C]">
-                        <th className="text-left py-2">Tier</th>
-                        <th className="text-left py-2">Copay (30-day)</th>
-                        <th className="text-left py-2">Copay (90-day)</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Generic</td>
-                        <td>$15</td>
-                        <td>$35</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Preferred Brand</td>
-                        <td>$35</td>
-                        <td>$80</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">Non-Preferred Brand</td>
-                        <td>$55</td>
-                        <td>$125</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3">Specialty</td>
-                        <td>20% coinsurance</td>
-                        <td>20% coinsurance</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <p className="text-gray-700 text-sm mt-6">
-                    <strong>Note:</strong> Pharmacy copayments do not apply to preventive medications.
-                  </p>
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'rx-copays')}
+                    onClick={() => toggleAccordion('rx-copays')}
+                  >
+                    <span>Copay Structure</span>
+                    <span>{expandedAccordion === 'rx-copays' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'rx-copays' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Generic:</strong> $15 (30-day) / $35 (90-day)</p>
+                      <p><strong>Preferred Brand:</strong> $40 (30-day) / $95 (90-day)</p>
+                      <p><strong>Non-Preferred Brand:</strong> $55 (30-day) / $125 (90-day)</p>
+                      <p><strong>Specialty:</strong> 20% coinsurance</p>
+                      <p><strong>Preventive medications:</strong> Copay waived</p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-lg font-bold text-[#1B2F5C] mb-6">Plan Highlights</h3>
-                  <ul className="space-y-4 text-gray-700">
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>90-day supply available at retail and mail order pharmacies</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Prior authorization may be required for certain medications</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Specialty medications available through CVS specialty pharmacy</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Annual deductible applies (varies by medical plan)</span>
-                    </li>
-                  </ul>
-                  <a
-                    href="https://www.cvscaremark.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold mt-8 inline-flex items-center gap-2"
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'rx-features')}
+                    onClick={() => toggleAccordion('rx-features')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> CVS Caremark Portal
+                    <span>Program Features</span>
+                    <span>{expandedAccordion === 'rx-features' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'rx-features' && (
+                    <div style={styles.accordionContent}>
+                      <p>• 90-day supply at retail and mail order pharmacies</p>
+                      <p>• Prior authorization may be required for certain medications</p>
+                      <p>• Specialty medications through CVS specialty pharmacy</p>
+                      <p>• Annual deductible applies (varies by medical plan)</p>
+                      <p>• Home delivery available</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Provider</div>
+                  <div style={styles.contactValue}>CVS Caremark</div>
+                  <a href="https://www.cvscaremark.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → CVS Caremark Portal
                   </a>
                 </div>
               </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
 
-          {/* Spending Accounts Tab */}
+          {/* Spending Accounts Booth */}
           {activeTab === 'spendingAccounts' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Flexible Spending Accounts</h2>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Flexible Spending Accounts</h2>
+                <p style={styles.boothDetailSubtitle}>HSA, FSA, and DCFSA options</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Health Savings Account (HSA)</h3>
-                  <ul className="space-y-3 text-gray-700 text-sm mb-6">
-                    <li><strong>2024 Limit:</strong> $4,150 individual / $8,300 family</li>
-                    <li><strong>Catch-up:</strong> +$1,000 age 55+</li>
-                    <li><strong>Employer Match:</strong> 50% up to limit</li>
-                    <li><strong>Rollovers:</strong> Unused funds roll over annually</li>
-                    <li><strong>Tax-Free:</strong> Withdrawals for qualified medical expenses</li>
-                  </ul>
-                  <a
-                    href="https://www.fidelity.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'hsa')}
+                    onClick={() => toggleAccordion('hsa')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> HSA Portal
-                  </a>
+                    <span>Health Savings Account (HSA)</span>
+                    <span>{expandedAccordion === 'hsa' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'hsa' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>2024 Limit:</strong> $4,150 individual / $8,300 family</p>
+                      <p><strong>Catch-up:</strong> +$1,000 age 55+</p>
+                      <p><strong>Employer Match:</strong> 50% up to limit</p>
+                      <p><strong>Rollovers:</strong> Unused funds roll over annually</p>
+                      <p><strong>Tax-Free:</strong> Withdrawals for qualified medical expenses</p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Flexible Spending Account (FSA)</h3>
-                  <ul className="space-y-3 text-gray-700 text-sm mb-6">
-                    <li><strong>2024 Limit:</strong> $3,300</li>
-                    <li><strong>Eligible Expenses:</strong> Medical, dental, vision</li>
-                    <li><strong>No Employer Match</strong></li>
-                    <li><strong>Carryover:</strong> Up to $610 rolls to next year</li>
-                    <li><strong>Tax-Free:</strong> Reduces taxable income</li>
-                  </ul>
-                  <a
-                    href="https://www.fidelity.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'fsa')}
+                    onClick={() => toggleAccordion('fsa')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> FSA Portal
-                  </a>
+                    <span>Flexible Spending Account (FSA)</span>
+                    <span>{expandedAccordion === 'fsa' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'fsa' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>2024 Limit:</strong> $3,300</p>
+                      <p><strong>Eligible Expenses:</strong> Medical, dental, vision</p>
+                      <p><strong>No Employer Match</strong></p>
+                      <p><strong>Carryover:</strong> Up to $610 rolls to next year</p>
+                      <p><strong>Tax-Free:</strong> Reduces taxable income</p>
+                    </div>
+                  )}
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-lg p-6">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Dependent Care FSA (DCFSA)</h3>
-                  <ul className="space-y-3 text-gray-700 text-sm mb-6">
-                    <li><strong>2024 Limit:</strong> $5,000 (single) / $2,500 (married filing separately)</li>
-                    <li><strong>Use:</strong> Childcare and adult dependent care</li>
-                    <li><strong>No Employer Match</strong></li>
-                    <li><strong>Use-It-Or-Lose-It:</strong> Unused funds forfeited</li>
-                    <li><strong>Tax-Free:</strong> Saves 20-30% in taxes</li>
-                  </ul>
-                  <a
-                    href="https://www.fidelity.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'dcfsa')}
+                    onClick={() => toggleAccordion('dcfsa')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> DCFSA Portal
+                    <span>Dependent Care FSA (DCFSA)</span>
+                    <span>{expandedAccordion === 'dcfsa' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'dcfsa' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>2024 Limit:</strong> $5,000 (single) / $2,500 (married filing separately)</p>
+                      <p><strong>Use:</strong> Childcare and adult dependent care</p>
+                      <p><strong>No Employer Match</strong></p>
+                      <p><strong>Use-It-Or-Lose-It:</strong> Unused funds forfeited</p>
+                      <p><strong>Tax-Free:</strong> Saves 20-30% in taxes</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Administrator</div>
+                  <div style={styles.contactValue}>Fidelity</div>
+                  <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Fidelity Portal
                   </a>
                 </div>
               </div>
 
-              <div className="bg-blue-50 border-l-4 border-[#1B2F5C] p-6">
-                <h3 className="font-bold text-[#1B2F5C] mb-3">Important Reminder</h3>
-                <p className="text-gray-700">
-                  These accounts have tax advantages, but funds must be used for qualified expenses. Review IRS regulations for eligible expense categories.
-                </p>
-              </div>
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
 
-          {/* Wellness & EAP Tab */}
+          {/* Wellness & EAP Booth */}
           {activeTab === 'wellnessEap' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Wellness & Employee Assistance Program</h2>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Wellness & EAP</h2>
+                <p style={styles.boothDetailSubtitle}>24/7 support and wellness resources</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-4">Employee Assistance Program (EAP)</h3>
-                  <p className="text-gray-700 mb-4">
-                    Available 24/7/365 for confidential counseling and support services.
-                  </p>
-                  <ul className="space-y-3 text-gray-700 mb-6">
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Unlimited counseling sessions (up to 12 per year per issue)</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Mental health & counseling support</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Financial and legal consultation</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#CC1F34] font-bold">•</span>
-                      <span>Completely confidential and at no cost to you</span>
-                    </li>
-                  </ul>
-                  <a
-                    href="tel:8003000628"
-                    className="text-[#CC1F34] hover:underline font-semibold inline-flex items-center gap-2"
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'eap')}
+                    onClick={() => toggleAccordion('eap')}
                   >
-                    800.300.0628 — Available 24/7
+                    <span>Employee Assistance Program</span>
+                    <span>{expandedAccordion === 'eap' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'eap' && (
+                    <div style={styles.accordionContent}>
+                      <p>• Available 24/7/365 for confidential counseling</p>
+                      <p>• Unlimited counseling sessions (up to 12 per year per issue)</p>
+                      <p>• Mental health & counseling support</p>
+                      <p>• Financial and legal consultation</p>
+                      <p>• Completely confidential and at no cost</p>
+                      <p><strong>Phone:</strong> <a href="tel:8003000628" style={styles.contactLink}>800.300.0628</a></p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'wellness')}
+                    onClick={() => toggleAccordion('wellness')}
+                  >
+                    <span>Wellness Programs</span>
+                    <span>{expandedAccordion === 'wellness' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'wellness' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Calm:</strong> Premium meditation & sleep access</p>
+                      <p><strong>Personify Health:</strong> Nutrition coaching with dietitians</p>
+                      <p><strong>Behavioral Health:</strong> Therapy through your medical plan</p>
+                      <p><strong>On-site Clinics:</strong> Convenient health screenings</p>
+                      <p><strong>Fitness Programs:</strong> Gym discounts and classes</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>EAP Support</div>
+                  <div style={styles.contactValue}>24/7 Hotline</div>
+                  <a href="tel:8003000628" style={styles.contactLink}>
+                    800.300.0628
                   </a>
                 </div>
 
-                <div className="space-y-6">
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-3">Calm – Meditation & Sleep</h3>
-                    <p className="text-gray-700 text-sm mb-4">
-                      Premium access to meditation, sleep stories, and mindfulness exercises.
-                    </p>
-                    <a
-                      href="https://www.calm.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
-                    >
-                      <span style={{ marginRight: '4px' }}>→</span> Access Calm
-                    </a>
-                  </div>
-
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-3">Personify Health – Nutrition</h3>
-                    <p className="text-gray-700 text-sm mb-4">
-                      Personalized nutrition and wellness coaching with registered dietitians.
-                    </p>
-                    <a
-                      href="https://www.personifyhealth.com"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
-                    >
-                      <span style={{ marginRight: '4px' }}>→</span> Access Program
-                    </a>
-                  </div>
-
-                  <div className="bg-white border border-gray-300 rounded-lg p-6">
-                    <h3 className="text-lg font-bold text-[#1B2F5C] mb-3">Behavioral Health</h3>
-                    <p className="text-gray-700 text-sm mb-4">
-                      Therapy and counseling through your medical plan with Aetna.
-                    </p>
-                    <a
-                      href="tel:8555465415"
-                      className="text-[#CC1F34] hover:underline font-semibold text-sm inline-flex items-center gap-2"
-                    >
-                      855.546.5415 (Aetna Behavioral Health)
-                    </a>
-                  </div>
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Behavioral Health</div>
+                  <div style={styles.contactValue}>Aetna</div>
+                  <a href="tel:8555465415" style={styles.contactLink}>
+                    855.546.5415
+                  </a>
                 </div>
               </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
 
-          {/* Financial & Retirement Tab */}
+          {/* Financial & Retirement Booth */}
           {activeTab === 'financialRetirement' && (
             <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Financial & Retirement Planning</h2>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Financial & Retirement</h2>
+                <p style={styles.boothDetailSubtitle}>401(k) and retirement planning</p>
+              </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-6">401(k) Retirement Plan</h3>
-                  <p className="text-gray-700 mb-6">
-                    Fidelity administers our 401(k) plan, providing comprehensive retirement savings options.
-                  </p>
-                  <div className="space-y-4 mb-6">
-                    <div className="border-b pb-4">
-                      <p className="text-gray-700"><strong>Plan Highlights:</strong></p>
-                      <ul className="text-sm text-gray-700 mt-2 space-y-2">
-                        <li>• 2024 contribution limit: $23,500</li>
-                        <li>• Catch-up contribution (age 50+): $7,500</li>
-                        <li>• Roth 401(k) option available</li>
-                        <li>• Employer match: 100% up to 3%, 50% from 3-5%</li>
-                        <li>• Immediate eligibility</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <p className="text-gray-700"><strong>Investment Options:</strong></p>
-                      <ul className="text-sm text-gray-700 mt-2 space-y-2">
-                        <li>• Target-date funds</li>
-                        <li>• Index funds</li>
-                        <li>• Actively managed funds</li>
-                        <li>• Self-directed brokerage</li>
-                      </ul>
-                    </div>
-                  </div>
-                  <a
-                    href="https://www.fidelity.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-[#CC1F34] hover:underline font-semibold inline-flex items-center gap-2"
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === '401k-basics')}
+                    onClick={() => toggleAccordion('401k-basics')}
                   >
-                    <span style={{ marginRight: '4px' }}>→</span> Fidelity 401(k) Portal
+                    <span>401(k) Basics</span>
+                    <span>{expandedAccordion === '401k-basics' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === '401k-basics' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>2024 Limit:</strong> $23,500 (catch-up at 50+: $30,500)</p>
+                      <p><strong>Immediate Eligibility:</strong> First day of employment</p>
+                      <p><strong>Employer Match:</strong> Dollar-for-dollar up to 3%, 50% match from 3-4%</p>
+                      <p><strong>Vesting:</strong> Employer contributions vest immediately</p>
+                      <p><strong>Investment Options:</strong> Target-date, index, managed, and self-directed brokerage funds</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'match-details')}
+                    onClick={() => toggleAccordion('match-details')}
+                  >
+                    <span>Employer Match Details</span>
+                    <span>{expandedAccordion === 'match-details' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'match-details' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>1% contribution:</strong> 1% match (100%)</p>
+                      <p><strong>2% contribution:</strong> 2% match (100%)</p>
+                      <p><strong>3% contribution:</strong> 3% match (100%)</p>
+                      <p><strong>4% contribution:</strong> 3.5% match (50%)</p>
+                      <p><strong>5%+ contribution:</strong> 4% match (50%)</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Provider</div>
+                  <div style={styles.contactValue}>Fidelity</div>
+                  <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Fidelity Portal
+                  </a>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
+            </div>
+          )}
+
+          {/* Paid Time Off Booth */}
+          {activeTab === 'paidTimeOff' && (
+            <div>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Paid Time Off</h2>
+                <p style={styles.boothDetailSubtitle}>Vacation, holidays, and leave policies</p>
+              </div>
+
+              <div style={styles.gridTwoCol}>
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'pto')}
+                    onClick={() => toggleAccordion('pto')}
+                  >
+                    <span>Vacation & PTO</span>
+                    <span>{expandedAccordion === 'pto' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'pto' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>0–2 years:</strong> 15 days per year</p>
+                      <p><strong>3–5 years:</strong> 18 days per year</p>
+                      <p><strong>6–10 years:</strong> 22 days per year</p>
+                      <p><strong>10+ years:</strong> 25 days per year</p>
+                      <p><strong>Note:</strong> Vacation days do not roll over. Unused days are forfeited at year-end.</p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'holidays')}
+                    onClick={() => toggleAccordion('holidays')}
+                  >
+                    <span>Paid Holidays</span>
+                    <span>{expandedAccordion === 'holidays' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'holidays' && (
+                    <div style={styles.accordionContent}>
+                      <p>• New Year's Day</p>
+                      <p>• MLK Jr. Day</p>
+                      <p>• Presidents' Day</p>
+                      <p>• Memorial Day</p>
+                      <p>• Independence Day</p>
+                      <p>• Labor Day</p>
+                      <p>• Thanksgiving & Day After</p>
+                      <p>• Christmas Eve & Christmas</p>
+                      <p><strong>Total: 10 paid holidays per year</strong></p>
+                    </div>
+                  )}
+                </div>
+
+                <div style={styles.accordionSection}>
+                  <button
+                    style={styles.accordionHeader(expandedAccordion === 'parental')}
+                    onClick={() => toggleAccordion('parental')}
+                  >
+                    <span>Parental & Family Leave</span>
+                    <span>{expandedAccordion === 'parental' ? '−' : '+'}</span>
+                  </button>
+                  {expandedAccordion === 'parental' && (
+                    <div style={styles.accordionContent}>
+                      <p><strong>Birth Parent:</strong> 12 weeks paid</p>
+                      <p><strong>Non-Birth Parent:</strong> 4 weeks paid</p>
+                      <p><strong>Adoption:</strong> 4 weeks paid</p>
+                      <p><strong>Job Protection:</strong> FMLA compliant</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
+            </div>
+          )}
+
+          {/* Contacts Booth */}
+          {activeTab === 'contacts' && (
+            <div>
+              <div style={styles.boothDetailHeader(boothAccent)}>
+                <h2 style={styles.boothDetailTitle}>Benefits Support & Contacts</h2>
+                <p style={styles.boothDetailSubtitle}>Quick reference for all providers and support</p>
+              </div>
+
+              <div style={styles.gridTwoCol}>
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Medical Plan</div>
+                  <div style={styles.contactValue}>Aetna</div>
+                  <a href="tel:8555465415" style={styles.contactLink}>
+                    855.546.5415
+                  </a>
+                  <br />
+                  <a href="https://www.aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Aetna Portal
+                  </a>
+                  <p style={{ fontSize: '12px', color: '#636366', marginTop: '8px' }}>Available 24/7</p>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Dental</div>
+                  <div style={styles.contactValue}>Delta Dental</div>
+                  <a href="tel:8008105234" style={styles.contactLink}>
+                    800.810.5234
+                  </a>
+                  <br />
+                  <a href="https://www.deltadentalnj.com/RWJBH" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Find Provider
                   </a>
                 </div>
 
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-6">Employer Match Details</h3>
-                  <table className="w-full mb-6">
-                    <thead>
-                      <tr className="border-b-2 border-[#1B2F5C]">
-                        <th className="text-left py-2">Your Contribution</th>
-                        <th className="text-left py-2">Employer Match</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">1% of salary</td>
-                        <td>1% of salary</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">2% of salary</td>
-                        <td>2% of salary</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">3% of salary</td>
-                        <td>3% of salary (100%)</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">4% of salary</td>
-                        <td>3.5% of salary (50%)</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3">5%+ of salary</td>
-                        <td>4% of salary (50%)</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <div className="bg-yellow-50 border-l-4 border-[#CC1F34] p-4">
-                    <p className="text-sm text-gray-700">
-                      <strong>Vesting:</strong> Employer contributions vest immediately. You own 100% of your money from day one.
-                    </p>
-                  </div>
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Vision</div>
+                  <div style={styles.contactValue}>EyeMed</div>
+                  <a href="tel:8668005457" style={styles.contactLink}>
+                    866.800.5457
+                  </a>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Prescriptions</div>
+                  <div style={styles.contactValue}>CVS Caremark</div>
+                  <a href="https://www.cvscaremark.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → CVS Caremark Portal
+                  </a>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>FSA/HSA/DCFSA</div>
+                  <div style={styles.contactValue}>Fidelity</div>
+                  <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Fidelity Portal
+                  </a>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>401(k)</div>
+                  <div style={styles.contactValue}>Fidelity</div>
+                  <a href="https://www.fidelity.com" target="_blank" rel="noopener noreferrer" style={styles.contactLink}>
+                    → Fidelity 401(k) Portal
+                  </a>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Employee Assistance</div>
+                  <div style={styles.contactValue}>EAP Hotline</div>
+                  <a href="tel:8003000628" style={styles.contactLink}>
+                    800.300.0628
+                  </a>
+                  <p style={{ fontSize: '12px', color: '#636366', marginTop: '8px' }}>24/7/365</p>
+                </div>
+
+                <div style={styles.contactCard}>
+                  <div style={styles.contactLabel}>Behavioral Health</div>
+                  <div style={styles.contactValue}>Aetna Behavioral</div>
+                  <a href="tel:8555465415" style={styles.contactLink}>
+                    855.546.5415
+                  </a>
                 </div>
               </div>
-            </div>
-          )}
 
-          {/* Paid Time Off Tab */}
-          {activeTab === 'paidTimeOff' && (
-            <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Paid Time Off</h2>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-2xl font-bold text-[#1B2F5C] mb-6">Vacation & PTO</h3>
-                  <table className="w-full mb-6">
-                    <thead>
-                      <tr className="border-b-2 border-[#1B2F5C]">
-                        <th className="text-left py-2">Years of Service</th>
-                        <th className="text-left py-2">Days Per Year</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">0–2 years</td>
-                        <td>15 days</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">3–5 years</td>
-                        <td>18 days</td>
-                      </tr>
-                      <tr className="border-b border-gray-200">
-                        <td className="py-3">6–10 years</td>
-                        <td>22 days</td>
-                      </tr>
-                      <tr>
-                        <td className="py-3">10+ years</td>
-                        <td>25 days</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <p className="text-gray-700 text-sm">
-                    <strong>Note:</strong> Vacation days do not roll over. Unused days are forfeited at year-end.
-                  </p>
-                </div>
-
-                <div className="space-y-6">
-                  <div className="bg-white border border-gray-300 rounded-lg p-8">
-                    <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Holidays</h3>
-                    <p className="text-gray-700 mb-4">
-                      All employees observe the following company-recognized holidays:
-                    </p>
-                    <ul className="space-y-2 text-gray-700 text-sm">
-                      <li>• New Year's Day</li>
-                      <li>• MLK Jr. Day</li>
-                      <li>• Presidents' Day</li>
-                      <li>• Memorial Day</li>
-                      <li>• Independence Day</li>
-                      <li>• Labor Day</li>
-                      <li>• Thanksgiving</li>
-                      <li>• Day After Thanksgiving</li>
-                      <li>• Christmas Eve</li>
-                      <li>• Christmas Day</li>
-                    </ul>
-                    <p className="text-gray-700 text-sm mt-4">
-                      <strong>Total:</strong> 10 paid holidays per year
-                    </p>
-                  </div>
-
-                  <div className="bg-white border border-gray-300 rounded-lg p-8">
-                    <h3 className="text-xl font-bold text-[#1B2F5C] mb-4">Parental Leave</h3>
-                    <ul className="space-y-3 text-gray-700 text-sm">
-                      <li className="flex gap-3">
-                        <span className="text-[#CC1F34] font-bold">•</span>
-                        <span><strong>Birth Parent:</strong> 12 weeks paid</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-[#CC1F34] font-bold">•</span>
-                        <span><strong>Non-Birth Parent:</strong> 4 weeks paid</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-[#CC1F34] font-bold">•</span>
-                        <span><strong>Adoption:</strong> 4 weeks paid</span>
-                      </li>
-                      <li className="flex gap-3">
-                        <span className="text-[#CC1F34] font-bold">•</span>
-                        <span><strong>Job Protection:</strong> FMLA compliant</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* Contacts Tab */}
-          {activeTab === 'contacts' && (
-            <div>
-              <h2 className="text-3xl font-bold text-[#1B2F5C] mb-8">Benefits Support & Contacts</h2>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Medical */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Medical Plan (Aetna)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
-                        855.546.5415
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a
-                        href="https://www.aetnaresource.com/n/RWJBH"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        aetnaresource.com/n/RWJBH
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Customer Service:</strong> Available 24/7
-                    </p>
-                  </div>
-                </div>
-
-                {/* Dental */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Dental (Delta Dental)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8008105234" className="text-[#CC1F34] hover:underline">
-                        800.810.5234
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a
-                        href="https://www.deltadentalnj.com/RWJBH"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        deltadentalnj.com/RWJBH
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Find a Provider:</strong> Available on website
-                    </p>
-                  </div>
-                </div>
-
-                {/* Vision */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Vision (EyeMed)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8668005457" className="text-[#CC1F34] hover:underline">
-                        866.800.5457
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a
-                        href="https://www.eyemed.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        www.eyemed.com
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Provider Network:</strong> Nationwide coverage
-                    </p>
-                  </div>
-                </div>
-
-                {/* Pharmacy */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Pharmacy (CVS Caremark)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
-                        855.546.5415
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a
-                        href="https://www.cvscaremark.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        www.cvscaremark.com
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Mail Order:</strong> 90-day supplies available
-                    </p>
-                  </div>
-                </div>
-
-                {/* 401k */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    401(k) (Fidelity)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8005135015" className="text-[#CC1F34] hover:underline">
-                        800.513.5015
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a
-                        href="https://www.netbenefits.com/RWJBarnabasHealth"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        netbenefits.com/RWJBarnabasHealth
-                      </a>
-                    </p>
-                    <p>
-                      <strong>HSA & FSA:</strong> Also managed by Fidelity
-                    </p>
-                  </div>
-                </div>
-
-                {/* EAP */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Employee Assistance Program
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8003000628" className="text-[#CC1F34] hover:underline">
-                        800.300.0628
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Available:</strong> 24/7/365
-                    </p>
-                    <p>
-                      <strong>Services:</strong> Counseling, financial, legal, wellness
-                    </p>
-                  </div>
-                </div>
-
-                {/* HR Department */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    RWJBH Benefits Center
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8446900920" className="text-[#CC1F34] hover:underline">
-                        844.690.0920
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Email:</strong>{' '}
-                      <a href="mailto:benefits@rwjbh.org" className="text-[#CC1F34] hover:underline">
-                        benefits@rwjbh.org
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a href="https://www.RWJBHBenefits.com" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
-                        RWJBHBenefits.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Wellness Programs */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Wellness & Mental Health
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Calm App:</strong>{' '}
-                      <a
-                        href="https://www.calm.com"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        www.calm.com
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Personify Health:</strong>{' '}
-                      <a
-                        href="https://join.personifyhealth.com/bhealthy"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[#CC1F34] hover:underline"
-                      >
-                        join.personifyhealth.com/bhealthy
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Behavioral Health:</strong>{' '}
-                      <a href="tel:8555465415" className="text-[#CC1F34] hover:underline">
-                        855.546.5415
-                      </a>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Care Navigation */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Care Navigation
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8444242628" className="text-[#CC1F34] hover:underline">
-                        844.424.2628
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
-                        RWJBHTotalWellbeing.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
-
-                {/* Voluntary Benefits */}
-                <div className="bg-white border border-gray-300 rounded-lg p-8">
-                  <h3 className="text-xl font-bold text-[#1B2F5C] mb-6 flex items-center gap-2">
-                    <div className="w-3 h-3 bg-[#1B2F5C] rounded-full"></div>
-                    Voluntary Benefits (Aon)
-                  </h3>
-                  <div className="space-y-3">
-                    <p>
-                      <strong>Phone:</strong>{' '}
-                      <a href="tel:8444286672" className="text-[#CC1F34] hover:underline">
-                        844.428.6672
-                      </a>
-                    </p>
-                    <p>
-                      <strong>Website:</strong>{' '}
-                      <a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home" target="_blank" rel="noopener noreferrer" className="text-[#CC1F34] hover:underline">
-                        mybenefits.aon.com
-                      </a>
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <button
+                onClick={() => setActiveTab('exhibitHall')}
+                style={styles.backLink}
+              >
+                ← Back to Exhibit Hall
+              </button>
             </div>
           )}
         </div>
       </main>
-
-      {/* Footer */}
-      <footer className="bg-gray-100 border-t border-gray-300 py-8">
-        <div className="max-w-7xl mx-auto text-center text-gray-600 text-sm">
-          <p className="mb-2">
-            Questions? Contact RWJBH Benefits Center at{' '}
-            <a href="tel:8446900920" className="text-[#CC1F34] hover:underline">
-              844.690.0920
-            </a>
-            {' '}or{' '}
-            <a href="mailto:benefits@rwjbh.org" className="text-[#CC1F34] hover:underline">
-              benefits@rwjbh.org
-            </a>
-          </p>
-          <p className="text-xs">
-            This benefits information is provided for reference only. Please consult carrier materials and plan documents for complete coverage details.
-          </p>
-        </div>
-      </footer>
     </div>
   );
 }

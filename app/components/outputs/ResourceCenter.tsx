@@ -5,10 +5,12 @@ import { useState } from 'react';
 const RWJBH_COLORS = {
   navy: '#1B2F5C',
   red: '#CC1F34',
-  lightBg: '#EBF0F5',
+  lightBg: '#f8f9fa',
+  lightBg2: '#EBF0F5',
   darkGray: '#374151',
   lightGray: '#F3F4F6',
   border: '#E5E7EB',
+  white: '#FFFFFF',
 };
 
 type TabId = 'home' | 'medical' | 'dental' | 'prescriptions' | 'spending' | 'life' | 'retirement' | 'wellness' | 'contacts';
@@ -290,15 +292,43 @@ interface ResourceCenterProps {
   clientName?: string;
 }
 
+// Icon SVG components as simple HTML strings
+const getPdfIcon = () => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M4 1C2.89543 1 2 1.89543 2 3V13C2 14.1046 2.89543 15 4 15H12C13.1046 15 14 14.1046 14 13V5L9 1H4Z" stroke="currentColor" stroke-width="1" fill="none"/>
+  <path d="M9 1V4H12" stroke="currentColor" stroke-width="1"/>
+</svg>`;
+
+const getVideoIcon = () => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1"/>
+  <path d="M6.5 5.5L11 8L6.5 10.5V5.5Z" fill="currentColor"/>
+</svg>`;
+
+const getLinkIcon = () => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M3.5 8.5H7M9 8.5H12.5M8.5 3.5L12 7M4 12L7.5 8.5" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+  <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1" fill="none"/>
+</svg>`;
+
+const getArrowIcon = () => `<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`;
+
 export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: ResourceCenterProps) {
   const [activeTab, setActiveTab] = useState<TabId>('home');
+  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (sectionId: string) => {
+    setExpandedSections(prev => ({
+      ...prev,
+      [sectionId]: !prev[sectionId]
+    }));
+  };
 
   const openVideo = () => {
     window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank');
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'white' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: RWJBH_COLORS.lightBg }}>
       {/* Header */}
       <header style={{
         backgroundColor: RWJBH_COLORS.navy,
@@ -316,16 +346,18 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
       {/* Sticky Tab Bar */}
       <nav style={{
-        backgroundColor: 'white',
+        backgroundColor: RWJBH_COLORS.white,
         borderBottom: `1px solid ${RWJBH_COLORS.border}`,
         position: 'sticky',
         top: 0,
         zIndex: 40,
         overflowX: 'auto',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
       }}>
         <div style={{
           display: 'flex',
           gap: 0,
+          maxWidth: '100%',
         }}>
           {TABS.map((tab) => (
             <button
@@ -333,8 +365,8 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
               onClick={() => setActiveTab(tab.id)}
               style={{
                 flex: '0 0 auto',
-                padding: '16px 20px',
-                backgroundColor: activeTab === tab.id ? RWJBH_COLORS.navy : 'white',
+                padding: '16px 18px',
+                backgroundColor: activeTab === tab.id ? RWJBH_COLORS.navy : RWJBH_COLORS.white,
                 color: activeTab === tab.id ? 'white' : RWJBH_COLORS.darkGray,
                 border: 'none',
                 borderBottom: activeTab === tab.id ? `3px solid ${RWJBH_COLORS.red}` : '1px solid transparent',
@@ -343,6 +375,7 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                 fontWeight: activeTab === tab.id ? '600' : '500',
                 transition: 'all 0.2s ease',
                 whiteSpace: 'nowrap',
+                textTransform: 'capitalize',
               }}
             >
               {tab.label}
@@ -352,143 +385,149 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
       </nav>
 
       {/* Main Content Area */}
-      <main style={{ flex: 1, padding: '40px 40px' }}>
+      <main style={{ flex: 1, padding: '40px' }}>
         {/* Home Tab */}
         {activeTab === 'home' && (
           <div>
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
-              Welcome to Your Benefits
-            </h2>
-            <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '32px', maxWidth: '700px' }}>
-              Everything you need to understand and maximize your benefits. Start here to learn about your coverage options and take action.
-            </p>
-
-            {/* Quick Links Grid */}
-            <div style={{ marginBottom: '40px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
-                Explore Your Benefits
-              </h3>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-                gap: '16px',
-              }}>
-                {TABS.slice(1, 9).map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    style={{
-                      padding: '20px',
-                      backgroundColor: RWJBH_COLORS.lightGray,
-                      border: `2px solid ${RWJBH_COLORS.border}`,
-                      borderRadius: '8px',
-                      cursor: 'pointer',
-                      textAlign: 'center',
-                      transition: 'all 0.2s ease',
-                    }}
-                    onMouseOver={(e) => {
-                      const target = e.currentTarget;
-                      target.style.borderColor = RWJBH_COLORS.red;
-                      target.style.backgroundColor = RWJBH_COLORS.navy;
-                    }}
-                    onMouseOut={(e) => {
-                      const target = e.currentTarget;
-                      target.style.borderColor = RWJBH_COLORS.border;
-                      target.style.backgroundColor = RWJBH_COLORS.lightGray;
-                    }}
-                  >
-                    <div style={{ fontSize: '16px', fontWeight: '600', color: 'inherit' }}>
-                      {tab.label}
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {/* Featured Video Card */}
-            <div style={{ marginBottom: '40px' }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
-                Featured Video
-              </h3>
-              <button
-                onClick={openVideo}
-                style={{
-                  width: '100%',
-                  maxWidth: '500px',
-                  padding: '32px',
-                  backgroundColor: RWJBH_COLORS.navy,
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  textAlign: 'center',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.backgroundColor = RWJBH_COLORS.red;
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.backgroundColor = RWJBH_COLORS.navy;
-                }}
-              >
-                <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>
-                  Benefits Key Terms Explained
-                </div>
-                <div style={{ fontSize: '14px', opacity: 0.9 }}>
-                  5:32 — Click to watch in video library
-                </div>
-              </button>
-            </div>
-
-            {/* Enrollment CTA */}
-            <div style={{
-              padding: '32px',
-              backgroundColor: RWJBH_COLORS.lightBg,
-              border: `2px solid ${RWJBH_COLORS.red}`,
-              borderRadius: '8px',
-              textAlign: 'center',
-            }}>
-              <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
-                Ready to Enroll?
-              </h3>
-              <p style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '16px' }}>
-                Visit RWJBHBenefits.com to review plans and make your elections.
+            <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
+              <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+                Welcome to Your Benefits
+              </h2>
+              <p style={{ fontSize: '16px', color: RWJBH_COLORS.darkGray, marginBottom: '40px', maxWidth: '700px', lineHeight: '1.6' }}>
+                Everything you need to understand and maximize your benefits. Explore your coverage options, access resources, and take action.
               </p>
-              <a
-                href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  display: 'inline-block',
-                  padding: '12px 28px',
-                  backgroundColor: RWJBH_COLORS.red,
-                  color: 'white',
-                  textDecoration: 'none',
-                  borderRadius: '4px',
-                  fontWeight: '600',
-                  fontSize: '14px',
-                  transition: 'all 0.2s ease',
-                }}
-                onMouseOver={(e) => {
-                  e.currentTarget.style.opacity = '0.9';
-                  e.currentTarget.style.transform = 'scale(1.02)';
-                }}
-                onMouseOut={(e) => {
-                  e.currentTarget.style.opacity = '1';
-                  e.currentTarget.style.transform = 'scale(1)';
-                }}
-              >
-                Go to Enrollment
-              </a>
+
+              {/* Quick Links Grid */}
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
+                  Explore Your Benefits
+                </h3>
+                <div style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                  gap: '12px',
+                }}>
+                  {TABS.slice(1, 9).map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      style={{
+                        padding: '16px 12px',
+                        backgroundColor: RWJBH_COLORS.white,
+                        border: `1px solid ${RWJBH_COLORS.border}`,
+                        borderRadius: '6px',
+                        cursor: 'pointer',
+                        textAlign: 'center',
+                        transition: 'all 0.2s ease',
+                        fontSize: '14px',
+                        fontWeight: '500',
+                        color: RWJBH_COLORS.navy,
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.red;
+                        e.currentTarget.style.backgroundColor = RWJBH_COLORS.lightBg2;
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.border;
+                        e.currentTarget.style.backgroundColor = RWJBH_COLORS.white;
+                        e.currentTarget.style.boxShadow = 'none';
+                      }}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Featured Video Card */}
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
+                  Featured Video
+                </h3>
+                <button
+                  onClick={openVideo}
+                  style={{
+                    width: '100%',
+                    maxWidth: '500px',
+                    padding: '32px',
+                    backgroundColor: RWJBH_COLORS.navy,
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    textAlign: 'center',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 2px 8px rgba(27, 47, 92, 0.1)',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.backgroundColor = RWJBH_COLORS.red;
+                    e.currentTarget.style.boxShadow = '0 4px 12px rgba(204, 31, 52, 0.15)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.backgroundColor = RWJBH_COLORS.navy;
+                    e.currentTarget.style.boxShadow = '0 2px 8px rgba(27, 47, 92, 0.1)';
+                  }}
+                >
+                  <div style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>
+                    Benefits Key Terms Explained
+                  </div>
+                  <div style={{ fontSize: '14px', opacity: 0.9 }}>
+                    5:32 — Click to watch in video library
+                  </div>
+                </button>
+              </div>
+
+              {/* Enrollment CTA */}
+              <div style={{
+                padding: '32px',
+                backgroundColor: RWJBH_COLORS.white,
+                border: `2px solid ${RWJBH_COLORS.red}`,
+                borderRadius: '6px',
+                textAlign: 'center',
+              }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+                  Ready to Enroll?
+                </h3>
+                <p style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '20px' }}>
+                  Visit RWJBHBenefits.com to review plans and make your elections.
+                </p>
+                <a
+                  href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    display: 'inline-block',
+                    padding: '12px 28px',
+                    backgroundColor: RWJBH_COLORS.red,
+                    color: 'white',
+                    textDecoration: 'none',
+                    borderRadius: '4px',
+                    fontWeight: '600',
+                    fontSize: '14px',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.opacity = '0.9';
+                    e.currentTarget.style.transform = 'scale(1.02)';
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.opacity = '1';
+                    e.currentTarget.style.transform = 'scale(1)';
+                  }}
+                >
+                  Go to Enrollment
+                </a>
+              </div>
             </div>
           </div>
         )}
 
         {/* All other tabs use a shared layout */}
         {activeTab !== 'home' && (
-          <div>
+          <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
             {/* Tab Title */}
-            <h2 style={{ fontSize: '24px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
+            <h2 style={{ fontSize: '28px', fontWeight: 'bold', color: RWJBH_COLORS.navy, marginBottom: '12px', textTransform: 'capitalize' }}>
               {TABS.find(t => t.id === activeTab)?.label}
             </h2>
 
@@ -536,29 +575,38 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
             {/* Quick Info Cards (if applicable) */}
             {QUICK_INFO[activeTab] && QUICK_INFO[activeTab].length > 0 && (
-              <div style={{ marginBottom: '40px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
                   Key Information
                 </h3>
                 <div style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-                  gap: '16px',
+                  gap: '12px',
                 }}>
                   {QUICK_INFO[activeTab].map((info, idx) => (
                     <div
                       key={idx}
                       style={{
                         padding: '16px',
-                        backgroundColor: RWJBH_COLORS.lightGray,
+                        backgroundColor: RWJBH_COLORS.white,
                         borderLeft: `4px solid ${RWJBH_COLORS.red}`,
                         borderRadius: '4px',
+                        border: `1px solid ${RWJBH_COLORS.border}`,
+                        borderLeftWidth: '4px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.boxShadow = 'none';
                       }}
                     >
-                      <div style={{ fontSize: '12px', fontWeight: '600', color: RWJBH_COLORS.darkGray, textTransform: 'uppercase', marginBottom: '4px' }}>
+                      <div style={{ fontSize: '12px', fontWeight: '600', color: RWJBH_COLORS.darkGray, textTransform: 'uppercase', marginBottom: '6px', letterSpacing: '0.5px' }}>
                         {info.label}
                       </div>
-                      <div style={{ fontSize: '18px', fontWeight: 'bold', color: RWJBH_COLORS.navy }}>
+                      <div style={{ fontSize: '20px', fontWeight: 'bold', color: RWJBH_COLORS.navy }}>
                         {info.value}
                       </div>
                     </div>
@@ -569,8 +617,8 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
             {/* Portal Buttons */}
             {PORTALS[activeTab] && PORTALS[activeTab].length > 0 && (
-              <div style={{ marginBottom: '40px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
                   Access Your Account
                 </h3>
                 <div style={{
@@ -585,7 +633,7 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                       target="_blank"
                       rel="noopener noreferrer"
                       style={{
-                        padding: '14px 18px',
+                        padding: '12px 16px',
                         backgroundColor: RWJBH_COLORS.navy,
                         color: 'white',
                         textDecoration: 'none',
@@ -599,9 +647,11 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.backgroundColor = RWJBH_COLORS.red;
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.15)`;
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.backgroundColor = RWJBH_COLORS.navy;
+                        e.currentTarget.style.boxShadow = 'none';
                       }}
                     >
                       {button.label}
@@ -613,13 +663,13 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
             {/* Videos */}
             {VIDEOS[activeTab] && VIDEOS[activeTab].length > 0 && (
-              <div style={{ marginBottom: '40px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
                   Videos
                 </h3>
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                   gap: '16px',
                 }}>
                   {VIDEOS[activeTab].map((video, idx) => (
@@ -628,27 +678,51 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                       onClick={openVideo}
                       style={{
                         padding: '20px',
-                        backgroundColor: RWJBH_COLORS.lightGray,
+                        backgroundColor: RWJBH_COLORS.white,
                         border: `1px solid ${RWJBH_COLORS.border}`,
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         cursor: 'pointer',
                         textAlign: 'left',
                         transition: 'all 0.2s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.borderColor = RWJBH_COLORS.red;
-                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                        e.currentTarget.style.boxShadow = `0 4px 12px rgba(204, 31, 52, 0.12)`;
+                        e.currentTarget.style.transform = 'translateY(-2px)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.borderColor = RWJBH_COLORS.border;
                         e.currentTarget.style.boxShadow = 'none';
+                        e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >
-                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                        <span style={{
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          color: 'white',
+                          backgroundColor: RWJBH_COLORS.red,
+                          padding: '4px 8px',
+                          borderRadius: '3px',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                        }}>
+                          Video
+                        </span>
+                      </div>
+                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px', lineHeight: '1.4', wordBreak: 'break-word' }}>
                         {video.title}
                       </div>
-                      <div style={{ fontSize: '13px', color: RWJBH_COLORS.darkGray }}>
-                        {video.duration} — Click to watch
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: RWJBH_COLORS.darkGray, fontSize: '13px', marginBottom: '8px', flex: 1 }}>
+                        <span>{video.duration}</span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: RWJBH_COLORS.red, fontSize: '13px', fontWeight: '600' }}>
+                        <span>Watch Video</span>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </div>
                     </button>
                   ))}
@@ -658,13 +732,13 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
             {/* Documents */}
             {DOCUMENTS[activeTab] && DOCUMENTS[activeTab].length > 0 && (
-              <div style={{ marginBottom: '40px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
                   Documents & Resources
                 </h3>
                 <div style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                   gap: '16px',
                 }}>
                   {DOCUMENTS[activeTab].map((doc, idx) => (
@@ -672,28 +746,50 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                       key={idx}
                       style={{
                         padding: '20px',
-                        backgroundColor: 'white',
+                        backgroundColor: RWJBH_COLORS.white,
                         border: `1px solid ${RWJBH_COLORS.border}`,
-                        borderRadius: '8px',
+                        borderRadius: '6px',
                         transition: 'all 0.2s ease',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        cursor: 'pointer',
                       }}
                       onMouseOver={(e) => {
                         e.currentTarget.style.borderColor = RWJBH_COLORS.red;
-                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                        e.currentTarget.style.boxShadow = `0 4px 12px rgba(204, 31, 52, 0.12)`;
+                        e.currentTarget.style.transform = 'translateY(-2px)';
                       }}
                       onMouseOut={(e) => {
                         e.currentTarget.style.borderColor = RWJBH_COLORS.border;
                         e.currentTarget.style.boxShadow = 'none';
+                        e.currentTarget.style.transform = 'translateY(0)';
                       }}
                     >
-                      <div style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '8px' }}>
-                        PDF Document
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '12px' }}>
+                        <span style={{
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          color: 'white',
+                          backgroundColor: RWJBH_COLORS.navy,
+                          padding: '4px 8px',
+                          borderRadius: '3px',
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.5px',
+                        }}>
+                          PDF
+                        </span>
                       </div>
-                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px' }}>
+                      <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '8px', lineHeight: '1.4', wordBreak: 'break-word' }}>
                         {doc.title}
                       </div>
-                      <div style={{ fontSize: '13px', color: RWJBH_COLORS.darkGray }}>
+                      <div style={{ fontSize: '13px', color: RWJBH_COLORS.darkGray, marginBottom: '12px', lineHeight: '1.5', flex: 1 }}>
                         {doc.description}
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: RWJBH_COLORS.red, fontSize: '13px', fontWeight: '600' }}>
+                        <span>View Document</span>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </div>
                     </div>
                   ))}
@@ -703,8 +799,8 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
 
             {/* Contact Cards */}
             {BENEFIT_CONTACTS[activeTab] && BENEFIT_CONTACTS[activeTab].length > 0 && (
-              <div style={{ marginBottom: '40px' }}>
-                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '16px' }}>
+              <div style={{ marginBottom: '48px' }}>
+                <h3 style={{ fontSize: '18px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '20px', textTransform: 'capitalize' }}>
                   Contact Information
                 </h3>
                 <div style={{
@@ -717,17 +813,26 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                       key={idx}
                       style={{
                         padding: '20px',
-                        backgroundColor: 'white',
+                        backgroundColor: RWJBH_COLORS.white,
                         border: `1px solid ${RWJBH_COLORS.border}`,
-                        borderRadius: '8px',
+                        borderRadius: '6px',
+                        transition: 'all 0.2s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.red;
+                        e.currentTarget.style.boxShadow = `0 2px 8px rgba(204, 31, 52, 0.1)`;
+                      }}
+                      onMouseOut={(e) => {
+                        e.currentTarget.style.borderColor = RWJBH_COLORS.border;
+                        e.currentTarget.style.boxShadow = 'none';
                       }}
                     >
                       <div style={{ fontSize: '16px', fontWeight: '600', color: RWJBH_COLORS.navy, marginBottom: '12px' }}>
                         {contact.name}
                       </div>
                       {contact.phone && (
-                        <div style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '8px' }}>
-                          <a href={`tel:${contact.phone.replace(/\D/g, '')}`} style={{ color: RWJBH_COLORS.red, textDecoration: 'none' }}>
+                        <div style={{ fontSize: '14px', color: RWJBH_COLORS.darkGray, marginBottom: '12px' }}>
+                          <a href={`tel:${contact.phone.replace(/\D/g, '')}`} style={{ color: RWJBH_COLORS.red, textDecoration: 'none', fontWeight: '600' }}>
                             {contact.phone}
                           </a>
                         </div>
@@ -737,14 +842,19 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
                         target="_blank"
                         rel="noopener noreferrer"
                         style={{
-                          display: 'inline-block',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '4px',
                           fontSize: '13px',
                           color: RWJBH_COLORS.red,
                           textDecoration: 'none',
                           fontWeight: '600',
                         }}
                       >
-                        Visit Portal
+                        <span>Visit Portal</span>
+                        <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M6 4L10 8L6 12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        </svg>
                       </a>
                     </div>
                   ))}
@@ -759,40 +869,46 @@ export default function ResourceCenter({ clientName = 'RWJBarnabas Health' }: Re
       <footer style={{
         backgroundColor: RWJBH_COLORS.navy,
         color: 'white',
-        padding: '24px 40px',
+        padding: '32px 40px',
         borderTop: `1px solid ${RWJBH_COLORS.border}`,
         fontSize: '13px',
+        marginTop: 'auto',
       }}>
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '20px',
-          marginBottom: '16px',
+          maxWidth: '1200px',
+          margin: '0 auto',
         }}>
-          <div>
-            <div style={{ fontWeight: '600', marginBottom: '8px' }}>General Inquiries</div>
-            <a href="tel:1-833-266-9922" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
-              1-833-266-9922
-            </a>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+            gap: '24px',
+            marginBottom: '24px',
+          }}>
+            <div>
+              <div style={{ fontWeight: '600', marginBottom: '8px', textTransform: 'capitalize' }}>General Inquiries</div>
+              <a href="tel:1-833-266-9922" style={{ color: '#E0E7FF', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseOver={(e) => { e.currentTarget.style.color = 'white'; }} onMouseOut={(e) => { e.currentTarget.style.color = '#E0E7FF'; }}>
+                1-833-266-9922
+              </a>
+            </div>
+            <div>
+              <div style={{ fontWeight: '600', marginBottom: '8px', textTransform: 'capitalize' }}>Benefits & Enrollment</div>
+              <a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseOver={(e) => { e.currentTarget.style.color = 'white'; }} onMouseOut={(e) => { e.currentTarget.style.color = '#E0E7FF'; }}>
+                RWJBHBenefits.com
+              </a>
+            </div>
+            <div>
+              <div style={{ fontWeight: '600', marginBottom: '8px', textTransform: 'capitalize' }}>Wellness Resources</div>
+              <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none', transition: 'color 0.2s ease' }} onMouseOver={(e) => { e.currentTarget.style.color = 'white'; }} onMouseOut={(e) => { e.currentTarget.style.color = '#E0E7FF'; }}>
+                Total Wellbeing Site
+              </a>
+            </div>
           </div>
-          <div>
-            <div style={{ fontWeight: '600', marginBottom: '8px' }}>Benefits & Enrollment</div>
-            <a href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
-              RWJBHBenefits.com
-            </a>
+          <div style={{
+            borderTop: `1px solid rgba(255, 255, 255, 0.2)`,
+            paddingTop: '24px',
+          }}>
+            Copyright {new Date().getFullYear()} RWJBarnabas Health. All rights reserved.
           </div>
-          <div>
-            <div style={{ fontWeight: '600', marginBottom: '8px' }}>Wellness Resources</div>
-            <a href="https://RWJBHTotalWellbeing.com" target="_blank" rel="noopener noreferrer" style={{ color: '#E0E7FF', textDecoration: 'none' }}>
-              Total Wellbeing Site
-            </a>
-          </div>
-        </div>
-        <div style={{
-          borderTop: `1px solid rgba(255, 255, 255, 0.2)`,
-          paddingTop: '16px',
-        }}>
-          Copyright {new Date().getFullYear()} RWJBarnabas Health. All rights reserved.
         </div>
       </footer>
     </div>

@@ -23,44 +23,53 @@ const TABS: TabConfig[] = [
   { id: 'contacts', label: 'Contacts' },
 ];
 
+// Design System Colors
 const NAVY = '#1B2F5C';
 const RED = '#CC1F34';
 const LIGHT_BG = '#EBF0F5';
+const TEXT_DEFAULT = '#333333';
+const TEXT_LIGHT = '#636366';
+const BORDER_COLOR = '#ddd';
+const WHITE = '#ffffff';
 
 export default function Showcase({ clientName = 'RWJBarnabas Health' }: ShowcaseProps) {
   const [activeTab, setActiveTab] = useState<string>('welcome');
 
   return (
-    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: WHITE, fontFamily: 'Arial, "Open Sans", Lato, sans-serif', wordBreak: 'break-word' }}>
       {/* Header */}
       <header
         style={{
           backgroundColor: NAVY,
-          color: '#ffffff',
-          paddingTop: '20px',
-          paddingBottom: '20px',
-          paddingLeft: '40px',
-          paddingRight: '40px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+          color: WHITE,
+          paddingTop: '32px',
+          paddingBottom: '32px',
+          paddingLeft: '0',
+          paddingRight: '0',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
         }}
       >
-        <h1 style={{ margin: '0', fontSize: '28px', fontWeight: '700', letterSpacing: '-0.5px' }}>
-          {clientName}
-        </h1>
-        <p style={{ margin: '4px 0 0 0', fontSize: '14px', opacity: '0.9' }}>
-          Benefits Enrollment & Information
-        </p>
+        <div style={{ paddingLeft: '40px', paddingRight: '40px' }}>
+          <h1 style={{ margin: '0', fontSize: '32px', fontWeight: '700', letterSpacing: '-0.5px' }}>
+            {clientName}
+          </h1>
+          <p style={{ margin: '8px 0 0 0', fontSize: '14px', opacity: '0.9' }}>
+            Benefits Enrollment & Information
+          </p>
+        </div>
       </header>
 
-      {/* Tab Navigation - Sticky */}
+      {/* Tab Navigation - Sticky & Horizontal Scrollable */}
       <nav
         style={{
-          backgroundColor: '#ffffff',
-          borderBottom: `2px solid ${LIGHT_BG}`,
+          backgroundColor: WHITE,
+          borderBottom: `1px solid ${BORDER_COLOR}`,
           position: 'sticky',
           top: '0',
           zIndex: '100',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+          boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          paddingLeft: '0',
+          paddingRight: '0',
         }}
       >
         <div
@@ -70,6 +79,7 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
             paddingLeft: '40px',
             paddingRight: '40px',
             gap: '0',
+            scrollBehavior: 'smooth',
           }}
         >
           {TABS.map((tab) => (
@@ -80,26 +90,35 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
                 flex: 'none',
                 paddingTop: '16px',
                 paddingBottom: '16px',
-                paddingLeft: '20px',
-                paddingRight: '20px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
                 border: 'none',
-                backgroundColor: activeTab === tab.id ? LIGHT_BG : 'transparent',
+                backgroundColor: 'transparent',
                 borderBottom: activeTab === tab.id ? `3px solid ${RED}` : '3px solid transparent',
-                color: activeTab === tab.id ? NAVY : '#666666',
+                color: activeTab === tab.id ? RED : TEXT_LIGHT,
                 fontSize: '14px',
                 fontWeight: activeTab === tab.id ? '600' : '500',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
                 whiteSpace: 'nowrap',
+                textTransform: 'capitalize',
+                outline: 'none',
+              }}
+              onFocus={(e) => {
+                (e.target as HTMLElement).style.outline = `2px solid #ff9500`;
+                (e.target as HTMLElement).style.outlineOffset = '-4px';
+              }}
+              onBlur={(e) => {
+                (e.target as HTMLElement).style.outline = 'none';
               }}
               onMouseEnter={(e) => {
                 if (activeTab !== tab.id) {
-                  (e.target as HTMLElement).style.backgroundColor = '#f5f5f5';
+                  (e.target as HTMLElement).style.color = NAVY;
                 }
               }}
               onMouseLeave={(e) => {
                 if (activeTab !== tab.id) {
-                  (e.target as HTMLElement).style.backgroundColor = 'transparent';
+                  (e.target as HTMLElement).style.color = TEXT_LIGHT;
                 }
               }}
             >
@@ -126,38 +145,39 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
       <footer
         style={{
           backgroundColor: NAVY,
-          color: '#ffffff',
-          paddingTop: '40px',
-          paddingBottom: '40px',
+          color: WHITE,
+          paddingTop: '48px',
+          paddingBottom: '32px',
           paddingLeft: '40px',
           paddingRight: '40px',
           marginTop: 'auto',
+          borderTop: `1px solid rgba(255,255,255,0.1)`,
         }}
       >
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '40px', marginBottom: '40px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '48px', marginBottom: '32px' }}>
           <div>
-            <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>Quick Links</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: WHITE }}>Quick Links</h3>
             <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-              <li style={{ marginBottom: '8px' }}>
+              <li style={{ marginBottom: '12px' }}>
                 <a
                   href="https://RWJBHBenefits.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#ffffff', textDecoration: 'none', fontSize: '14px' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+                  style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '14px', transition: 'opacity 0.2s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.9')}
                 >
                   Benefits Portal
                 </a>
               </li>
-              <li style={{ marginBottom: '8px' }}>
+              <li style={{ marginBottom: '12px' }}>
                 <a
                   href="https://RWJBHTotalWellbeing.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#ffffff', textDecoration: 'none', fontSize: '14px' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+                  style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '14px', transition: 'opacity 0.2s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.9')}
                 >
                   Wellness Portal
                 </a>
@@ -167,9 +187,9 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
                   href="https://mybenefits.aon.com/Documents/RWJ-Barnabas/2025/Home"
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: '#ffffff', textDecoration: 'none', fontSize: '14px' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+                  style={{ color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '14px', transition: 'opacity 0.2s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '0.9')}
                 >
                   Voluntary Benefits
                 </a>
@@ -177,28 +197,28 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
             </ul>
           </div>
           <div>
-            <h3 style={{ margin: '0 0 12px 0', fontSize: '16px', fontWeight: '600' }}>Contact Info</h3>
+            <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: WHITE }}>Contact Info</h3>
             <ul style={{ margin: '0', paddingLeft: '0', listStyle: 'none' }}>
-              <li style={{ marginBottom: '8px' }}>
-                <span style={{ fontSize: '14px', color: '#cccccc' }}>Benefits Center:</span>
+              <li style={{ marginBottom: '16px' }}>
+                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>Benefits Center</span>
                 <br />
                 <a
                   href="tel:844-690-0920"
-                  style={{ color: '#ffffff', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+                  style={{ color: WHITE, textDecoration: 'none', fontSize: '15px', fontWeight: '600', transition: 'opacity 0.2s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
                 >
                   844.690.0920
                 </a>
               </li>
               <li>
-                <span style={{ fontSize: '14px', color: '#cccccc' }}>EAP 24/7:</span>
+                <span style={{ fontSize: '13px', color: 'rgba(255,255,255,0.7)' }}>EAP 24/7</span>
                 <br />
                 <a
                   href="tel:800-300-0628"
-                  style={{ color: '#ffffff', textDecoration: 'none', fontSize: '14px', fontWeight: '600' }}
-                  onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
-                  onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+                  style={{ color: WHITE, textDecoration: 'none', fontSize: '15px', fontWeight: '600', transition: 'opacity 0.2s' }}
+                  onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
+                  onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
                 >
                   800.300.0628
                 </a>
@@ -206,12 +226,12 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
             </ul>
           </div>
         </div>
-        <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '20px', fontSize: '13px', opacity: '0.8' }}>
+        <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: '24px', fontSize: '13px', color: 'rgba(255,255,255,0.8)' }}>
           <p style={{ margin: '0' }}>
             For questions or support, contact the Benefits Center at{' '}
             <a
               href="tel:844-690-0920"
-              style={{ color: '#ffffff', textDecoration: 'underline' }}
+              style={{ color: 'rgba(255,255,255,1)', textDecoration: 'none', fontWeight: '500' }}
             >
               844.690.0920
             </a>
@@ -230,41 +250,38 @@ export default function Showcase({ clientName = 'RWJBarnabas Health' }: Showcase
 function WelcomeTab() {
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ margin: '0 0 16px 0', fontSize: '32px', fontWeight: '700', color: NAVY }}>
         Welcome to Your Benefits
       </h2>
-      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333333', marginBottom: '32px', maxWidth: '700px' }}>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: TEXT_DEFAULT, marginBottom: '40px', maxWidth: '800px' }}>
         Get to know your comprehensive benefits package. This guide covers everything from medical and dental coverage to wellness programs and retirement planning. Click through each section to explore your options.
       </p>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px', marginBottom: '40px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px', marginBottom: '48px' }}>
         <Card title="Enrollment Checklist">
-          <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8' }}>
-            <li>Review medical plan options (Core, Flex, Out-of-Area)</li>
-            <li>Choose dental and vision coverage level</li>
-            <li>Review prescription drug formulary</li>
-            <li>Consider HSA or FSA for tax savings</li>
-            <li>Review beneficiaries on life insurance</li>
+          <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8', fontSize: '14px', color: TEXT_DEFAULT }}>
+            <li style={{ marginBottom: '8px' }}>Review medical plan options (Premier, Extended, Out-of-Area)</li>
+            <li style={{ marginBottom: '8px' }}>Choose dental and vision coverage level</li>
+            <li style={{ marginBottom: '8px' }}>Review prescription drug formulary</li>
+            <li style={{ marginBottom: '8px' }}>Consider HSA or FSA for tax savings</li>
+            <li style={{ marginBottom: '8px' }}>Review beneficiaries on life insurance</li>
             <li>Enroll in wellness programs</li>
           </ul>
         </Card>
 
         <Card title="Key Dates">
-          <div style={{ lineHeight: '1.8' }}>
-            <div style={{ marginBottom: '16px' }}>
-              <strong style={{ color: '#CC1F34' }}>Open Enrollment:</strong>
-              <br />
-              November 1 - November 30
+          <div style={{ lineHeight: '1.8', fontSize: '14px' }}>
+            <div style={{ marginBottom: '20px' }}>
+              <strong style={{ color: RED, display: 'block', marginBottom: '4px' }}>Open Enrollment</strong>
+              <span style={{ color: TEXT_DEFAULT }}>November 1 - November 30</span>
             </div>
-            <div style={{ marginBottom: '16px' }}>
-              <strong style={{ color: '#CC1F34' }}>Coverage Effective:</strong>
-              <br />
-              January 1
+            <div style={{ marginBottom: '20px' }}>
+              <strong style={{ color: RED, display: 'block', marginBottom: '4px' }}>Coverage Effective</strong>
+              <span style={{ color: TEXT_DEFAULT }}>January 1</span>
             </div>
             <div>
-              <strong style={{ color: '#CC1F34' }}>Questions?</strong>
-              <br />
-              Contact Benefits Center
+              <strong style={{ color: RED, display: 'block', marginBottom: '4px' }}>Questions?</strong>
+              <span style={{ color: TEXT_DEFAULT }}>Contact Benefits Center: 844.690.0920</span>
             </div>
           </div>
         </Card>
@@ -272,24 +289,24 @@ function WelcomeTab() {
         <Card title="Get Started">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             <ButtonPrimary href="https://RWJBHBenefits.com" target="_blank" rel="noopener noreferrer">
-              Go to Benefits Portal
+              Benefits Portal
             </ButtonPrimary>
             <ButtonSecondary onClick={() => window.open('https://flimp.live/Flimp_HRBenefitsVideoLibrary', '_blank')}>
-              Watch Benefit Videos
+              Watch Videos
             </ButtonSecondary>
             <ButtonTertiary href="tel:844-690-0920">
-              Call Benefits Center
+              Call 844.690.0920
             </ButtonTertiary>
           </div>
         </Card>
       </div>
 
-      <div style={{ backgroundColor: '#EBF0F5', paddingTop: '24px', paddingBottom: '24px', paddingLeft: '24px', paddingRight: '24px', borderRadius: '8px' }}>
-        <h3 style={{ margin: '0 0 16px 0', color: '#1B2F5C', fontSize: '18px', fontWeight: '600' }}>
-          Quick Navigation
+      <div style={{ backgroundColor: LIGHT_BG, paddingTop: '24px', paddingBottom: '24px', paddingLeft: '24px', paddingRight: '24px', borderRadius: '6px', border: `1px solid ${BORDER_COLOR}` }}>
+        <h3 style={{ margin: '0 0 12px 0', color: NAVY, fontSize: '16px', fontWeight: '600' }}>
+          Navigation Guide
         </h3>
-        <p style={{ margin: '0', fontSize: '14px', color: '#333333' }}>
-          Use the tabs above to explore specific benefit categories, carrier contacts, and key information about your coverage options.
+        <p style={{ margin: '0', fontSize: '14px', color: TEXT_DEFAULT, lineHeight: '1.6' }}>
+          Use the tabs above to explore specific benefit categories, carrier contacts, and detailed information about your coverage options. Each section includes plan details, costs, and contact information.
         </p>
       </div>
     </div>
@@ -297,233 +314,256 @@ function WelcomeTab() {
 }
 
 function MedicalTab() {
+  const tableHeaderStyle: React.CSSProperties = { backgroundColor: NAVY, color: WHITE };
+  const tableCellPadding: React.CSSProperties = { paddingTop: '14px', paddingBottom: '14px', paddingLeft: '14px', paddingRight: '14px' };
+  const tableBorderStyle: React.CSSProperties = { borderBottom: `1px solid ${BORDER_COLOR}` };
+  const tableAlternateRowStyle: React.CSSProperties = { backgroundColor: '#fafafa' };
+
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ margin: '0 0 16px 0', fontSize: '32px', fontWeight: '700', color: NAVY }}>
         Medical Plans
       </h2>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px', margin: '0 0 20px 0' }}>
           Plan Comparison
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', marginBottom: '24px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Feature</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Premier</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Extended</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Out-of-Area</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Carrier</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Aetna</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Aetna</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Aetna</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Deductible (Individual)</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$750</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,500</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$2,500</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Out-of-Pocket Max</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$2,500</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$4,000</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$6,500</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Preventive Care</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$0 copay</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$0 copay</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$0 copay</td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Primary Care Visit</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$30 copay</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$40 copay</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>20% coinsurance</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Feature</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Premier</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Extended</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Out-of-Area</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Carrier</td>
+                <td style={tableCellPadding}>Aetna</td>
+                <td style={tableCellPadding}>Aetna</td>
+                <td style={tableCellPadding}>Aetna</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Deductible (Individual)</td>
+                <td style={tableCellPadding}>$750</td>
+                <td style={tableCellPadding}>$1,500</td>
+                <td style={tableCellPadding}>$2,500</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Out-of-Pocket Max</td>
+                <td style={tableCellPadding}>$2,500</td>
+                <td style={tableCellPadding}>$4,000</td>
+                <td style={tableCellPadding}>$6,500</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Preventive Care</td>
+                <td style={tableCellPadding}>$0 copay</td>
+                <td style={tableCellPadding}>$0 copay</td>
+                <td style={tableCellPadding}>$0 copay</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Primary Care Visit</td>
+                <td style={tableCellPadding}>$30 copay</td>
+                <td style={tableCellPadding}>$40 copay</td>
+                <td style={tableCellPadding}>20% coinsurance</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           Monthly Contributions by Salary Band
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Salary Band</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Employee</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Employee + Spouse</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Family</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5', backgroundColor: '#fafafa' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>Under $35k</strong>
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$85</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$225</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$320</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>$35k - $50k</strong>
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$105</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$265</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$380</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5', backgroundColor: '#fafafa' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>$50k - $75k</strong>
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$135</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$315</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$450</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>Over $75k</strong>
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$165</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$375</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$540</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Salary Band</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Employee</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Employee + Spouse</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Family</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '600' }}>Under $35k</td>
+                <td style={tableCellPadding}>$85</td>
+                <td style={tableCellPadding}>$225</td>
+                <td style={tableCellPadding}>$320</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '600' }}>$35k - $50k</td>
+                <td style={tableCellPadding}>$105</td>
+                <td style={tableCellPadding}>$265</td>
+                <td style={tableCellPadding}>$380</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '600' }}>$50k - $75k</td>
+                <td style={tableCellPadding}>$135</td>
+                <td style={tableCellPadding}>$315</td>
+                <td style={tableCellPadding}>$450</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '600' }}>Over $75k</td>
+                <td style={tableCellPadding}>$165</td>
+                <td style={tableCellPadding}>$375</td>
+                <td style={tableCellPadding}>$540</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <Card title="Learn More About Medical Plans">
-        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
-          Review detailed plan documents and network information on the Aetna portal.
-        </p>
-        <ButtonPrimary href="https://aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer">
-          Visit Aetna Portal
-        </ButtonPrimary>
-      </Card>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+        <Card title="Learn More About Medical Plans">
+          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
+            Review detailed plan documents and network information on the Aetna portal.
+          </p>
+          <ButtonPrimary href="https://aetnaresource.com/n/RWJBH" target="_blank" rel="noopener noreferrer">
+            Visit Aetna Portal
+          </ButtonPrimary>
+        </Card>
 
-      <div style={{ marginTop: '24px', backgroundColor: '#EBF0F5', paddingTop: '16px', paddingBottom: '16px', paddingLeft: '16px', paddingRight: '16px', borderRadius: '6px', fontSize: '13px', color: '#555555' }}>
-        <strong>Aetna Medical Support:</strong>{' '}
-        <a href="tel:855-546-5415" style={{ color: '#CC1F34', textDecoration: 'none', fontWeight: '600' }}>
-          855.546.5415
-        </a>
+        <Card title="Medical Support">
+          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
+            Questions about coverage, claims, or finding providers?
+          </p>
+          <a
+            href="tel:855-546-5415"
+            style={{
+              display: 'inline-block',
+              fontSize: '16px',
+              fontWeight: '600',
+              color: RED,
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
+            onMouseLeave={(e) => (e.currentTarget.style.textDecoration = 'none')}
+          >
+            855.546.5415
+          </a>
+        </Card>
       </div>
     </div>
   );
 }
 
 function DentalVisionTab() {
+  const tableHeaderStyle: React.CSSProperties = { backgroundColor: NAVY, color: WHITE };
+  const tableCellPadding: React.CSSProperties = { paddingTop: '14px', paddingBottom: '14px', paddingLeft: '14px', paddingRight: '14px' };
+  const tableBorderStyle: React.CSSProperties = { borderBottom: `1px solid ${BORDER_COLOR}` };
+  const tableAlternateRowStyle: React.CSSProperties = { backgroundColor: '#fafafa' };
+
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ margin: '0 0 16px 0', fontSize: '32px', fontWeight: '700', color: NAVY }}>
         Dental & Vision Coverage
       </h2>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           Delta Dental Plans
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Service</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Base Plan</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Buy-Up Plan</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Preventive (Cleanings, Exams)</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>100% covered</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>100% covered</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Basic (Fillings, Root Canals)</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>70% covered</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>80% covered</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Major (Crowns, Bridges)</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>50% covered</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>60% covered</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Orthodontia</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Not covered</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>50% covered</td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Annual Max</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,200</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,500</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Service</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Base Plan</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Buy-Up Plan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Preventive (Cleanings, Exams)</td>
+                <td style={tableCellPadding}>100% covered</td>
+                <td style={tableCellPadding}>100% covered</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Basic (Fillings, Root Canals)</td>
+                <td style={tableCellPadding}>70% covered</td>
+                <td style={tableCellPadding}>80% covered</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Major (Crowns, Bridges)</td>
+                <td style={tableCellPadding}>50% covered</td>
+                <td style={tableCellPadding}>60% covered</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Orthodontia</td>
+                <td style={tableCellPadding}>Not covered</td>
+                <td style={tableCellPadding}>50% covered</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '600' }}>Annual Max</td>
+                <td style={tableCellPadding}>$1,200</td>
+                <td style={tableCellPadding}>$1,500</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           EyeMed Vision Coverage
         </h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '24px' }}>
           <Card title="Exam Benefits">
-            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>Eye exam: $10 copay</li>
-              <li>Once per calendar year</li>
+            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8', fontSize: '14px', color: TEXT_DEFAULT }}>
+              <li style={{ marginBottom: '8px' }}>Eye exam: $10 copay</li>
+              <li style={{ marginBottom: '8px' }}>Once per calendar year</li>
               <li>Includes dilation</li>
             </ul>
           </Card>
           <Card title="Frames & Lenses">
-            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>$130 frame allowance</li>
-              <li>Single vision lenses: $10 copay</li>
+            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8', fontSize: '14px', color: TEXT_DEFAULT }}>
+              <li style={{ marginBottom: '8px' }}>$130 frame allowance</li>
+              <li style={{ marginBottom: '8px' }}>Single vision lenses: $10 copay</li>
               <li>Progressive lenses: $75 copay</li>
             </ul>
           </Card>
           <Card title="Contacts">
-            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8' }}>
-              <li>$130 contact allowance</li>
-              <li>Exam included in vision coverage</li>
+            <ul style={{ margin: '0', paddingLeft: '20px', lineHeight: '1.8', fontSize: '14px', color: TEXT_DEFAULT }}>
+              <li style={{ marginBottom: '8px' }}>$130 contact allowance</li>
+              <li style={{ marginBottom: '8px' }}>Exam included in vision coverage</li>
               <li>Once per calendar year</li>
             </ul>
           </Card>
         </div>
       </div>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
         <Card title="Delta Dental Resources">
-          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
-            Find in-network dentists and review plan details on the Delta Dental portal.
+          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
+            Find in-network dentists and review plan details.
           </p>
           <ButtonPrimary href="https://deltadentalnj.com/RWJBH" target="_blank" rel="noopener noreferrer">
             Visit Delta Dental
           </ButtonPrimary>
-          <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: '#666666' }}>
+          <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: TEXT_DEFAULT }}>
             <strong>Support:</strong>{' '}
-            <a href="tel:800-810-5234" style={{ color: '#CC1F34', textDecoration: 'none', fontWeight: '600' }}>
+            <a href="tel:800-810-5234" style={{ color: RED, textDecoration: 'none', fontWeight: '600', marginLeft: '4px' }}>
               800.810.5234
             </a>
           </p>
         </Card>
 
         <Card title="EyeMed Vision Resources">
-          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
-            Find network eye care providers and review your vision benefits.
+          <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
+            Find network eye care providers and review benefits.
           </p>
           <ButtonPrimary href="https://eyemed.com" target="_blank" rel="noopener noreferrer">
             Visit EyeMed
           </ButtonPrimary>
-          <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: '#666666' }}>
+          <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: TEXT_DEFAULT }}>
             <strong>Support:</strong>{' '}
-            <a href="tel:866-800-5457" style={{ color: '#CC1F34', textDecoration: 'none', fontWeight: '600' }}>
+            <a href="tel:866-800-5457" style={{ color: RED, textDecoration: 'none', fontWeight: '600', marginLeft: '4px' }}>
               866.800.5457
             </a>
           </p>
@@ -534,66 +574,73 @@ function DentalVisionTab() {
 }
 
 function PrescriptionsTab() {
+  const tableHeaderStyle: React.CSSProperties = { backgroundColor: NAVY, color: WHITE };
+  const tableCellPadding: React.CSSProperties = { paddingTop: '14px', paddingBottom: '14px', paddingLeft: '14px', paddingRight: '14px' };
+  const tableBorderStyle: React.CSSProperties = { borderBottom: `1px solid ${BORDER_COLOR}` };
+  const tableAlternateRowStyle: React.CSSProperties = { backgroundColor: '#fafafa' };
+
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ margin: '0 0 16px 0', fontSize: '32px', fontWeight: '700', color: NAVY }}>
         Prescription Drug Coverage
       </h2>
-      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333333', marginBottom: '32px' }}>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: TEXT_DEFAULT, marginBottom: '40px' }}>
         CVS Caremark manages your prescription drug benefits through a 4-tier formulary system. Most generic medications have the lowest copays.
       </p>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           Copay by Tier
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Tier</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Type</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>30-Day Retail</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>90-Day Mail Order</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Tier 1</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Generic</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$10</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$25</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Tier 2</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Brand Preferred</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$30</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$75</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Tier 3</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Brand Non-Preferred</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$60</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$150</td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Tier 4</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Specialty</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>20% coinsurance</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>20% coinsurance</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Tier</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Type</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>30-Day Retail</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>90-Day Mail Order</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Tier 1</td>
+                <td style={tableCellPadding}>Generic</td>
+                <td style={tableCellPadding}>$10</td>
+                <td style={tableCellPadding}>$25</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Tier 2</td>
+                <td style={tableCellPadding}>Brand Preferred</td>
+                <td style={tableCellPadding}>$30</td>
+                <td style={tableCellPadding}>$75</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Tier 3</td>
+                <td style={tableCellPadding}>Brand Non-Preferred</td>
+                <td style={tableCellPadding}>$60</td>
+                <td style={tableCellPadding}>$150</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Tier 4</td>
+                <td style={tableCellPadding}>Specialty</td>
+                <td style={tableCellPadding}>20% coinsurance</td>
+                <td style={tableCellPadding}>20% coinsurance</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           Mail Order Pharmacy
         </h3>
-        <div style={{ backgroundColor: '#EBF0F5', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '8px', marginBottom: '24px' }}>
-          <p style={{ margin: '0 0 12px 0', fontSize: '14px', lineHeight: '1.6' }}>
+        <div style={{ backgroundColor: LIGHT_BG, paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '6px', marginBottom: '24px', border: `1px solid ${BORDER_COLOR}` }}>
+          <p style={{ margin: '0 0 12px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
             Save money by using mail order for maintenance medications (regular prescriptions you take long-term).
           </p>
-          <ul style={{ margin: '0', paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8' }}>
+          <ul style={{ margin: '0', paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8', color: TEXT_DEFAULT }}>
             <li>Get 90-day supplies for the price of 2 retail fills</li>
             <li>Free shipping on all orders</li>
             <li>Automatic refills available</li>
@@ -603,15 +650,15 @@ function PrescriptionsTab() {
       </div>
 
       <Card title="CVS Caremark Resources">
-        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
+        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
           Check the formulary, find pharmacies, and manage your prescriptions online.
         </p>
         <ButtonPrimary href="https://caremarkrxplaninfo.com/RWJBH" target="_blank" rel="noopener noreferrer">
           Visit CVS Caremark
         </ButtonPrimary>
-        <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: '#666666' }}>
+        <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: TEXT_DEFAULT }}>
           <strong>Support:</strong>{' '}
-          <a href="tel:833-290-5676" style={{ color: '#CC1F34', textDecoration: 'none', fontWeight: '600' }}>
+          <a href="tel:833-290-5676" style={{ color: RED, textDecoration: 'none', fontWeight: '600', marginLeft: '4px' }}>
             833.290.5676
           </a>
         </p>
@@ -621,116 +668,125 @@ function PrescriptionsTab() {
 }
 
 function SpendingTab() {
+  const tableHeaderStyle: React.CSSProperties = { backgroundColor: NAVY, color: WHITE };
+  const tableCellPadding: React.CSSProperties = { paddingTop: '14px', paddingBottom: '14px', paddingLeft: '14px', paddingRight: '14px' };
+  const tableBorderStyle: React.CSSProperties = { borderBottom: `1px solid ${BORDER_COLOR}` };
+  const tableAlternateRowStyle: React.CSSProperties = { backgroundColor: '#fafafa' };
+
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '700', color: NAVY, margin: '0 0 16px 0' }}>
         Spending Accounts
       </h2>
-      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333333', marginBottom: '32px' }}>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: TEXT_DEFAULT, marginBottom: '40px' }}>
         Take advantage of tax-advantaged accounts to save on healthcare and dependent care expenses.
       </p>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           2025 Account Limits & Contribution Limits
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Account Type</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Annual Limit</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Best For</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>HSA</strong>
-                <br />
-                (Health Savings Account)
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                Individual: $4,150
-                <br />
-                Family: $8,300
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                Medical, dental, vision, and prescription expenses. Can roll over year to year.
-              </td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>FSA</strong>
-                <br />
-                (Flexible Spending Account)
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                $3,300
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                Medical, dental, vision, and prescription expenses. Use it or lose it by year end.
-              </td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                <strong>DCFSA</strong>
-                <br />
-                (Dependent Care FSA)
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                $5,000
-              </td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>
-                Childcare, preschool, elder care. Use it or lose it by year end.
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Account Type</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Annual Limit</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Best For</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>
+                  HSA
+                  <br />
+                  (Health Savings Account)
+                </td>
+                <td style={tableCellPadding}>
+                  Individual: $4,150
+                  <br />
+                  Family: $8,300
+                </td>
+                <td style={tableCellPadding}>
+                  Medical, dental, vision, and prescription expenses. Can roll over year to year.
+                </td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>
+                  FSA
+                  <br />
+                  (Flexible Spending Account)
+                </td>
+                <td style={tableCellPadding}>
+                  $3,300
+                </td>
+                <td style={tableCellPadding}>
+                  Medical, dental, vision, and prescription expenses. Use it or lose it by year end.
+                </td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>
+                  DCFSA
+                  <br />
+                  (Dependent Care FSA)
+                </td>
+                <td style={tableCellPadding}>
+                  $5,000
+                </td>
+                <td style={tableCellPadding}>
+                  Childcare, preschool, elder care. Use it or lose it by year end.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           HSA vs. FSA Comparison
         </h3>
-        <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
-          <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Feature</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>HSA</th>
-              <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>FSA</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Requires HDHP enrollment</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Yes</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>No</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Rollover funds</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Yes (no limit)</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>No ($640 carryover)</td>
-            </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Invest unused funds</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Yes</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>No</td>
-            </tr>
-            <tr>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Eligible expenses</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Healthcare & dependent care</td>
-              <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Healthcare only</td>
-            </tr>
-          </tbody>
-        </table>
+        <div style={{ overflowX: 'auto', border: `1px solid ${BORDER_COLOR}`, borderRadius: '6px' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px', backgroundColor: WHITE }}>
+            <thead>
+              <tr style={tableHeaderStyle}>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>Feature</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>HSA</th>
+                <th style={{ ...tableCellPadding, textAlign: 'left', fontWeight: '600' }}>FSA</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Requires HDHP enrollment</td>
+                <td style={tableCellPadding}>Yes</td>
+                <td style={tableCellPadding}>No</td>
+              </tr>
+              <tr style={{ ...tableBorderStyle, ...tableAlternateRowStyle }}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Rollover funds</td>
+                <td style={tableCellPadding}>Yes (no limit)</td>
+                <td style={tableCellPadding}>No ($640 carryover)</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Invest unused funds</td>
+                <td style={tableCellPadding}>Yes</td>
+                <td style={tableCellPadding}>No</td>
+              </tr>
+              <tr style={tableBorderStyle}>
+                <td style={{ ...tableCellPadding, fontWeight: '500' }}>Eligible expenses</td>
+                <td style={tableCellPadding}>Healthcare & dependent care</td>
+                <td style={tableCellPadding}>Healthcare only</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+      <div style={{ marginBottom: '48px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '20px', margin: '0 0 20px 0' }}>
           HSA Eligibility
         </h3>
-        <div style={{ backgroundColor: '#EBF0F5', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '8px' }}>
-          <ul style={{ margin: '0', paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8' }}>
+        <div style={{ backgroundColor: LIGHT_BG, paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '6px', border: `1px solid ${BORDER_COLOR}` }}>
+          <ul style={{ margin: '0', paddingLeft: '20px', fontSize: '14px', lineHeight: '1.8', color: TEXT_DEFAULT }}>
             <li>Must be enrolled in an HSA-eligible health plan (HDHP)</li>
             <li>Cannot have other health coverage (with limited exceptions)</li>
             <li>Cannot be claimed as dependent on someone else's tax return</li>
@@ -740,7 +796,7 @@ function SpendingTab() {
       </div>
 
       <Card title="Manage Your Accounts">
-        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
+        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: TEXT_DEFAULT }}>
           View balances, submit claims, and manage your HSA and FSA online through Fidelity.
         </p>
         <ButtonPrimary href="https://netbenefits.com/RWJBarnabasHealth" target="_blank" rel="noopener noreferrer">
@@ -754,10 +810,10 @@ function SpendingTab() {
 function WellbeingTab() {
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '700', color: NAVY, margin: '0 0 16px 0' }}>
         Wellbeing & EAP
       </h2>
-      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333333', marginBottom: '32px' }}>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: TEXT_DEFAULT, marginBottom: '32px' }}>
         We support your mental, physical, and financial health with comprehensive wellness programs and 24/7 counseling support.
       </p>
 
@@ -777,8 +833,8 @@ function WellbeingTab() {
               href="tel:800-300-0628"
               style={{
                 display: 'inline-block',
-                backgroundColor: '#CC1F34',
-                color: '#ffffff',
+                backgroundColor: RED,
+                color: WHITE,
                 paddingTop: '10px',
                 paddingBottom: '10px',
                 paddingLeft: '16px',
@@ -823,10 +879,10 @@ function WellbeingTab() {
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Personify Health Wellness
         </h3>
-        <div style={{ backgroundColor: '#EBF0F5', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '8px', marginBottom: '24px' }}>
+        <div style={{ backgroundColor: LIGHT_BG, paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '6px', marginBottom: '24px' }}>
           <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6' }}>
             Get personalized coaching for fitness, nutrition, and chronic condition management.
           </p>
@@ -844,7 +900,7 @@ function WellbeingTab() {
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           RWJBarnabas Health Total Wellbeing
         </h3>
         <p style={{ fontSize: '14px', lineHeight: '1.6', marginBottom: '16px' }}>
@@ -855,9 +911,9 @@ function WellbeingTab() {
         </ButtonPrimary>
       </div>
 
-      <div style={{ backgroundColor: '#FFF3F1', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '8px', borderLeft: `4px solid ${RED}` }}>
-        <h4 style={{ margin: '0 0 12px 0', color: '#CC1F34', fontWeight: '600' }}>Mental Health Matters</h4>
-        <p style={{ margin: '0', fontSize: '14px', color: '#333333' }}>
+      <div style={{ backgroundColor: '#FFF3F1', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '6px', borderLeft: `4px solid ${RED}` }}>
+        <h4 style={{ margin: '0 0 12px 0', color: RED, fontWeight: '600' }}>Mental Health Matters</h4>
+        <p style={{ margin: '0', fontSize: '14px', color: TEXT_DEFAULT }}>
           If you're in crisis, please reach out immediately. The National Suicide Prevention Lifeline is available 24/7 at 988, and the Crisis Text Line is available by texting HOME to 741741.
         </p>
       </div>
@@ -868,12 +924,12 @@ function WellbeingTab() {
 function RetirementTab() {
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '700', color: NAVY, margin: '0 0 16px 0' }}>
         Financial & Retirement
       </h2>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Fidelity 401(k) Plan
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px', marginBottom: '24px' }}>
@@ -910,12 +966,12 @@ function RetirementTab() {
         </div>
 
         <div style={{ marginBottom: '24px' }}>
-          <h4 style={{ fontSize: '16px', fontWeight: '600', color: '#333333', marginBottom: '12px' }}>
+          <h4 style={{ fontSize: '16px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '12px' }}>
             Contribution Example by Salary
           </h4>
           <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
-              <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
+              <tr style={{ backgroundColor: NAVY, color: WHITE }}>
                 <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Annual Salary</th>
                 <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>6% Contribution</th>
                 <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Employer Match</th>
@@ -923,19 +979,19 @@ function RetirementTab() {
               </tr>
             </thead>
             <tbody>
-              <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
+              <tr style={{ borderBottom: `1px solid ${BORDER_COLOR}` }}>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$40,000</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$2,400</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,200</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,200</td>
               </tr>
-              <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
+              <tr style={{ borderBottom: `1px solid ${BORDER_COLOR}` }}>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$60,000</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$3,600</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,800</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$1,800</td>
               </tr>
-              <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
+              <tr style={{ borderBottom: `1px solid ${BORDER_COLOR}` }}>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$80,000</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$4,800</td>
                 <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>$2,400</td>
@@ -959,9 +1015,9 @@ function RetirementTab() {
         <ButtonPrimary href="https://netbenefits.com/RWJBarnabasHealth" target="_blank" rel="noopener noreferrer">
           Access Fidelity Account
         </ButtonPrimary>
-        <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: '#666666' }}>
+        <p style={{ margin: '12px 0 0 0', fontSize: '13px', color: '#999999' }}>
           <strong>Fidelity Support:</strong>{' '}
-          <a href="tel:800-513-5015" style={{ color: '#CC1F34', textDecoration: 'none', fontWeight: '600' }}>
+          <a href="tel:800-513-5015" style={{ color: RED, textDecoration: 'none', fontWeight: '600' }}>
             800.513.5015
           </a>
         </p>
@@ -973,27 +1029,27 @@ function RetirementTab() {
 function PTOTab() {
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '700', color: NAVY, margin: '0 0 16px 0' }}>
         Paid Time Off
       </h2>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Vacation Days
         </h3>
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
           <thead>
-            <tr style={{ backgroundColor: '#1B2F5C', color: '#ffffff' }}>
+            <tr style={{ backgroundColor: NAVY, color: WHITE }}>
               <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Years of Service</th>
               <th style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px', textAlign: 'left', fontWeight: '600' }}>Vacation Days</th>
             </tr>
           </thead>
           <tbody>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
+            <tr style={{ borderBottom: `1px solid ${BORDER_COLOR}` }}>
               <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Year 1</td>
               <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>10 days</td>
             </tr>
-            <tr style={{ borderBottom: '1px solid #EBF0F5' }}>
+            <tr style={{ borderBottom: `1px solid ${BORDER_COLOR}` }}>
               <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>Years 2-5</td>
               <td style={{ paddingTop: '12px', paddingBottom: '12px', paddingLeft: '12px', paddingRight: '12px' }}>15 days</td>
             </tr>
@@ -1006,7 +1062,7 @@ function PTOTab() {
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Sick Leave
         </h3>
         <p style={{ fontSize: '14px', lineHeight: '1.6', marginBottom: '12px' }}>
@@ -1015,7 +1071,7 @@ function PTOTab() {
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Holidays
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
@@ -1037,7 +1093,7 @@ function PTOTab() {
       </div>
 
       <div style={{ marginBottom: '40px' }}>
-        <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#333333', marginBottom: '16px' }}>
+        <h3 style={{ fontSize: '20px', fontWeight: '600', color: TEXT_DEFAULT, marginBottom: '16px' }}>
           Parental Leave
         </h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '20px' }}>
@@ -1063,9 +1119,9 @@ function PTOTab() {
         </div>
       </div>
 
-      <div style={{ backgroundColor: '#EBF0F5', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '8px' }}>
-        <h4 style={{ margin: '0 0 12px 0', color: '#1B2F5C', fontWeight: '600' }}>PTO Request & Scheduling</h4>
-        <p style={{ margin: '0', fontSize: '14px', color: '#333333' }}>
+      <div style={{ backgroundColor: LIGHT_BG, paddingTop: '20px', paddingBottom: '20px', paddingLeft: '20px', paddingRight: '20px', borderRadius: '6px' }}>
+        <h4 style={{ margin: '0 0 12px 0', color: NAVY, fontWeight: '600' }}>PTO Request & Scheduling</h4>
+        <p style={{ margin: '0', fontSize: '14px', color: TEXT_DEFAULT }}>
           Request and track paid time off through your HR system or speak with your manager. Policies may vary by location and role.
         </p>
       </div>
@@ -1076,10 +1132,10 @@ function PTOTab() {
 function ContactsTab() {
   return (
     <div>
-      <h2 style={{ fontSize: '32px', fontWeight: '700', color: '#1B2F5C', margin: '0 0 24px 0' }}>
+      <h2 style={{ fontSize: '32px', fontWeight: '700', color: NAVY, margin: '0 0 16px 0' }}>
         Carrier & Benefits Contacts
       </h2>
-      <p style={{ fontSize: '16px', lineHeight: '1.6', color: '#333333', marginBottom: '32px' }}>
+      <p style={{ fontSize: '16px', lineHeight: '1.6', color: TEXT_DEFAULT, marginBottom: '32px' }}>
         Quick access to all carrier phone numbers, portals, and support contact information.
       </p>
 
@@ -1203,18 +1259,27 @@ function Card({ title, children, style }: CardProps) {
   return (
     <div
       style={{
-        backgroundColor: '#ffffff',
-        border: `1px solid #EBF0F5`,
-        borderRadius: '8px',
+        backgroundColor: WHITE,
+        border: `1px solid ${BORDER_COLOR}`,
+        borderRadius: '6px',
         paddingTop: '24px',
         paddingBottom: '24px',
         paddingLeft: '20px',
         paddingRight: '20px',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.08)',
+        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+        transition: 'box-shadow 0.2s ease, border-color 0.2s ease',
         ...style,
       }}
+      onMouseEnter={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+        (e.currentTarget as HTMLElement).style.borderColor = '#bbb';
+      }}
+      onMouseLeave={(e) => {
+        (e.currentTarget as HTMLElement).style.boxShadow = '0 1px 2px rgba(0,0,0,0.05)';
+        (e.currentTarget as HTMLElement).style.borderColor = BORDER_COLOR;
+      }}
     >
-      <h3 style={{ margin: '0 0 16px 0', fontSize: '18px', fontWeight: '600', color: '#1B2F5C' }}>
+      <h3 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '600', color: NAVY }}>
         {title}
       </h3>
       {children}
@@ -1237,12 +1302,12 @@ function ContactCard({ title, description, phone, phoneHref, link, linkText, emp
     <Card
       title={title}
       style={{
-        borderColor: emphasis ? '#CC1F34' : '#EBF0F5',
-        backgroundColor: emphasis ? '#FFF3F1' : '#ffffff',
+        borderColor: emphasis ? RED : BORDER_COLOR,
+        backgroundColor: emphasis ? '#FFF8F7' : WHITE,
       }}
     >
       {description && (
-        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: '#666666' }}>
+        <p style={{ margin: '0 0 16px 0', fontSize: '14px', lineHeight: '1.6', color: '#999999' }}>
           {description}
         </p>
       )}
@@ -1255,7 +1320,7 @@ function ContactCard({ title, description, phone, phoneHref, link, linkText, emp
                 display: 'inline-block',
                 fontSize: '16px',
                 fontWeight: '600',
-                color: '#CC1F34',
+                color: RED,
                 textDecoration: 'none',
               }}
               onMouseEnter={(e) => (e.currentTarget.style.textDecoration = 'underline')}
@@ -1272,24 +1337,25 @@ function ContactCard({ title, description, phone, phoneHref, link, linkText, emp
             rel="noopener noreferrer"
             style={{
               display: 'inline-block',
-              backgroundColor: '#1B2F5C',
-              color: '#ffffff',
+              backgroundColor: NAVY,
+              color: WHITE,
               paddingTop: '10px',
               paddingBottom: '10px',
-              paddingLeft: '14px',
-              paddingRight: '14px',
+              paddingLeft: '16px',
+              paddingRight: '16px',
               borderRadius: '4px',
               fontSize: '14px',
               fontWeight: '600',
               textDecoration: 'none',
               textAlign: 'center',
               maxWidth: '100%',
+              transition: 'background-color 0.2s ease',
             }}
             onMouseEnter={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = '#CC1F34';
+              (e.currentTarget as HTMLElement).style.backgroundColor = RED;
             }}
             onMouseLeave={(e) => {
-              (e.currentTarget as HTMLElement).style.backgroundColor = '#1B2F5C';
+              (e.currentTarget as HTMLElement).style.backgroundColor = NAVY;
             }}
           >
             {linkText || 'Visit'}
@@ -1312,19 +1378,19 @@ interface ButtonProps {
 function ButtonPrimary({ href, onClick, children, target = '_blank', rel = 'noopener noreferrer', style }: ButtonProps) {
   const baseStyle: React.CSSProperties = {
     display: 'inline-block',
-    backgroundColor: '#CC1F34',
-    color: '#ffffff',
-    paddingTop: '12px',
-    paddingBottom: '12px',
-    paddingLeft: '20px',
-    paddingRight: '20px',
+    backgroundColor: RED,
+    color: WHITE,
+    paddingTop: '11px',
+    paddingBottom: '11px',
+    paddingLeft: '18px',
+    paddingRight: '18px',
     borderRadius: '4px',
     fontSize: '14px',
     fontWeight: '600',
     textDecoration: 'none',
     border: 'none',
     cursor: 'pointer',
-    transition: 'background-color 0.2s',
+    transition: 'background-color 0.2s ease, opacity 0.2s ease',
     ...style,
   };
 
@@ -1335,8 +1401,8 @@ function ButtonPrimary({ href, onClick, children, target = '_blank', rel = 'noop
         target={target}
         rel={rel}
         style={baseStyle}
-        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#B91A2D')}
-        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#CC1F34')}
+        onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#a01828')}
+        onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = RED)}
       >
         {children}
       </a>
@@ -1347,8 +1413,8 @@ function ButtonPrimary({ href, onClick, children, target = '_blank', rel = 'noop
     <button
       onClick={onClick}
       style={baseStyle}
-      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#B91A2D')}
-      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#CC1F34')}
+      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#a01828')}
+      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = RED)}
     >
       {children}
     </button>
@@ -1361,25 +1427,27 @@ function ButtonSecondary({ onClick, children, style }: ButtonProps) {
       onClick={onClick}
       style={{
         display: 'inline-block',
-        backgroundColor: '#ffffff',
-        color: '#1B2F5C',
-        paddingTop: '12px',
-        paddingBottom: '12px',
-        paddingLeft: '20px',
-        paddingRight: '20px',
+        backgroundColor: WHITE,
+        color: NAVY,
+        paddingTop: '11px',
+        paddingBottom: '11px',
+        paddingLeft: '18px',
+        paddingRight: '18px',
         borderRadius: '4px',
         fontSize: '14px',
         fontWeight: '600',
-        border: `2px solid #1B2F5C`,
+        border: `1.5px solid ${NAVY}`,
         cursor: 'pointer',
-        transition: 'all 0.2s',
+        transition: 'all 0.2s ease',
         ...style,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.backgroundColor = '#EBF0F5';
+        (e.currentTarget as HTMLElement).style.backgroundColor = LIGHT_BG;
+        (e.currentTarget as HTMLElement).style.borderColor = RED;
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.backgroundColor = '#ffffff';
+        (e.currentTarget as HTMLElement).style.backgroundColor = WHITE;
+        (e.currentTarget as HTMLElement).style.borderColor = NAVY;
       }}
     >
       {children}
@@ -1394,21 +1462,21 @@ function ButtonTertiary({ href, children, style }: ButtonProps) {
       style={{
         display: 'inline-block',
         backgroundColor: 'transparent',
-        color: '#CC1F34',
-        paddingTop: '12px',
-        paddingBottom: '12px',
-        paddingLeft: '20px',
-        paddingRight: '20px',
+        color: RED,
+        paddingTop: '11px',
+        paddingBottom: '11px',
+        paddingLeft: '18px',
+        paddingRight: '18px',
         borderRadius: '4px',
         fontSize: '14px',
         fontWeight: '600',
-        border: `2px solid #CC1F34`,
+        border: `1.5px solid ${RED}`,
         textDecoration: 'none',
-        transition: 'all 0.2s',
+        transition: 'all 0.2s ease',
         ...style,
       }}
       onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.backgroundColor = '#FFF3F1';
+        (e.currentTarget as HTMLElement).style.backgroundColor = '#FFF8F7';
       }}
       onMouseLeave={(e) => {
         (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
