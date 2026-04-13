@@ -37,10 +37,18 @@ function LoginForm() {
     }
   };
 
+  const ALLOWED_DOMAIN = '@flimp.net';
+
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+
+    if (!email.toLowerCase().endsWith(ALLOWED_DOMAIN)) {
+      setError('Sign-up is restricted to @flimp.net email addresses.');
+      setLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.signUp({
       email,
@@ -125,7 +133,7 @@ function LoginForm() {
           }}>
             {mode === 'login'
               ? 'Sign in to access the microsite generator'
-              : 'Get started with Flimp AI'}
+              : 'Restricted to @flimp.net accounts'}
           </p>
 
           {error && (
@@ -170,7 +178,7 @@ function LoginForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                placeholder="you@company.com"
+                placeholder="you@flimp.net"
                 style={{
                   width: '100%',
                   padding: '12px 14px',
